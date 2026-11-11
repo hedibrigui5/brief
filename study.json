@@ -1,0 +1,1120 @@
+{
+ "maths": {
+  "title": "Spécialité Mathématiques",
+  "teacher": "M. Sarhani",
+  "exam": "Bac : épreuve écrite de 4 h, 20 points, avec une partie automatismes sans calculatrice",
+  "general_tips": [
+   "Recopie la question clé au brouillon et souligne le verbe : « montrer », « justifier », « déterminer » n'attendent pas la même rédaction.",
+   "Chaque propriété utilisée doit être nommée ou écrite : c'est elle qui rapporte les points.",
+   "Les questions s'enchaînent : si tu bloques, admets le résultat de la question précédente et continue."
+  ],
+  "chapters": [
+   {
+    "id": "suites",
+    "n": 1,
+    "title": "Suites et raisonnement par récurrence",
+    "recap": [
+     "Récurrence : initialisation (P(n₀) vraie), hérédité (si P(n) vraie pour un n ≥ n₀ fixé, alors P(n+1) vraie), conclusion.",
+     "Sens de variation : étudier le signe de uₙ₊₁ − uₙ, ou comparer uₙ₊₁/uₙ à 1 si uₙ > 0, ou utiliser f croissante si uₙ₊₁ = f(uₙ) (par récurrence).",
+     "Suite géométrique : qⁿ → 0 si −1 < q < 1, qⁿ → +∞ si q > 1. Somme : 1 + q + … + qⁿ = (1 − qⁿ⁺¹)/(1 − q).",
+     "Comparaison : si uₙ ≥ vₙ et vₙ → +∞ alors uₙ → +∞. Gendarmes : si vₙ ≤ uₙ ≤ wₙ et v, w → ℓ, alors uₙ → ℓ.",
+     "Convergence monotone : une suite croissante et majorée converge ; décroissante et minorée converge.",
+     "Si uₙ₊₁ = f(uₙ), uₙ → ℓ et f continue en ℓ, alors ℓ = f(ℓ)."
+    ],
+    "methods": [
+     "Encadrement par récurrence : pour montrer a ≤ uₙ ≤ b, applique f (monotone) aux inégalités dans l'hérédité.",
+     "Limite d'un quotient : factorise numérateur et dénominateur par le terme de plus haut degré.",
+     "Étudier une suite définie par récurrence : variation (récurrence) → bornée → converge → limite par ℓ = f(ℓ).",
+     "Suite auxiliaire vₙ = uₙ − ℓ : montre qu'elle est géométrique, exprime vₙ puis uₙ en fonction de n."
+    ],
+    "questions": [
+     [
+      "Quelles sont les trois étapes d'un raisonnement par récurrence ?",
+      "Initialisation, hérédité (on suppose P(n) vraie pour un entier n fixé et on montre P(n+1)), conclusion."
+     ],
+     [
+      "Énonce le théorème de convergence monotone.",
+      "Toute suite croissante majorée converge ; toute suite décroissante minorée converge."
+     ],
+     [
+      "Limite de qⁿ selon q ?",
+      "0 si −1 < q < 1 ; 1 si q = 1 ; +∞ si q > 1 ; pas de limite si q ≤ −1."
+     ],
+     [
+      "Énonce le théorème des gendarmes.",
+      "Si vₙ ≤ uₙ ≤ wₙ à partir d'un rang et si (vₙ) et (wₙ) convergent vers ℓ, alors (uₙ) converge vers ℓ."
+     ]
+    ],
+    "auto": [
+     [
+      "lim (2n² − n)/(n² + 1) quand n → +∞ ?",
+      "2 (on factorise par n²)."
+     ],
+     [
+      "u₀ = 1 et uₙ₊₁ = 2uₙ + 1. Calcule u₂.",
+      "u₁ = 3, u₂ = 7."
+     ],
+     [
+      "lim 0,9ⁿ ?",
+      "0, car −1 < 0,9 < 1."
+     ]
+    ],
+    "bac": [
+     "Dans l'hérédité, écris clairement « Supposons P(n) vraie pour un entier n ≥ n₀ fixé ».",
+     "Une suite croissante et majorée converge, mais pas forcément vers le majorant : ne conclus pas trop vite.",
+     "Pour un algorithme Python de seuil, une boucle while qui s'arrête dès que la condition est atteinte."
+    ]
+   },
+   {
+    "id": "limites",
+    "n": 2,
+    "title": "Limites de fonctions",
+    "recap": [
+     "Formes indéterminées : ∞ − ∞, 0 × ∞, ∞/∞, 0/0.",
+     "En ±∞, un polynôme ou une fraction rationnelle a la limite de ses termes de plus haut degré.",
+     "Croissances comparées : eˣ/xⁿ → +∞ et xⁿe⁻ˣ → 0 en +∞ ; xeˣ → 0 en −∞ ; ln x / x → 0 en +∞ ; x ln x → 0 en 0⁺.",
+     "Asymptote horizontale y = ℓ si f(x) → ℓ en ±∞ ; asymptote verticale x = a si f(x) → ±∞ quand x → a.",
+     "Composée : si u(x) → b quand x → a et v(X) → c quand X → b, alors v(u(x)) → c.",
+     "Comparaison et gendarmes s'appliquent aussi aux fonctions."
+    ],
+    "methods": [
+     "Lever une forme indéterminée : factoriser par le terme dominant, multiplier par la quantité conjuguée, ou utiliser les croissances comparées.",
+     "Limite en un point avec division par 0 : étudier le signe du dénominateur pour trancher +∞ ou −∞.",
+     "Interpréter graphiquement chaque limite (asymptote) : souvent demandé juste après le calcul."
+    ],
+    "questions": [
+     [
+      "Cite les quatre formes indéterminées.",
+      "∞ − ∞, 0 × ∞, ∞/∞ et 0/0."
+     ],
+     [
+      "Limite de eˣ/x en +∞ ?",
+      "+∞ (croissances comparées)."
+     ],
+     [
+      "Quand la droite x = a est-elle asymptote verticale ?",
+      "Quand f(x) tend vers +∞ ou −∞ lorsque x tend vers a."
+     ]
+    ],
+    "auto": [
+     [
+      "lim (3x² + 1)/(x² − 5) en +∞ ?",
+      "3."
+     ],
+     [
+      "lim x eˣ en −∞ ?",
+      "0."
+     ],
+     [
+      "lim 1/(x − 2) quand x → 2⁺ ?",
+      "+∞ (dénominateur positif qui tend vers 0)."
+     ]
+    ],
+    "bac": [
+     "Écris le nom de la règle utilisée : « par croissances comparées », « par quotient », « par composition ».",
+     "Ne jamais écrire ∞/∞ = 1 : c'est une forme indéterminée."
+    ]
+   },
+   {
+    "id": "espace",
+    "n": 3,
+    "title": "Vecteurs, droites et plans de l'espace",
+    "recap": [
+     "Trois vecteurs sont coplanaires si l'un est combinaison linéaire des deux autres ; trois vecteurs non coplanaires forment une base de l'espace.",
+     "Une droite est déterminée par un point A et un vecteur directeur u⃗ : M ∈ d ⇔ AM⃗ = t·u⃗.",
+     "Représentation paramétrique : x = x_A + at, y = y_A + bt, z = z_A + ct (t ∈ ℝ).",
+     "Un plan est déterminé par un point et deux vecteurs non colinéaires : M ∈ P ⇔ AM⃗ = s·u⃗ + t·v⃗.",
+     "Positions relatives : deux droites sont sécantes, parallèles ou non coplanaires ; une droite et un plan sont sécants ou parallèles.",
+     "Théorème du toit : si deux plans sécants contiennent deux droites parallèles, leur intersection est parallèle à ces droites."
+    ],
+    "methods": [
+     "Montrer que A, B, C, D sont coplanaires : écrire AD⃗ = s·AB⃗ + t·AC⃗ et trouver s et t.",
+     "Intersection de deux droites : égaler les représentations paramétriques (paramètres différents !) et résoudre le système.",
+     "Point d'une droite : remplacer t par une valeur dans la représentation paramétrique."
+    ],
+    "questions": [
+     [
+      "Quand trois vecteurs sont-ils coplanaires ?",
+      "Quand l'un s'écrit comme combinaison linéaire des deux autres."
+     ],
+     [
+      "Écris une représentation paramétrique de la droite passant par A(1 ; 2 ; 0) dirigée par u⃗(2 ; −1 ; 3).",
+      "x = 1 + 2t, y = 2 − t, z = 3t, t ∈ ℝ."
+     ]
+    ],
+    "auto": [
+     [
+      "d : x = 1 + 2t, y = 2 − t, z = 3t. Point de paramètre t = 1 ?",
+      "(3 ; 1 ; 3)."
+     ]
+    ],
+    "bac": [
+     "Pour l'intersection de deux droites, utilise deux paramètres différents (t et s).",
+     "Deux droites non parallèles ne sont pas forcément sécantes dans l'espace : vérifie la troisième équation."
+    ]
+   },
+   {
+    "id": "ortho",
+    "n": 4,
+    "title": "Orthogonalité dans l'espace",
+    "current": true,
+    "recap": [
+     "Définition : pour A, B, C tels que u⃗ = AB⃗ et v⃗ = AC⃗, le produit scalaire u⃗·v⃗ est AB⃗·AC⃗ calculé dans un plan contenant A, B et C.",
+     "u⃗·v⃗ = ‖u⃗‖ × ‖v⃗‖ × cos(u⃗ ; v⃗), soit AB⃗·AC⃗ = AB × AC × cos(BÂC).",
+     "Projeté : si H est le projeté orthogonal de C sur (AB), alors AB⃗·AC⃗ = AB⃗·AH⃗ (= AB × AH si même sens, −AB × AH sinon).",
+     "Carré scalaire : u⃗² = ‖u⃗‖², donc AB⃗² = AB².",
+     "u⃗·v⃗ = 0 ⇔ u⃗ et v⃗ orthogonaux. Le vecteur nul est orthogonal à tout vecteur.",
+     "Règles : u⃗·v⃗ = v⃗·u⃗ ; u⃗·(v⃗ + w⃗) = u⃗·v⃗ + u⃗·w⃗ ; (ku⃗)·v⃗ = k(u⃗·v⃗). Identités : (u⃗ + v⃗)² = u⃗² + 2u⃗·v⃗ + v⃗² ; (u⃗ − v⃗)² = u⃗² − 2u⃗·v⃗ + v⃗² ; (u⃗ + v⃗)·(u⃗ − v⃗) = u⃗² − v⃗².",
+     "Polarisation : u⃗·v⃗ = ½(‖u⃗‖² + ‖v⃗‖² − ‖u⃗ − v⃗‖²) = ½(‖u⃗ + v⃗‖² − ‖u⃗‖² − ‖v⃗‖²). En particulier AB⃗·AC⃗ = ½(AB² + AC² − BC²).",
+     "Base orthonormée (i⃗, j⃗, k⃗) : vecteurs deux à deux orthogonaux et de norme 1. Dans un repère orthonormé : u⃗·v⃗ = xx′ + yy′ + zz′ et ‖u⃗‖ = √(x² + y² + z²).",
+     "Distance : AB = √((x_B − x_A)² + (y_B − y_A)² + (z_B − z_A)²). Milieu I de [AB] : ((x_A + x_B)/2 ; (y_A + y_B)/2 ; (z_A + z_B)/2).",
+     "Droites orthogonales : leurs parallèles menées par un même point sont perpendiculaires. d ⊥ d′ ⇔ u⃗·u⃗′ = 0. Perpendiculaires = orthogonales ET sécantes (la réciproque est fausse).",
+     "Droite orthogonale à un plan : orthogonale à toutes les droites du plan ⇔ orthogonale à DEUX droites sécantes du plan.",
+     "Projeté orthogonal de M sur une droite d : intersection de d avec le plan passant par M et orthogonal à d.",
+     "Projeté orthogonal de M sur un plan P : intersection de P avec la droite passant par M et orthogonale à P. C'est le point de P le plus proche de M ; MH est la distance de M au plan (Pythagore : AM² = AH² + HM² > HM²)."
+    ],
+    "methods": [
+     "Calculer un produit scalaire : choisis la formule selon les données. Figure avec angles droits → projeté. Vecteurs décomposables → Chasles (ex. IE⃗·GF⃗ = (IH⃗ + HE⃗)·GF⃗ = 0 + HE × GF). Repère orthonormé → coordonnées. Trois longueurs connues → polarisation.",
+     "Deux droites orthogonales : produit scalaire des vecteurs directeurs nul, ou montrer que l'une est orthogonale à un plan contenant l'autre (ex. (AF) ⊥ (EBC) donc (AF) ⊥ (EC)).",
+     "Droite orthogonale à un plan : trouve deux droites SÉCANTES du plan qui lui sont orthogonales (diagonales d'un carré, médiane d'un triangle équilatéral, arêtes d'un cube) ou deux produits scalaires nuls avec deux vecteurs non colinéaires du plan.",
+     "Projeté H de A sur un plan (BDE) : deux conditions. 1) H appartient au plan (ex. DH⃗ = a·DB⃗ + b·DE⃗). 2) AH⃗ est orthogonal à deux vecteurs non colinéaires du plan.",
+     "Angle : cos(BÂC) = AB⃗·AC⃗ / (AB × AC), puis arccos à la calculatrice en mode degrés.",
+     "Justifier un repère orthonormé dans un cube d'arête 1 : les arêtes issues d'un sommet sont deux à deux orthogonales (faces carrées) et de longueur 1.",
+     "Volume d'un tétraèdre : V = ⅓ × aire de la base × hauteur ; la hauteur est la distance du sommet au plan de la base (via le projeté)."
+    ],
+    "questions": [
+     [
+      "Donne trois façons de calculer AB⃗·AC⃗.",
+      "AB × AC × cos(BÂC) ; AB⃗·AH⃗ avec H projeté de C sur (AB) ; ½(AB² + AC² − BC²) ; (en repère orthonormé) xx′ + yy′ + zz′."
+     ],
+     [
+      "Différence entre droites orthogonales et perpendiculaires ?",
+      "Orthogonales : leurs parallèles par un même point sont perpendiculaires. Perpendiculaires : orthogonales et sécantes (donc coplanaires). Deux droites perpendiculaires sont orthogonales, pas l'inverse."
+     ],
+     [
+      "Comment montrer qu'une droite est orthogonale à un plan ?",
+      "Montrer qu'elle est orthogonale à deux droites sécantes de ce plan."
+     ],
+     [
+      "Énonce les formules de polarisation.",
+      "u⃗·v⃗ = ½(‖u⃗‖² + ‖v⃗‖² − ‖u⃗ − v⃗‖²) = ½(‖u⃗ + v⃗‖² − ‖u⃗‖² − ‖v⃗‖²)."
+     ],
+     [
+      "Définis le projeté orthogonal d'un point M sur un plan P.",
+      "C'est l'intersection H de P avec la droite passant par M orthogonale à P. MH est la plus courte distance de M à un point de P."
+     ],
+     [
+      "À quelle condition peut-on utiliser u⃗·v⃗ = xx′ + yy′ + zz′ ?",
+      "Seulement dans un repère ORTHONORMÉ."
+     ],
+     [
+      "Quand dit-on qu'une base (i⃗, j⃗, k⃗) est orthonormée ?",
+      "Quand les trois vecteurs sont deux à deux orthogonaux et de norme 1."
+     ]
+    ],
+    "auto": [
+     [
+      "u⃗(1 ; 2 ; −1) et v⃗(3 ; −1 ; 1) dans un repère orthonormé. u⃗·v⃗ ?",
+      "3 − 2 − 1 = 0 : u⃗ et v⃗ sont orthogonaux."
+     ],
+     [
+      "‖u⃗‖ = 3, ‖v⃗‖ = 2 et l'angle vaut 60°. u⃗·v⃗ ?",
+      "3 × 2 × cos 60° = 3."
+     ],
+     [
+      "Cube ABCDEFGH d'arête 1. AB⃗·AG⃗ ?",
+      "Le projeté de G sur (AB) est B, donc AB⃗·AG⃗ = AB⃗·AB⃗ = 1."
+     ],
+     [
+      "A(1 ; 0 ; 2) et B(3 ; 1 ; 0). Longueur AB ?",
+      "√(4 + 1 + 4) = 3."
+     ],
+     [
+      "‖u⃗‖ = 2, ‖v⃗‖ = 1, u⃗·v⃗ = −1. ‖u⃗ + v⃗‖² ?",
+      "4 + 2 × (−1) + 1 = 3."
+     ],
+     [
+      "AB = 4, AC = 5, BC = 6. AB⃗·AC⃗ ?",
+      "½(16 + 25 − 36) = 2,5."
+     ]
+    ],
+    "bac": [
+     "Avant xx′ + yy′ + zz′, écris « dans le repère orthonormé (…) » : c'est une condition, le correcteur la cherche.",
+     "Dans un cube, si aucun repère n'est imposé, place (A ; AB⃗, AD⃗, AE⃗) : les coordonnées rendent tout mécanique.",
+     "« Orthogonale à un plan » : précise que les deux droites (ou vecteurs) du plan sont sécantes (non colinéaires). Sans ce mot, la preuve est incomplète.",
+     "Pour un projeté, il y a deux choses à démontrer : l'appartenance au plan et l'orthogonalité. Oublier la première coûte des points.",
+     "Les questions « en déduire » s'appuient sur la question d'avant : cite-la explicitement."
+    ],
+    "project": {
+     "title": "Évaluation : orthogonalité dans l'espace",
+     "intro": "Préparation construite à partir de ton cours (8 pages), de la fiche de révisions (13 exercices) et de la liste d'exercices supplémentaires du manuel.",
+     "groups": [
+      {
+       "name": "Fiche de révisions",
+       "items": [
+        [
+         "f1",
+         "Ex 1 · Cube de côté 5 : (ABC) ⊥ (AE), longueur de la diagonale [EC]"
+        ],
+        [
+         "f2",
+         "Ex 2 · Tétraèdre régulier : (BD) orthogonale au plan (AIC)"
+        ],
+        [
+         "f3",
+         "Ex 3 · Cube : (AF) ⊥ (EBC), (HF) ⊥ (ECG), puis (EC) ⊥ (AFH)"
+        ],
+        [
+         "f4",
+         "Ex 4 · Coordonnées : alignement, triangle isocèle, pied de la hauteur"
+        ],
+        [
+         "f5",
+         "Ex 5 · Définition : FE⃗·FB⃗, IA⃗·IB⃗, nature de ACH, HA⃗·HC⃗"
+        ],
+        [
+         "f6",
+         "Ex 6 · Orthogonalité et colinéarité : EH⃗·DH⃗, AB⃗·DC⃗, BC⃗·GF⃗"
+        ],
+        [
+         "f7",
+         "Ex 7 · Relation de Chasles : AF⃗·HG⃗, JF⃗·AB⃗, IJ⃗·EF⃗"
+        ],
+        [
+         "f8",
+         "Ex 8 · Polarisation : pavé AB = 10, AD = 5, AE = 4, diagonale AG"
+        ],
+        [
+         "f9",
+         "Ex 9 · Montrer que ABC est rectangle en C (coordonnées)"
+        ],
+        [
+         "f10",
+         "Ex 10 · Cube : (IJ) et (CK) orthogonales"
+        ],
+        [
+         "f11",
+         "Ex 11 · Angle BÂC au degré près, points non alignés"
+        ],
+        [
+         "f12",
+         "Ex 12 · Projeté orthogonal de A sur le plan (BDE)"
+        ],
+        [
+         "f13",
+         "Ex 13 · Projeté de I sur (EFJ), volume de EFIJ égal à 1/6"
+        ]
+       ]
+      },
+      {
+       "name": "Exercices du manuel",
+       "items": [
+        [
+         "m125",
+         "p. 125 · ex 28, 30, 31 et 34"
+        ],
+        [
+         "m126a",
+         "p. 126 · ex 39 et 40"
+        ],
+        [
+         "m126b",
+         "p. 126 · ex 45, 46 et 49"
+        ],
+        [
+         "m127",
+         "p. 127 · ex 58, 59, 61 et 62"
+        ],
+        [
+         "m128",
+         "p. 128 · ex 65, 67 et 68"
+        ],
+        [
+         "m132a",
+         "p. 132 · ex 91"
+        ],
+        [
+         "m132b",
+         "p. 132 · ex 92 et 95"
+        ]
+       ]
+      },
+      {
+       "name": "Exemples du cours à refaire seul",
+       "items": [
+        [
+         "c1",
+         "Tétraèdre régulier d'arête 6 : AB⃗·AC⃗, AI⃗·AJ⃗ et angle IÂJ"
+        ],
+        [
+         "c2",
+         "Cube : AG⃗ et HF⃗ orthogonaux (repère (D ; DA⃗, DC⃗, DH⃗))"
+        ],
+        [
+         "c3",
+         "Pavé AD = AE = 1, AB = 2 : longueur BI"
+        ],
+        [
+         "c4",
+         "Tétraèdre : (AB) et (CD) orthogonales"
+        ],
+        [
+         "c5",
+         "Cube : (BE) orthogonale au plan (ADG)"
+        ],
+        [
+         "c6",
+         "Projeté de F sur (CD), projeté de E sur (CDG)"
+        ],
+        [
+         "c7",
+         "ABCH : distance de A au plan (HBC) en fonction de a"
+        ]
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "continuite",
+    "n": 5,
+    "title": "Continuité et théorème des valeurs intermédiaires",
+    "recap": [
+     "Les fonctions usuelles (polynômes, exp, ln, cos, sin, racine) sont continues sur leur ensemble de définition ; une fonction dérivable est continue.",
+     "TVI : si f est continue sur [a ; b], pour tout k entre f(a) et f(b), l'équation f(x) = k a au moins une solution dans [a ; b].",
+     "Corollaire (bijection) : si de plus f est strictement monotone sur [a ; b], la solution est unique.",
+     "Si uₙ → ℓ et f continue en ℓ, alors f(uₙ) → f(ℓ)."
+    ],
+    "methods": [
+     "Pour « montrer que f(x) = k a une unique solution α » : continuité + stricte monotonie + k entre les valeurs (ou limites) aux bornes.",
+     "Encadrer α : balayage ou dichotomie à la calculatrice, en donnant l'encadrement à la précision demandée."
+    ],
+    "questions": [
+     [
+      "Énonce le TVI.",
+      "Si f est continue sur [a ; b], tout réel k compris entre f(a) et f(b) admet au moins un antécédent dans [a ; b]."
+     ],
+     [
+      "Que faut-il ajouter pour l'unicité ?",
+      "La stricte monotonie de f sur l'intervalle."
+     ]
+    ],
+    "auto": [
+     [
+      "x³ + x − 1 = 0 a-t-elle une solution dans [0 ; 1] ?",
+      "Oui : f(0) = −1 < 0 < f(1) = 1 et f est continue (polynôme). Unique car f est strictement croissante."
+     ]
+    ],
+    "bac": [
+     "Avec des limites aux bornes d'un intervalle ouvert, cite le corollaire avec les limites, pas f(a) et f(b).",
+     "Donne l'encadrement de α avec les valeurs de f qui le justifient."
+    ]
+   },
+   {
+    "id": "derivation",
+    "n": 6,
+    "title": "Dérivation et convexité",
+    "recap": [
+     "Composée : (v∘u)′ = u′ × v′∘u. Cas usuels : (eᵘ)′ = u′eᵘ ; (uⁿ)′ = nu′uⁿ⁻¹ ; (√u)′ = u′/(2√u) ; (ln u)′ = u′/u.",
+     "f convexe sur I ⇔ f′ croissante sur I ⇔ f″ ≥ 0 sur I ⇔ courbe au-dessus de ses tangentes (et en dessous de ses cordes).",
+     "Point d'inflexion : la courbe traverse sa tangente, f″ s'annule en changeant de signe.",
+     "Tangente en a : y = f′(a)(x − a) + f(a)."
+    ],
+    "methods": [
+     "Étude complète : dérivée → signe (facteur toujours positif comme eˣ mis à part) → tableau de variations avec limites.",
+     "Convexité : calcule f″, étudie son signe, conclus convexe/concave et points d'inflexion.",
+     "Inégalité du type eˣ ≥ x + 1 : convexité et tangente, ou étude de la fonction différence."
+    ],
+    "questions": [
+     [
+      "Dérivée de eᵘ ?",
+      "u′eᵘ."
+     ],
+     [
+      "Caractérisations d'une fonction convexe dérivable deux fois ?",
+      "f′ croissante, f″ ≥ 0, courbe au-dessus de ses tangentes."
+     ]
+    ],
+    "auto": [
+     [
+      "Dérivée de e³ˣ⁺¹ ?",
+      "3e³ˣ⁺¹."
+     ],
+     [
+      "f″(x) = 6x. Point d'inflexion ?",
+      "En x = 0 (f″ change de signe)."
+     ]
+    ],
+    "bac": [
+     "Justifie le signe de chaque facteur de f′(x) : « eˣ > 0 pour tout réel x ».",
+     "Ne confonds pas variations de f (signe de f′) et convexité (signe de f″)."
+    ]
+   },
+   {
+    "id": "ln",
+    "n": 7,
+    "title": "Fonction logarithme népérien",
+    "recap": [
+     "ln est la réciproque de exp : y = ln x ⇔ x = eʸ (x > 0). ln 1 = 0, ln e = 1.",
+     "ln(ab) = ln a + ln b ; ln(a/b) = ln a − ln b ; ln(aⁿ) = n ln a ; ln √a = ½ ln a.",
+     "ln′(x) = 1/x ; (ln u)′ = u′/u. ln est strictement croissante et concave sur ]0 ; +∞[.",
+     "Limites : ln x → +∞ en +∞, → −∞ en 0⁺ ; ln x / x → 0 en +∞ ; x ln x → 0 en 0⁺."
+    ],
+    "methods": [
+     "Résoudre eˣ = k (k > 0) : x = ln k. Résoudre qⁿ > S : n > ln S / ln q (attention, ln q < 0 si q < 1 : l'inégalité change de sens).",
+     "Toujours donner le domaine de définition avant de résoudre une équation avec ln."
+    ],
+    "questions": [
+     [
+      "ln(ab) = ?",
+      "ln a + ln b (a, b > 0)."
+     ],
+     [
+      "Dérivée de ln(u) ?",
+      "u′/u."
+     ]
+    ],
+    "auto": [
+     [
+      "ln 8 / ln 2 ?",
+      "3."
+     ],
+     [
+      "Résoudre eˣ = 5.",
+      "x = ln 5."
+     ],
+     [
+      "Plus petit n tel que 2ⁿ > 1000 ?",
+      "n = 10 (ln 1000 / ln 2 ≈ 9,97)."
+     ]
+    ],
+    "bac": [
+     "En divisant par ln q avec 0 < q < 1, change le sens de l'inégalité et dis-le.",
+     "Vérifie que les solutions trouvées appartiennent au domaine de définition."
+    ]
+   },
+   {
+    "id": "trigo",
+    "n": 8,
+    "title": "Fonctions trigonométriques",
+    "recap": [
+     "cos et sin sont 2π-périodiques ; cos est paire, sin est impaire.",
+     "sin′ = cos et cos′ = −sin ; (cos(ax + b))′ = −a sin(ax + b) ; (sin(ax + b))′ = a cos(ax + b).",
+     "lim sin x / x = 1 en 0.",
+     "Valeurs : cos(π/6) = √3/2, cos(π/4) = √2/2, cos(π/3) = 1/2 ; sin(π/6) = 1/2, sin(π/4) = √2/2, sin(π/3) = √3/2."
+    ],
+    "methods": [
+     "Étudier sur une période (et utiliser la parité) puis compléter par symétrie et translation.",
+     "Résoudre cos x = a sur un intervalle : cercle trigonométrique."
+    ],
+    "questions": [
+     [
+      "Dérivée de cos ?",
+      "−sin."
+     ],
+     [
+      "Parité de sin ?",
+      "Impaire : sin(−x) = −sin x."
+     ]
+    ],
+    "auto": [
+     [
+      "cos(π/3) ?",
+      "1/2."
+     ],
+     [
+      "Dérivée de sin(2x) ?",
+      "2cos(2x)."
+     ]
+    ],
+    "bac": [
+     "Pense à la périodicité pour réduire l'intervalle d'étude et justifie-le."
+    ]
+   },
+   {
+    "id": "primitives",
+    "n": 9,
+    "title": "Primitives et équations différentielles",
+    "recap": [
+     "F est une primitive de f sur I si F′ = f. Deux primitives diffèrent d'une constante.",
+     "Primitives usuelles : xⁿ → xⁿ⁺¹/(n+1) ; 1/x → ln x ; eˣ → eˣ ; u′eᵘ → eᵘ ; u′/u → ln u (u > 0) ; u′uⁿ → uⁿ⁺¹/(n+1).",
+     "y′ = ay : solutions y = Ce^(ax), C ∈ ℝ.",
+     "y′ = ay + b (a ≠ 0) : solutions y = Ce^(ax) − b/a.",
+     "y′ = ay + f : solution générale = solution particulière + Ce^(ax)."
+    ],
+    "methods": [
+     "Repérer la forme u′eᵘ ou u′/u avant d'intégrer, en ajustant une constante multiplicative.",
+     "Condition initiale y(0) = y₀ : elle fixe C, à la fin."
+    ],
+    "questions": [
+     [
+      "Solutions de y′ = ay + b ?",
+      "y(x) = Ce^(ax) − b/a, C ∈ ℝ."
+     ],
+     [
+      "Primitive de u′/u ?",
+      "ln u (si u > 0)."
+     ]
+    ],
+    "auto": [
+     [
+      "Primitive de 2x·e^(x²) ?",
+      "e^(x²)."
+     ],
+     [
+      "y′ = 3y et y(0) = 2 ?",
+      "y = 2e^(3x)."
+     ]
+    ],
+    "bac": [
+     "Pour vérifier une solution particulière, dérive-la et remplace dans l'équation : c'est rapide et sûr."
+    ]
+   },
+   {
+    "id": "integrales",
+    "n": 10,
+    "title": "Calcul intégral",
+    "recap": [
+     "Si f ≥ 0 continue, ∫ₐᵇ f(x)dx est l'aire sous la courbe en unités d'aire.",
+     "∫ₐᵇ f = F(b) − F(a) avec F primitive de f.",
+     "Linéarité, relation de Chasles, positivité, croissance de l'intégrale.",
+     "Valeur moyenne : 1/(b − a) × ∫ₐᵇ f.",
+     "Intégration par parties : ∫ₐᵇ uv′ = [uv]ₐᵇ − ∫ₐᵇ u′v.",
+     "Aire entre deux courbes (f ≥ g) : ∫ₐᵇ (f − g)."
+    ],
+    "methods": [
+     "IPP : choisis u qui se simplifie en dérivant (x, ln x) et v′ facile à intégrer (eˣ).",
+     "Suite d'intégrales Iₙ : monotonie par signe de Iₙ₊₁ − Iₙ, encadrement par positivité."
+    ],
+    "questions": [
+     [
+      "Formule de l'intégration par parties ?",
+      "∫ₐᵇ uv′ = [uv]ₐᵇ − ∫ₐᵇ u′v."
+     ],
+     [
+      "Définition de la valeur moyenne ?",
+      "μ = 1/(b − a) × ∫ₐᵇ f(x)dx."
+     ]
+    ],
+    "auto": [
+     [
+      "∫₀¹ 2x dx ?",
+      "1."
+     ],
+     [
+      "∫₀^(ln 2) eˣ dx ?",
+      "2 − 1 = 1."
+     ]
+    ],
+    "bac": [
+     "Une aire se donne en unités d'aire, puis convertie en cm² si l'énoncé donne les unités graphiques."
+    ]
+   },
+   {
+    "id": "denombrement",
+    "n": 11,
+    "title": "Dénombrement",
+    "recap": [
+     "k-uplets d'un ensemble à n éléments : nᵏ.",
+     "k-uplets d'éléments distincts (arrangements) : n!/(n − k)! ; permutations : n!.",
+     "Combinaisons (parties à k éléments) : C(n ; k) = n!/(k!(n − k)!).",
+     "Nombre de parties d'un ensemble à n éléments : 2ⁿ.",
+     "Pascal : C(n ; k) = C(n − 1 ; k − 1) + C(n − 1 ; k) ; symétrie C(n ; k) = C(n ; n − k)."
+    ],
+    "methods": [
+     "Se demander : l'ordre compte-t-il ? les répétitions sont-elles possibles ? Puis choisir nᵏ, arrangement ou combinaison."
+    ],
+    "questions": [
+     [
+      "Formule de C(n ; k) ?",
+      "n!/(k!(n − k)!)."
+     ]
+    ],
+    "auto": [
+     [
+      "C(5 ; 2) ?",
+      "10."
+     ],
+     [
+      "Nombre de codes à 4 chiffres ?",
+      "10⁴ = 10 000."
+     ]
+    ],
+    "bac": [
+     "Justifie en une phrase pourquoi l'ordre compte (ou pas) : c'est ce qui est noté."
+    ]
+   },
+   {
+    "id": "probas",
+    "n": 12,
+    "title": "Probabilités : loi binomiale et sommes de variables aléatoires",
+    "recap": [
+     "Schéma de Bernoulli : n épreuves identiques et indépendantes à deux issues. X nombre de succès suit B(n ; p).",
+     "P(X = k) = C(n ; k) pᵏ(1 − p)ⁿ⁻ᵏ ; E(X) = np ; V(X) = np(1 − p).",
+     "E(X + Y) = E(X) + E(Y) ; V(X + Y) = V(X) + V(Y) si X et Y indépendantes ; E(aX + b) = aE(X) + b ; V(aX + b) = a²V(X).",
+     "Bienaymé-Tchebychev : P(|X − E(X)| ≥ δ) ≤ V(X)/δ².",
+     "Probabilités totales : P(B) = P(A∩B) + P(Ā∩B) ; P_A(B) = P(A∩B)/P(A)."
+    ],
+    "methods": [
+     "Justifier une loi binomiale : nommer l'épreuve, le succès, p, l'indépendance (tirage avec remise ou population assimilée), n.",
+     "P(X ≥ 1) = 1 − P(X = 0)."
+    ],
+    "questions": [
+     [
+      "Espérance et variance de B(n ; p) ?",
+      "np et np(1 − p)."
+     ]
+    ],
+    "auto": [
+     [
+      "X ~ B(10 ; 0,3). E(X) et V(X) ?",
+      "3 et 2,1."
+     ],
+     [
+      "P(X ≥ 1) si X ~ B(3 ; 0,5) ?",
+      "1 − 0,5³ = 0,875."
+     ]
+    ],
+    "bac": [
+     "Arrondis seulement à la fin et à la précision demandée (souvent 10⁻³)."
+    ]
+   },
+   {
+    "id": "plans",
+    "n": 13,
+    "title": "Représentations paramétriques et équations cartésiennes",
+    "recap": [
+     "Vecteur normal n⃗ à un plan : orthogonal à deux vecteurs non colinéaires du plan.",
+     "Plan de vecteur normal n⃗(a ; b ; c) : équation ax + by + cz + d = 0.",
+     "Droite et plan sécants : remplacer la représentation paramétrique dans l'équation du plan.",
+     "Plans parallèles ⇔ vecteurs normaux colinéaires ; plans perpendiculaires ⇔ vecteurs normaux orthogonaux."
+    ],
+    "methods": [
+     "Équation de plan : trouver n⃗, écrire ax + by + cz + d = 0, déterminer d avec un point du plan."
+    ],
+    "questions": [
+     [
+      "Équation d'un plan de vecteur normal n⃗(a ; b ; c) ?",
+      "ax + by + cz + d = 0."
+     ]
+    ],
+    "auto": [
+     [
+      "Vecteur normal au plan 2x − y + 3z − 1 = 0 ?",
+      "n⃗(2 ; −1 ; 3)."
+     ]
+    ],
+    "bac": [
+     "Vérifie toujours que ton point satisfait l'équation trouvée."
+    ]
+   }
+  ]
+ },
+ "ses": {
+  "title": "Spécialité SES",
+  "teacher": "Mme Raddadi",
+  "exam": "Bac : 4 h, au choix dissertation ou épreuve composée (EC1 mobilisation des connaissances, EC2 étude d'un document, EC3 raisonnement sur dossier)",
+  "general_tips": [
+   "EC1 (4 pts) : définition précise + mécanisme expliqué + exemple. Une idée par paragraphe.",
+   "EC2 (6 pts) : lis la source et l'unité, fais une phrase de lecture exacte (« Selon l'INSEE, en 2022, … »), calcule une variation, puis interprète.",
+   "EC3 (10 pts) et dissertation : introduction (accroche, définitions, problématique, annonce), parties AEI (Affirmation, Explication, Illustration chiffrée tirée des documents), conclusion.",
+   "Toujours mobiliser les documents ET tes connaissances : un document recopié ne rapporte rien."
+  ],
+  "chapters": [
+   {
+    "id": "croissance",
+    "n": 1,
+    "title": "Sources et défis de la croissance économique",
+    "recap": [
+     "Croissance : augmentation durable de la production (PIB en volume). Sources : accumulation des facteurs (capital, travail) et productivité globale des facteurs (PGF).",
+     "La PGF s'explique par le progrès technique, lui-même endogène : il résulte d'investissements (R&D, capital humain, infrastructures) qui ont des effets externes (Romer).",
+     "Institutions : droits de propriété, cadre juridique, stabilité favorisent l'investissement et l'innovation (North).",
+     "Innovation et destruction créatrice (Schumpeter) : nouveaux produits et procédés, disparition d'activités, effets sur les inégalités de revenus.",
+     "Limites écologiques : épuisement des ressources, pollution. Soutenabilité faible (capitaux substituables) vs forte (capital naturel à préserver)."
+    ],
+    "methods": [
+     "Chaîne : investissement en R&D → innovation → gains de productivité → baisse des coûts / hausse des revenus → hausse de la demande → croissance.",
+     "Distinguer variation absolue, taux de variation et coefficient multiplicateur en EC2."
+    ],
+    "questions": [
+     [
+      "Définis la productivité globale des facteurs.",
+      "La part de la croissance qui n'est pas expliquée par l'augmentation des quantités de capital et de travail : elle mesure l'efficacité de leur combinaison (progrès technique, organisation)."
+     ],
+     [
+      "Pourquoi le progrès technique est-il dit endogène ?",
+      "Parce qu'il résulte de décisions économiques (investissement en R&D, capital humain, infrastructures publiques) et non du hasard."
+     ],
+     [
+      "Soutenabilité faible et forte ?",
+      "Faible : les capitaux sont substituables, on peut remplacer du capital naturel par du capital physique. Forte : une partie du capital naturel est irremplaçable et doit être préservée."
+     ]
+    ],
+    "auto": [
+     [
+      "Qu'est-ce que la destruction créatrice ?",
+      "Processus décrit par Schumpeter : les innovations font naître de nouvelles activités et en font disparaître d'autres."
+     ],
+     [
+      "Cite deux institutions favorables à la croissance.",
+      "Les droits de propriété (dont la propriété intellectuelle) et un système juridique stable qui fait respecter les contrats."
+     ]
+    ],
+    "bac": [
+     "Pour un sujet sur les limites écologiques, mobilise soutenabilité faible et forte et un exemple chiffré (émissions de CO₂, ressources)."
+    ]
+   },
+   {
+    "id": "commerce",
+    "n": 2,
+    "title": "Fondements du commerce international et internationalisation de la production",
+    "current": true,
+    "recap": [
+     "Avantages comparatifs (Ricardo) : chaque pays gagne à se spécialiser dans la production où il est relativement le plus efficace.",
+     "Dotations factorielles (modèle HOS) : un pays se spécialise dans les biens qui utilisent intensivement le facteur dont il est abondamment doté.",
+     "Commerce entre pays comparables : différenciation des produits (qualité, marque), recherche de diversité par les consommateurs, économies d'échelle. D'où le commerce intra-branche.",
+     "Fragmentation de la chaîne de valeur : les firmes multinationales répartissent les étapes de production selon les coûts, l'accès aux marchés et les compétences.",
+     "Compétitivité-prix (coûts, taux de change) et hors-prix (qualité, innovation, image).",
+     "Effets du commerce : gains (baisse des prix, diversité, productivité) mais inégalités de revenus internes (perdants dans les secteurs concurrencés) ; débat libre-échange / protectionnisme."
+    ],
+    "methods": [
+     "Mécanisme Ricardo : spécialisation → production mondiale plus grande → échange → chaque pays consomme plus.",
+     "En EC2, distinguer exportations, importations, solde commercial et taux de couverture (X/M × 100)."
+    ],
+    "questions": [
+     [
+      "Définis l'avantage comparatif.",
+      "Un pays a un avantage comparatif dans la production où son désavantage est le plus faible ou son avantage le plus fort, relativement aux autres productions."
+     ],
+     [
+      "Qu'est-ce que le commerce intra-branche ?",
+      "Échange de produits similaires d'une même branche entre pays (ex. voitures allemandes contre voitures françaises), lié à la différenciation des produits."
+     ],
+     [
+      "Pourquoi une firme fragmente-t-elle sa chaîne de valeur ?",
+      "Pour réduire ses coûts (main-d'œuvre, fiscalité), se rapprocher de ses marchés, accéder à des compétences et contourner des barrières commerciales."
+     ],
+     [
+      "Compétitivité-prix et hors-prix ?",
+      "Prix : capacité à vendre moins cher (coûts, change). Hors-prix : capacité à vendre grâce à la qualité, l'innovation, le service, l'image de marque."
+     ]
+    ],
+    "auto": [
+     [
+      "Que dit le modèle HOS ?",
+      "Les pays se spécialisent dans les productions qui utilisent intensivement le facteur de production dont ils sont relativement abondamment dotés."
+     ],
+     [
+      "Définis une firme multinationale.",
+      "Entreprise qui possède au moins une filiale à l'étranger, contrôlée par investissement direct à l'étranger (IDE)."
+     ],
+     [
+      "Pourquoi le commerce peut-il accroître les inégalités internes ?",
+      "Les travailleurs des secteurs concurrencés par les importations perdent leur emploi ou voient leur salaire baisser, tandis que les secteurs exportateurs et les plus qualifiés gagnent."
+     ]
+    ],
+    "bac": [
+     "Illustre chaque théorie par un exemple concret (Ricardo : vin et drap ; intra-branche : automobile en Europe).",
+     "Sur les effets du commerce, nuance toujours : gains globaux mais répartition inégale."
+    ]
+   },
+   {
+    "id": "chomage",
+    "n": 3,
+    "title": "Comment lutter contre le chômage ?",
+    "recap": [
+     "Chômeur au sens du BIT : sans emploi, disponible sous 15 jours, en recherche active. Taux de chômage = chômeurs / population active.",
+     "Chômage structurel : frictions et problèmes d'appariement, asymétries d'information, salaire d'efficience, institutions du marché du travail (salaire minimum, protection de l'emploi).",
+     "Chômage conjoncturel : insuffisance de la demande anticipée par les entreprises (Keynes).",
+     "Politiques : relance de la demande (conjoncturel) ; baisse du coût du travail, formation, flexibilisation, meilleur appariement (structurel)."
+    ],
+    "methods": [
+     "Associe toujours une cause du chômage à la politique qui la combat."
+    ],
+    "questions": [
+     [
+      "Définis le chômage au sens du BIT.",
+      "Personne en âge de travailler, sans emploi, disponible sous 15 jours et ayant cherché activement un emploi."
+     ],
+     [
+      "Qu'est-ce que le salaire d'efficience ?",
+      "Salaire supérieur au salaire d'équilibre versé pour motiver et retenir les salariés : il peut créer du chômage."
+     ]
+    ],
+    "auto": [
+     [
+      "Différence chômage conjoncturel / structurel ?",
+      "Conjoncturel : lié au ralentissement de l'activité. Structurel : lié au fonctionnement du marché du travail, il persiste même en croissance."
+     ]
+    ],
+    "bac": [
+     "Ne confonds pas taux de chômage (chômeurs/actifs) et part du chômage (chômeurs/population totale)."
+    ]
+   },
+   {
+    "id": "crises",
+    "n": 4,
+    "title": "Crises financières et régulation du système financier",
+    "recap": [
+     "Bulle spéculative : hausse du prix d'un actif au-delà de sa valeur fondamentale, entretenue par des anticipations auto-réalisatrices et des comportements mimétiques.",
+     "Panique bancaire, faillites en chaîne, credit crunch (rationnement du crédit), effet de richesse négatif : transmission à l'économie réelle.",
+     "Régulation : supervision bancaire, ratios de fonds propres (accords de Bâle), prêteur en dernier ressort ; problème de l'aléa moral."
+    ],
+    "methods": [
+     "Raconte la crise comme une chaîne : euphorie → retournement → ventes → faillites → crédit restreint → baisse de l'activité."
+    ],
+    "questions": [
+     [
+      "Qu'est-ce que l'aléa moral ?",
+      "Comportement plus risqué d'un acteur parce qu'il sait qu'il sera secouru (ex. banque « too big to fail »)."
+     ]
+    ],
+    "auto": [
+     [
+      "Définis une bulle spéculative.",
+      "Écart durable et croissant entre le prix de marché d'un actif et sa valeur fondamentale."
+     ]
+    ],
+    "bac": [
+     "Appuie-toi sur un exemple daté : crise des subprimes 2007-2008."
+    ]
+   },
+   {
+    "id": "europe",
+    "n": 5,
+    "title": "Politiques économiques dans le cadre européen",
+    "recap": [
+     "Intégration : marché unique (libre circulation), union économique et monétaire (euro, BCE).",
+     "Politique monétaire de la BCE : taux directeurs, objectif de stabilité des prix (inflation proche de 2 %).",
+     "Politique de la concurrence : contrôle des concentrations, des ententes, des aides d'État.",
+     "Politique budgétaire nationale encadrée (déficit 3 %, dette 60 % du PIB) ; chocs asymétriques et besoin de coordination."
+    ],
+    "methods": [
+     "Montre la tension : une politique monétaire unique pour des pays aux situations différentes."
+    ],
+    "questions": [
+     [
+      "Qu'est-ce qu'un choc asymétrique ?",
+      "Choc économique qui touche un pays de la zone euro plus que les autres."
+     ]
+    ],
+    "auto": [
+     [
+      "Quel est l'objectif principal de la BCE ?",
+      "La stabilité des prix, soit une inflation proche de 2 % à moyen terme."
+     ]
+    ],
+    "bac": [
+     "Distingue bien politique monétaire (BCE, commune) et politique budgétaire (États, encadrée)."
+    ]
+   },
+   {
+    "id": "structure",
+    "n": 6,
+    "title": "Structure sociale de la société française",
+    "recap": [
+     "Évolutions : salarisation, tertiarisation, élévation du niveau de qualification, féminisation des emplois.",
+     "Facteurs de structuration et de hiérarchisation : profession, revenu, diplôme, composition du ménage, position dans le cycle de vie, sexe, lieu de résidence.",
+     "Marx : classes définies par la place dans les rapports de production, classe en soi et classe pour soi (conscience, lutte).",
+     "Weber : stratification multidimensionnelle (ordres économique, social, politique : classes, groupes de statut, partis).",
+     "Débat : moyennisation et brouillage des frontières, ou persistance des classes (inégalités, entre-soi des classes supérieures)."
+    ],
+    "methods": [
+     "Pour un sujet « classes sociales », oppose arguments de pertinence et de non-pertinence avec des données (PCS, revenus, homogamie)."
+    ],
+    "questions": [
+     [
+      "Différence entre classe en soi et classe pour soi ?",
+      "En soi : groupe d'individus partageant la même position dans les rapports de production. Pour soi : groupe qui a conscience de ses intérêts communs et se mobilise."
+     ],
+     [
+      "Quels sont les trois ordres chez Weber ?",
+      "Économique (classes), social (groupes de statut fondés sur le prestige), politique (partis)."
+     ]
+    ],
+    "auto": [
+     [
+      "Cite trois évolutions de la structure socioprofessionnelle.",
+      "Salarisation, tertiarisation, élévation des qualifications (et féminisation)."
+     ]
+    ],
+    "bac": [
+     "Utilise les PCS de l'INSEE avec des pourcentages précis."
+    ]
+   },
+   {
+    "id": "ecole",
+    "n": 7,
+    "title": "L'action de l'école sur les destins individuels",
+    "recap": [
+     "Massification (hausse des effectifs) n'est pas démocratisation (réduction des inégalités d'accès selon l'origine sociale).",
+     "Inégalités de réussite selon le milieu social et le genre.",
+     "Explications : capital culturel et socialisation familiale (Bourdieu), stratégies et calcul coûts/avantages des familles (Boudon), fonctionnement de l'école (orientation, ségrégation scolaire)."
+    ],
+    "methods": [
+     "Croise toujours origine sociale et diplôme dans les tableaux (ex. part des enfants de cadres en classes préparatoires)."
+    ],
+    "questions": [
+     [
+      "Massification et démocratisation ?",
+      "Massification : accès d'un plus grand nombre aux études. Démocratisation : réduction des inégalités d'accès selon l'origine sociale."
+     ]
+    ],
+    "auto": [
+     [
+      "Qu'est-ce que le capital culturel ?",
+      "Ensemble des ressources culturelles (diplômes, savoirs, pratiques, langage) transmises par la famille et valorisées par l'école."
+     ]
+    ],
+    "bac": [
+     "Ne réduis pas les inégalités scolaires à l'argent : le capital culturel est central."
+    ]
+   },
+   {
+    "id": "mobilite",
+    "n": 8,
+    "title": "Mobilité sociale",
+    "recap": [
+     "Tables de mobilité : table de destinée (ce que deviennent les fils/filles d'un groupe) et table de recrutement (d'où viennent les membres d'un groupe).",
+     "Mobilité observée vs fluidité sociale (mobilité nette des changements de structure, mesurée par les odds ratios).",
+     "Mobilité structurelle : due à l'évolution de la structure des emplois. Mobilité ascendante, descendante, déclassement.",
+     "Facteurs : évolution de la structure socioprofessionnelle, niveau de formation, ressources et configurations familiales. Paradoxe d'Anderson."
+    ],
+    "methods": [
+     "En EC2, lis une table de destinée par ligne et une table de recrutement par colonne, avec la bonne formulation."
+    ],
+    "questions": [
+     [
+      "Mobilité structurelle ?",
+      "Partie de la mobilité observée due à la transformation de la structure des emplois entre deux générations."
+     ]
+    ],
+    "auto": [
+     [
+      "Qu'est-ce que le paradoxe d'Anderson ?",
+      "Un fils plus diplômé que son père n'atteint pas forcément une position sociale plus élevée, car les diplômes se sont dévalorisés avec leur diffusion."
+     ]
+    ],
+    "bac": [
+     "Écris « Sur 100 fils de cadres, 50 sont cadres » (destinée) et non l'inverse."
+    ]
+   },
+   {
+    "id": "travail",
+    "n": 9,
+    "title": "Mutations du travail et de l'emploi",
+    "recap": [
+     "Taylorisme (division verticale et horizontale du travail) puis modèles post-tayloriens (polyvalence, flexibilité, travail en équipe).",
+     "Numérique : brouillage des frontières travail/hors travail, plateformes, polarisation des emplois.",
+     "Qualité des emplois : conditions de travail, salaire, sécurité, perspectives.",
+     "Travail facteur d'intégration (Durkheim, solidarité organique), affaibli par la précarité et l'individualisation."
+    ],
+    "methods": [
+     "Distingue travail (activité) et emploi (statut juridique, contrat)."
+    ],
+    "questions": [
+     [
+      "Qu'est-ce que la polarisation des emplois ?",
+      "Hausse des emplois très qualifiés et peu qualifiés, recul des emplois intermédiaires."
+     ]
+    ],
+    "auto": [
+     [
+      "Cite deux formes d'emploi précaire.",
+      "CDD et intérim (aussi temps partiel subi)."
+     ]
+    ],
+    "bac": [
+     "Ajoute un exemple du numérique : plateformes de livraison, télétravail."
+    ]
+   },
+   {
+    "id": "engagement",
+    "n": 10,
+    "title": "L'engagement politique dans les sociétés démocratiques",
+    "recap": [
+     "Formes : vote, militantisme, engagement associatif, consommation engagée, manifestation, pétition.",
+     "Paradoxe de l'action collective (Olson) : le passager clandestin profite sans s'engager. Solutions : incitations sélectives, rétributions symboliques.",
+     "Structure des opportunités politiques ; variables sociodémographiques (diplôme, âge, sexe, CSP).",
+     "Transformations : répertoires d'action (Tilly), nouveaux enjeux (environnement, discriminations)."
+    ],
+    "methods": [
+     "Associe chaque facteur d'engagement à un exemple (syndicat, association écologiste, mouvement social)."
+    ],
+    "questions": [
+     [
+      "Qu'est-ce que le paradoxe d'Olson ?",
+      "Un individu rationnel a intérêt à ne pas participer à une action collective dont il profitera de toute façon (passager clandestin)."
+     ]
+    ],
+    "auto": [
+     [
+      "Définis une incitation sélective.",
+      "Avantage réservé aux membres d'un groupe pour les inciter à s'engager."
+     ]
+    ],
+    "bac": [
+     "Varie les exemples : formes conventionnelles et non conventionnelles."
+    ]
+   },
+   {
+    "id": "justice",
+    "n": 11,
+    "title": "Inégalités et justice sociale",
+    "recap": [
+     "Égalité des droits, des chances, des situations.",
+     "Conceptions de la justice : utilitarisme, libertarisme, égalitarisme libéral (Rawls), égalitarisme strict.",
+     "Mesures : courbe de Lorenz, indice de Gini, rapport interdécile, part du top 1 %.",
+     "Action publique : fiscalité, protection sociale, services collectifs, lutte contre les discriminations. Débats : efficacité, légitimité, effets pervers."
+    ],
+    "methods": [
+     "En EC2, lis un rapport interdécile : « le revenu plancher des 10 % les plus riches est X fois supérieur au revenu plafond des 10 % les plus pauvres »."
+    ],
+    "questions": [
+     [
+      "Que mesure l'indice de Gini ?",
+      "La concentration des revenus ou du patrimoine : 0 = égalité parfaite, 1 = inégalité maximale."
+     ]
+    ],
+    "auto": [
+     [
+      "Qu'est-ce que l'égalitarisme libéral de Rawls ?",
+      "Des inégalités sont justes si elles profitent aux plus défavorisés et si les positions sont ouvertes à tous (égalité des chances)."
+     ]
+    ],
+    "bac": [
+     "Distingue toujours redistribution horizontale et verticale."
+    ]
+   },
+   {
+    "id": "environnement",
+    "n": 12,
+    "title": "Quelle action publique pour l'environnement ?",
+    "recap": [
+     "Acteurs : pouvoirs publics, ONG, entreprises, experts, partis, mouvements citoyens ; construction du problème et mise à l'agenda.",
+     "Externalités négatives et biens communs : défaillances du marché.",
+     "Instruments : réglementation, taxation (Pigou), marchés de quotas d'émission, subventions à l'innovation verte.",
+     "Négociations internationales : passager clandestin, inégalités entre pays, accords (Paris 2015)."
+    ],
+    "methods": [
+     "Compare les instruments : efficacité, coût, acceptabilité sociale."
+    ],
+    "questions": [
+     [
+      "Qu'est-ce qu'une externalité négative ?",
+      "Effet négatif de l'activité d'un agent sur un autre sans compensation monétaire (ex. pollution)."
+     ]
+    ],
+    "auto": [
+     [
+      "Principe d'une taxe pigouvienne ?",
+      "Faire payer au pollueur le coût social de sa pollution pour l'inciter à la réduire."
+     ]
+    ],
+    "bac": [
+     "Pour les quotas, explique le prix du carbone et cite le marché européen (SEQE)."
+    ]
+   }
+  ]
+ }
+}
