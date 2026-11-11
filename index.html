@@ -351,6 +351,12 @@ body.locked .rail, body.locked main { visibility: hidden; }
 .class-list .t { font: 600 12px var(--mono); color: var(--muted); }
 
 /* ---------- study ---------- */
+code { font: 500 .88em var(--mono); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+pre.code, code { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+pre.code { margin: 0; padding: 14px 16px; background: #12161b; color: #e6e3dc; border-radius: 9px; overflow-x: auto; font: 13px/1.6 var(--mono); }
+pre.code code { background: none; border: 0; padding: 0; font: inherit; color: inherit; }
+.ex-head { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: center; }
+
 .vec { position: relative; display: inline-block; padding-top: .28em; line-height: 1; }
 .vec::before { content: ""; position: absolute; left: 1px; right: 2px; top: .1em; border-top: 1.3px solid currentColor; }
 .vec::after { content: ""; position: absolute; right: -1px; top: calc(.1em - 3px); border: 3.5px solid transparent; border-left: 5px solid currentColor; border-right: 0; }
@@ -574,10 +580,11 @@ const ICON = {
   focus: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6"/>',
   apps: '<path d="M5 4.5h10l4 4V19.5H5z"/><path d="M15 4.5v4h4M8.5 13l2 2 4-4"/>',
   maths: '<path d="M4 6h7M7.5 2.5v7M14 6h6M4 17.5l5-5M4 12.5l5 5M14 15h6M14 19h6"/>',
-  ses: '<path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/>'
+  ses: '<path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/>',
+  python: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>'
 };
 const VIEWS = [
-  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['sat', 'SAT', '3'], ['maths', 'Spé Maths', '4'], ['ses', 'Spé SES', '5'], ['news', 'News', '6'], ['focus', 'Focus', '7'], ['apps', 'Applications', '8']
+  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['sat', 'SAT', '3'], ['maths', 'Spé Maths', '4'], ['ses', 'Spé SES', '5'], ['news', 'News', '6'], ['focus', 'Focus', '7'], ['apps', 'Applications', '8'], ['python', 'Python', '9']
 ];
 
 const SAT = {
@@ -696,7 +703,7 @@ function rerender(scrollTop) {
   const y = window.scrollY;
   main.innerHTML = '';
   const head = el('div', { class: 'mob-head' }, el('span', { class: 'label', text: fmtDay(todayYmd(), { weekday: 'long', month: 'short', day: 'numeric' }) }), el('span', { class: 'label num', id: 'mob-clock' }));
-  main.append(head, ({ today: vToday, timetable: vTimetable, sat: vSat, maths: () => vStudy('maths'), ses: () => vStudy('ses'), news: vNews, focus: vFocus, apps: vApps })[S.view]());
+  main.append(head, ({ today: vToday, timetable: vTimetable, sat: vSat, maths: () => vStudy('maths'), ses: () => vStudy('ses'), python: () => vStudy('python'), news: vNews, focus: vFocus, apps: vApps })[S.view]());
   if (scrollTop) window.scrollTo(0, 0); else window.scrollTo(0, y);
   tick();
 }
@@ -1075,9 +1082,9 @@ function dailyAuto(subj, D) {
   return src.length ? src[dayIndex() % src.length] : null;
 }
 function rich(t) {
-  const out = []; const re = /([A-Za-zα-ωéÂ′]{1,3})\u20D7|_([A-Za-z0-9])/g; let last = 0, m;
+  const out = []; const re = /`([^`]+)`|([A-Za-zα-ωéÂ′]{1,3})\u20D7|_([A-Za-z0-9])/g; let last = 0, m;
   t = String(t ?? '');
-  while ((m = re.exec(t))) { if (m.index > last) out.push(t.slice(last, m.index)); out.push(m[1] ? el('span', { class: 'vec', text: m[1] }) : el('sub', { text: m[2] })); last = re.lastIndex; }
+  while ((m = re.exec(t))) { if (m.index > last) out.push(t.slice(last, m.index)); out.push(m[1] ? el('code', { text: m[1] }) : m[2] ? el('span', { class: 'vec', text: m[2] }) : el('sub', { text: m[3] })); last = re.lastIndex; }
   if (last < t.length) out.push(t.slice(last));
   return out;
 }
@@ -1093,9 +1100,11 @@ function vStudy(subj) {
   const open = S.studyCh[subj] && D.chapters.find(c => c.id === S.studyCh[subj]);
   if (open) return vChapter(subj, D, open);
   v.append(pageHead(D.teacher ? `Terminale · ${D.teacher}` : 'Terminale', D.title, D.exam));
-  const au = dailyAuto(subj, D);
+  const au = D.static ? null : dailyAuto(subj, D);
   const top = el('div', { class: 'grid g-12' });
-  top.append(el('div', { class: 'card s-7 auto-card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Automatisme du jour' }), el('span', { class: 'chip brass', text: au ? au.ch : '' })),
+  if (D.static) { const all = D.chapters.flatMap(c => (c.exercises || []).map((_, i) => c.id + ':ex' + i)); const dn = all.filter(k => (studyState().proj || {})[k]).length;
+    top.append(el('div', { class: 'card s-7 auto-card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Ta progression' }), el('span', { class: 'chip brass', text: `${dn}/${all.length} exercices` })), el('div', { class: 'bar', style: { margin: '10px 0 14px' } }, el('i', { style: { width: (all.length ? dn / all.length * 100 : 0) + '%', background: 'var(--brass)' } })), el('p', { class: 'muted', style: { margin: 0 }, text: 'Chaque chapitre : le cours, les méthodes, puis des exercices corrigés. Essaie toujours avant d\u2019ouvrir la solution.' }))); }
+  else top.append(el('div', { class: 'card s-7 auto-card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Automatisme du jour' }), el('span', { class: 'chip brass', text: au ? au.ch : '' })),
     au ? [el('p', { class: 'q-prompt' }, rich(au.q)), revealBtn(subj + ':daily:' + todayYmd(), au.a)] : el('p', { class: 'empty', text: 'Nouvelle question à 7 h.' })));
   top.append(el('div', { class: 'card s-5' }, el('div', { class: 'card-h' }, el('h2', { text: 'Méthode de l’épreuve' })), el('ul', { class: 'tips-list' }, (D.general_tips || []).map(t => el('li', { text: t })))));
   v.append(top);
@@ -1108,7 +1117,7 @@ function vStudy(subj) {
     grid.append(el('div', { class: 'ch-card' + (s === 'cours' ? ' cur' : ''), role: 'button', tabindex: '0', onclick: () => { S.studyCh[subj] = c.id; S.studyTab[subj] = c.project ? 'project' : 'recap'; rerender(true); }, onkeydown: e => { if (e.key === 'Enter') e.currentTarget.click(); } },
       el('div', { class: 'ch-top' }, el('span', { class: 'ch-n num', text: String(c.n).padStart(2, '0') }), chip),
       el('b', { class: 'ch-title', text: c.title }),
-      el('div', { class: 'ch-meta' }, el('span', { text: `${qn} questions · ${ok} sues` }), c.project ? el('span', { class: 'chip warn', text: 'évaluation' }) : null),
+      el('div', { class: 'ch-meta' }, el('span', { text: c.exercises ? `${c.exercises.length} exercices · ${c.exercises.filter((_, i) => (st.proj || {})[c.id + ':ex' + i]).length} faits` : `${qn} questions · ${ok} sues` }), c.project ? el('span', { class: 'chip warn', text: 'évaluation' }) : null),
       el('div', { class: 'bar thin' }, el('i', { style: { width: (qn ? ok / qn * 100 : 0) + '%' } }))));
   }
   v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Chapitres' }), el('span', { class: 'label', text: 'Clique sur un chapitre pour ouvrir le cours · clique sur le statut pour le changer' })), grid));
@@ -1117,7 +1126,7 @@ function vStudy(subj) {
 function vChapter(subj, D, c) {
   const v = el('section', { class: 'view' });
   const st = studyState();
-  const tabs = [['recap', 'Rappels de cours'], ['methods', 'Méthodes clés'], ['questions', 'Questions de cours'], ['auto', 'Automatismes'], ['bac', subj === 'ses' ? 'Conseils épreuve' : 'Conseils bac']];
+  const tabs = D.static ? [['recap', 'Cours'], ['methods', 'Méthodes'], ['exercises', `Exercices (${(c.exercises || []).length})`]] : [['recap', 'Rappels de cours'], ['methods', 'Méthodes clés'], ['questions', 'Questions de cours'], ['auto', 'Automatismes'], ['bac', subj === 'ses' ? 'Conseils épreuve' : 'Conseils bac']];
   if (c.project) tabs.unshift(['project', 'Évaluation']);
   const tab = S.studyTab[subj] || tabs[0][0];
   v.append(el('button', { class: 'btn sm ghost', style: { marginBottom: '14px' }, onclick: () => { S.studyCh[subj] = null; rerender(true); }, text: '← Tous les chapitres' }));
@@ -1146,6 +1155,21 @@ function vChapter(subj, D, c) {
     body.append(el('div', { class: 'flash-list' }, (c.auto || []).map(([q, a], i) => el('div', { class: 'flash' }, el('p', { class: 'fq' }, rich(q)), revealBtn(`a:${subj}:${c.id}:${i}`, a)))));
   }
   if (tab === 'bac') body.append(el('div', { class: 'card-h' }, el('h2', { text: subj === 'ses' ? 'Conseils pour l’épreuve' : 'Conseils pour les exercices type bac' })), el('ul', { class: 'tips-list' }, [...(c.bac || []), ...(D.general_tips || [])].map(t => el('li', { text: t }))));
+  if (tab === 'exercises') {
+    body.append(el('div', { class: 'card-h' }, el('h2', { text: 'Exercices corrigés' }), el('span', { class: 'label', text: 'essaie avant d\u2019ouvrir la solution' })));
+    body.append(el('div', { class: 'flash-list' }, (c.exercises || []).map((e, i) => {
+      const k = c.id + ':ex' + i, key = 'ex:' + k, shown = S.reveal.has(key);
+      const cb = el('input', { type: 'checkbox', class: 'tick', id: 'ex-' + c.id + i, 'aria-label': 'Exercice fait' }); cb.checked = !!(st.proj || {})[k];
+      cb.addEventListener('change', () => { saveStudy({ proj: { [k]: cb.checked } }); rerender(); });
+      return el('div', { class: 'flash' + (cb.checked ? ' ok' : '') },
+        el('div', { class: 'ex-head' }, cb, el('label', { for: 'ex-' + c.id + i, class: 'fq', text: `${i + 1}. ${e.title}` })),
+        el('p', { style: { margin: 0 } }, rich(e.prompt)),
+        shown ? el('pre', { class: 'code' }, el('code', { text: e.solution })) : null,
+        shown && e.why ? el('div', { class: 'ans' }, rich(e.why)) : null,
+        el('div', { class: 'form-row' }, el('button', { class: 'btn sm', onclick: () => { shown ? S.reveal.delete(key) : S.reveal.add(key); rerender(); }, text: shown ? 'Masquer la solution' : 'Voir la solution' }),
+          shown ? el('button', { class: 'btn sm ghost', onclick: ev => { const t = e.solution; const b = ev.currentTarget; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { b.textContent = 'Copié'; }).catch(() => { b.textContent = 'Copie impossible'; }); }, text: 'Copier le code' }) : null));
+    })));
+  }
   if (tab === 'project') {
     const P = c.project; const all = P.groups.flatMap(g => g.items); const done = all.filter(([id]) => (st.proj || {})[c.id + ':' + id]).length;
     body.append(el('div', { class: 'card-h' }, el('h2', { text: P.title }), el('span', { class: 'label', text: `${done}/${all.length} faits` })), el('p', { class: 'muted', style: { marginTop: 0 }, text: P.intro }),
