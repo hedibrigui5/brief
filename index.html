@@ -439,7 +439,7 @@ async function pull(quiet) {
     SYNC.sha = j.sha;
     const remote = JSON.parse(b64ToUtf8(j.content || '') || '{}');
     let changed = false;
-    for (const k of Object.keys(S.db)) if (!SYNC.dirty.has(k) && JSON.stringify(remote[k] ?? null) !== JSON.stringify(S.db[k])) { S.db[k] = remote[k] ?? null; local.set('cache:' + k, S.db[k]); changed = true; }
+    for (const k of Object.keys(S.db)) if (!SYNC.dirty.has(k) && remote[k] != null && JSON.stringify(remote[k]) !== JSON.stringify(S.db[k])) { S.db[k] = remote[k] ?? null; local.set('cache:' + k, S.db[k]); changed = true; }
     setSync('ok', 'Synced');
     if (changed && !quiet && !(document.activeElement && document.activeElement.matches('input[type=text], textarea'))) rerender();
     return true;
@@ -468,8 +468,13 @@ async function save(name, data) {
   if (!ghToken()) { setSync('bad', 'This device only'); return; }
   clearTimeout(SYNC.timer); SYNC.timer = setTimeout(push, 900);
 }
+async function loadDefaults() {
+  try { const r = await fetch('defaults.enc?t=' + Date.now(), { cache: 'no-store' }); if (!r.ok) return {}; return await decryptBrief(await r.text(), local.get('pw', '')); }
+  catch { return {}; }
+}
 async function initDb() {
-  for (const k of Object.keys(S.db)) S.db[k] = local.get('cache:' + k, null);
+  const defs = await loadDefaults();
+  for (const k of Object.keys(S.db)) { S.db[k] = local.get('cache:' + k, null); if (S.db[k] == null && defs[k] != null) S.db[k] = defs[k]; }
   S.dbReady = true;
   if (!ghToken()) { setSync('bad', 'This device only'); rerender(); return; }
   setSync('', 'Connecting');
