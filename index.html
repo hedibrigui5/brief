@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1b1f25">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2214%22 fill=%22%231b1f25%22 stroke=%22%23d4af72%22 stroke-width=%222%22/%3E%3Cpath d=%22M16 16 L22 9%22 stroke=%22%23d4af72%22 stroke-width=%222.5%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
+<title>Morning Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: an instrument panel. Fixed left rail of sections (bottom tab bar on phones), one view at a time on the right.
+   Graphite surfaces, one brass accent used for "live" things (now, countdowns, active section). */
+:root {
+  --bg: #eceae6; --panel: #ffffff; --panel-2: #f4f3f0; --line: #dcd9d3; --ink: #15181c; --muted: #6b7079; --faint: #a3a7ad;
+  --brass: #8c6a2f; --brass-soft: rgba(140,106,47,.12); --ok: #3f7d5f; --warn: #b4572f; --blue: #3c5d8f;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --rail: 232px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1f25; --panel: #232830; --panel-2: #2a3039; --line: #353c47; --ink: #eeece7; --muted: #a3aab4; --faint: #6b7480;
+    --brass: #d4af72; --brass-soft: rgba(212,175,114,.14); --ok: #74b08f; --warn: #e08e68; --blue: #86a6d6; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1f25; --panel: #232830; --panel-2: #2a3039; --line: #353c47; --ink: #eeece7; --muted: #a3aab4; --faint: #6b7480;
+  --brass: #d4af72; --brass-soft: rgba(212,175,114,.14); --ok: #74b08f; --warn: #e08e68; --blue: #86a6d6; color-scheme: dark;
+}
+html, body { background: var(--bg); color: var(--ink); }
+body { font: 15px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.mono { font-family: var(--mono); }
+.label { font: 500 11px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* ---------- shell ---------- */
+.rail { position: fixed; inset: 0 auto 0 0; width: var(--rail); border-right: 1px solid var(--line); background: var(--panel);
+  display: flex; flex-direction: column; padding: calc(24px + env(safe-area-inset-top, 0px)) 14px 20px max(14px, env(safe-area-inset-left, 0px)); box-sizing: border-box; z-index: 5; }
+.brand { display: flex; align-items: center; gap: 10px; padding: 0 8px 22px; }
+.brand-mark { width: 30px; height: 30px; border: 1.5px solid var(--ink); border-radius: 50%; display: grid; place-items: center; position: relative; }
+.brand-mark::after { content: ""; position: absolute; width: 1.5px; height: 10px; background: var(--brass); top: 4px; left: calc(50% - .75px); transform-origin: 50% 100%; transform: rotate(var(--hand, 0deg)); }
+.brand b { font: 700 15px/1 var(--display); font-stretch: 85%; letter-spacing: .08em; text-transform: uppercase; }
+.brand small { display: block; font: 500 10px/1.4 var(--mono); color: var(--muted); letter-spacing: .1em; margin-top: 3px; }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav a { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 14px; position: relative; }
+.nav a:hover { background: var(--panel-2); color: var(--ink); }
+.nav a.on { background: var(--panel-2); color: var(--ink); }
+.nav a.on::before { content: ""; position: absolute; left: -14px; top: 9px; bottom: 9px; width: 3px; background: var(--brass); border-radius: 0 2px 2px 0; }
+.nav svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.nav kbd { font: 500 10px var(--mono); color: var(--faint); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
+.nav .badge { font: 600 10px var(--mono); background: var(--warn); color: var(--panel); border-radius: 999px; padding: 1px 6px; }
+.rail-foot { margin-top: auto; padding: 14px 10px 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+.clock { font: 600 26px/1 var(--display); font-stretch: 75%; letter-spacing: .02em; }
+.sync { display: flex; align-items: center; gap: 7px; font: 500 10.5px var(--mono); color: var(--muted); }
+.sync i { width: 6px; height: 6px; border-radius: 50%; background: var(--faint); }
+.sync.ok i { background: var(--ok); } .sync.bad i { background: var(--warn); }
+
+main { margin-left: var(--rail); min-height: 100%; box-sizing: border-box; padding-block: 32px 64px;
+  padding-left: max(16px, 40px); padding-right: max(16px, env(safe-area-inset-right, 0px), 40px); }
+.view { max-width: 1120px; margin: 0 auto; animation: rise .35s ease both; }
+@keyframes rise { from { opacity: .001; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.page-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; margin-bottom: 26px; }
+.page-head h1 { font: 700 clamp(2rem, 4.4vw, 3.3rem)/.95 var(--display); font-stretch: 72%; letter-spacing: -.005em; text-transform: uppercase; margin: 6px 0 0; text-wrap: balance; }
+.page-head p { margin: 8px 0 0; color: var(--muted); max-width: 60ch; }
+
+.grid { display: grid; gap: 16px; }
+.g-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.s-4 { grid-column: span 4; } .s-5 { grid-column: span 5; } .s-6 { grid-column: span 6; } .s-7 { grid-column: span 7; } .s-8 { grid-column: span 8; } .s-12 { grid-column: span 12; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; min-width: 0; }
+.card-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.card h2 { font: 700 15px/1.2 var(--display); font-stretch: 85%; letter-spacing: .06em; text-transform: uppercase; margin: 0; }
+.muted { color: var(--muted); }
+.empty { color: var(--muted); font-size: 14px; margin: 0; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); font-weight: 600; font-size: 13px; cursor: pointer; text-decoration: none; }
+.btn:hover { border-color: var(--faint); }
+.btn.solid { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.btn.brass { background: var(--brass); color: var(--panel); border-color: var(--brass); }
+.btn.ghost { background: transparent; }
+.btn.sm { padding: 5px 10px; font-size: 12px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 500 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.chip.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+.chip.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
+.chip.brass { color: var(--brass); border-color: color-mix(in srgb, var(--brass) 45%, transparent); }
+.chip.blue { color: var(--blue); border-color: color-mix(in srgb, var(--blue) 40%, transparent); }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field span { font: 500 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.field input, .field select, .field textarea { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; width: 100%; box-sizing: border-box; }
+.form-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+.form-row .field { flex: 1 1 110px; }
+
+/* ---------- today ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 16px; }
+.headline-card { padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+.headline { font: 600 clamp(1.7rem, 3.4vw, 2.6rem)/1.05 var(--display); font-stretch: 80%; margin: 0; text-wrap: balance; }
+.acts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.act { padding: 12px 14px 0 0; }
+.act + .act { padding-left: 14px; border-left: 1px solid var(--line); }
+.act b { display: block; font: 600 11.5px var(--mono); letter-spacing: .04em; margin-bottom: 4px; }
+.act p { margin: 0; font-size: 13.5px; color: var(--muted); }
+.dial-card { display: grid; place-items: center; padding: 18px; position: relative; }
+.dial { width: 100%; max-width: 320px; height: auto; }
+.dial text { font-family: var(--mono); fill: var(--muted); }
+.stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.stat { padding: 16px 18px; }
+.stat .big { font: 700 2.1rem/1 var(--display); font-stretch: 72%; margin-top: 8px; }
+.stat .sub { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+.stat.live .big { color: var(--brass); }
+.items { list-style: none; margin: 0; padding: 0; }
+.item { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.item:first-child { border-top: 0; padding-top: 0; }
+.tick { appearance: none; width: 20px; height: 20px; border: 1.5px solid var(--faint); border-radius: 5px; margin: 2px 0 0; cursor: pointer; display: grid; place-items: center; }
+.tick:checked { background: var(--ok); border-color: var(--ok); }
+.tick:checked::after { content: ""; width: 9px; height: 5px; border: 2px solid var(--panel); border-top: 0; border-right: 0; transform: rotate(-45deg) translate(1px,-1px); }
+.attn .tick:not(:checked) { border-color: var(--warn); }
+.item-t { font-weight: 600; text-decoration: none; }
+.item-t:hover { text-decoration: underline; text-underline-offset: 3px; }
+.item p { margin: 3px 0 0; color: var(--muted); font-size: 14px; }
+.item .meta { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.item .meta a { font: 500 11.5px var(--mono); color: var(--muted); }
+.item.done .item-t { text-decoration: line-through; color: var(--muted); }
+.item.done p { opacity: .55; }
+.okmark { width: 20px; height: 20px; border-radius: 5px; background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); display: grid; place-items: center; font-size: 12px; font-weight: 700; margin-top: 2px; }
+.next-title { font: 700 1.6rem/1.05 var(--display); font-stretch: 80%; margin: 0; }
+.horizon { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.horizon li { display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 12px; align-items: center; font-size: 14px; }
+.date-tile { text-align: center; border: 1px solid var(--line); border-radius: 8px; padding: 4px 0; font: 500 10px var(--mono); text-transform: uppercase; color: var(--muted); }
+.date-tile b { display: block; font: 700 1.2rem/1 var(--display); font-stretch: 75%; color: var(--ink); }
+.horizon a { text-decoration: none; } .horizon a:hover { text-decoration: underline; }
+
+/* ---------- timetable ---------- */
+.tt-wrap { overflow-x: auto; }
+.tt { display: grid; grid-template-columns: 54px repeat(var(--days), minmax(118px, 1fr)); min-width: 640px; position: relative; }
+.tt-head { position: sticky; top: 0; font: 600 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 8px 8px 10px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.tt-head.today { color: var(--brass); }
+.tt-col { position: relative; border-left: 1px solid var(--line); }
+.tt-hour { height: var(--hr); font: 500 10.5px var(--mono); color: var(--faint); text-align: right; padding-right: 8px; transform: translateY(-7px); }
+.tt-line { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--line); }
+.slot { position: absolute; left: 4px; right: 4px; border-radius: 7px; padding: 6px 8px; font-size: 12.5px; overflow: hidden; cursor: pointer; border: 1px solid var(--line); background: var(--panel-2); text-align: left; }
+.slot b { display: block; font-weight: 600; font-size: 12.5px; line-height: 1.2; }
+.slot small { font: 500 10.5px var(--mono); color: var(--muted); }
+.slot.cal { background: var(--brass-soft); border-color: color-mix(in srgb, var(--brass) 40%, transparent); cursor: default; }
+.slot.now { box-shadow: inset 3px 0 0 var(--brass); }
+.slot:hover:not(.cal) { border-color: var(--faint); }
+.now-line { position: absolute; left: 0; right: 0; height: 0; border-top: 2px solid var(--brass); z-index: 2; }
+.now-line::before { content: ""; position: absolute; left: -5px; top: -6px; width: 10px; height: 10px; border-radius: 50%; background: var(--brass); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font: 500 11px var(--mono); color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--line); background: var(--panel-2); }
+.legend i.cal { background: var(--brass-soft); border-color: var(--brass); }
+
+/* ---------- SAT ---------- */
+.count-card { display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+.count-big { font: 800 clamp(3.4rem, 7vw, 5.2rem)/.85 var(--display); font-stretch: 62%; color: var(--brass); }
+.bar { height: 8px; border-radius: 99px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; position: relative; }
+.bar > i { position: absolute; inset: 0 auto 0 0; background: var(--ink); border-radius: 99px; }
+.bar > em { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--brass); }
+.score-line { display: grid; grid-template-columns: 92px minmax(0, 1fr) 96px; gap: 12px; align-items: center; font-size: 13px; margin-top: 12px; }
+.score-line b { font: 700 1.2rem var(--display); font-stretch: 75%; }
+.weeks { display: flex; flex-direction: column; gap: 10px; }
+.week { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.week > button { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 14px; background: var(--panel-2); border: 0; cursor: pointer; text-align: left; }
+.week.current > button { background: var(--brass-soft); }
+.week .wk-dates { font: 500 11px var(--mono); color: var(--muted); }
+.week .wk-name { font-weight: 600; }
+.week .wk-prog { font: 600 11.5px var(--mono); }
+.week ul { list-style: none; margin: 0; padding: 6px 14px 12px; }
+.week li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.week li:first-child { border-top: 0; }
+.week li.done span { color: var(--muted); text-decoration: line-through; }
+.strats { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.strat { border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--panel-2); cursor: pointer; text-align: left; min-height: 104px; display: flex; flex-direction: column; gap: 6px; }
+.strat b { font: 700 14px/1.2 var(--display); font-stretch: 85%; letter-spacing: .02em; text-transform: uppercase; }
+.strat span { font-size: 13px; color: var(--muted); }
+.strat.open { border-color: var(--brass); }
+.chart { width: 100%; height: auto; display: block; }
+.chart text { font: 500 10px var(--mono); fill: var(--muted); }
+.log { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.log th { text-align: left; font: 500 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.log td { padding: 8px; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.log td.x { text-align: right; }
+.x-btn { background: none; border: 0; color: var(--faint); cursor: pointer; font-size: 16px; line-height: 1; padding: 2px 6px; }
+.x-btn:hover { color: var(--warn); }
+.today-drill { border-left: 3px solid var(--brass); padding: 4px 0 4px 14px; margin: 0; font-size: 15px; }
+
+/* ---------- news ---------- */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.ticker { display: flex; gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; background: var(--panel); }
+.tick-cell { flex: 1 0 120px; padding: 14px 16px; border-left: 1px solid var(--line); }
+.tick-cell:first-child { border-left: 0; }
+.tick-cell b { display: block; font: 700 1.35rem/1 var(--display); font-stretch: 75%; margin-top: 6px; }
+.up { color: var(--ok); } .down { color: var(--warn); }
+.news { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.story { display: flex; flex-direction: column; gap: 8px; }
+.story h3 { font: 700 1.2rem/1.15 var(--display); font-stretch: 85%; margin: 0; text-wrap: balance; }
+.story h3 a { text-decoration: none; } .story h3 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.story p { margin: 0; color: var(--muted); font-size: 14px; }
+.why { font-size: 13.5px; padding: 10px 12px; border-radius: 8px; background: var(--panel-2); }
+.why b { font: 600 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--brass); margin-right: 6px; }
+.story .meta { display: flex; justify-content: space-between; gap: 8px; font: 500 11px var(--mono); color: var(--muted); margin-top: auto; padding-top: 4px; }
+
+/* ---------- focus ---------- */
+.timer { display: grid; place-items: center; gap: 14px; }
+.timer svg { width: 220px; height: 220px; max-width: 100%; }
+.timer-time { font: 700 3rem/1 var(--display); font-stretch: 70%; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: transparent; padding: 6px 12px; cursor: pointer; font: 500 12px var(--mono); color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--panel); }
+.habits { display: flex; flex-direction: column; gap: 4px; }
+.habit { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid var(--line); }
+.habit:first-child { border-top: 0; }
+.dots { display: flex; gap: 4px; }
+.dots i { width: 9px; height: 9px; border-radius: 2px; background: var(--panel-2); border: 1px solid var(--line); }
+.dots i.on { background: var(--ok); border-color: var(--ok); }
+.prio { display: flex; flex-direction: column; gap: 8px; }
+.prio-row { display: grid; grid-template-columns: 24px 20px minmax(0, 1fr); gap: 10px; align-items: center; }
+.prio-row .n { font: 700 1.1rem var(--display); color: var(--faint); }
+.prio-row input[type=text] { background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: 6px 2px; width: 100%; min-width: 0; }
+.prio-row.done input[type=text] { text-decoration: line-through; color: var(--muted); }
+.tips-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.tip { padding: 12px 0; border-top: 1px solid var(--line); }
+.tip:first-child { border-top: 0; }
+.tip b { display: block; font-weight: 600; }
+.tip span { color: var(--muted); font-size: 14px; }
+.tip-hero { font: 600 1.35rem/1.2 var(--display); font-stretch: 85%; margin: 0 0 6px; }
+
+/* ---------- apps ---------- */
+.apps { display: flex; flex-direction: column; }
+.app-row { display: grid; grid-template-columns: minmax(0, 1.4fr) 140px minmax(0, 1.6fr) 110px 28px; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
+.app-row:first-child { border-top: 0; }
+.app-row b { font-weight: 600; }
+.app-row select { background: var(--panel-2); border: 1px solid var(--line); border-radius: 7px; padding: 5px 8px; }
+.app-row small { display: block; color: var(--muted); font-size: 12.5px; }
+.due { font: 500 11.5px var(--mono); }
+.due.soon { color: var(--warn); }
+
+.toast { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--panel); padding: 10px 14px; border-radius: 8px; font-size: 13px; z-index: 20; }
+.loading { padding: 80px 0; text-align: center; font: 500 12px var(--mono); color: var(--muted); }
+.mob-head { display: none; }
+
+@media (max-width: 1000px) {
+  .s-4, .s-5, .s-6, .s-7, .s-8 { grid-column: span 12; }
+  .hero { grid-template-columns: 1fr; }
+  .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .news { grid-template-columns: 1fr; }
+  .app-row { grid-template-columns: minmax(0, 1fr) 130px 28px; }
+  .app-row .next, .app-row .due { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .rail { inset: auto 0 0 0; width: auto; height: auto; flex-direction: row; padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); border-right: 0; border-top: 1px solid var(--line); }
+  .brand, .rail-foot, .nav kbd, .nav .lbl { display: none; }
+  .nav { flex-direction: row; justify-content: space-around; width: 100%; }
+  .nav a { grid-template-columns: 1fr; justify-items: center; padding: 8px 10px; gap: 2px; }
+  .nav a.on::before { left: 25%; right: 25%; top: -7px; bottom: auto; width: auto; height: 2px; border-radius: 0 0 2px 2px; }
+  .nav .badge { position: absolute; top: 2px; right: 2px; }
+  main { margin-left: 0; padding-block: 18px 96px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .mob-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .acts { grid-template-columns: 1fr; }
+  .act, .act + .act { padding: 10px 0; border-left: 0; }
+  .act + .act { border-top: 1px solid var(--line); }
+  .headline-card, .card { padding: 16px; }
+  .score-line { grid-template-columns: 70px minmax(0, 1fr) 80px; }
+}
+/* ---------- home hero ---------- */
+.home-hero { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: 34px 34px 30px;
+  background: radial-gradient(120% 140% at 0% 0%, var(--brass-soft), transparent 55%), var(--panel); }
+.greet { font: 800 clamp(3rem, 7.4vw, 6rem)/.88 var(--display); font-stretch: 68%; letter-spacing: -.012em; margin: 14px 0 18px; }
+.greet em { font-style: normal; color: var(--brass); }
+.home-sub { font: 500 clamp(1.05rem, 1.6vw, 1.3rem)/1.35 var(--body); margin: 0 0 18px; max-width: 46ch; text-wrap: balance; }
+.home-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.home-chips a { text-decoration: none; }
+.home-dial { display: grid; place-items: center; }
+.acts-card { margin-top: 16px; padding-top: 4px; padding-bottom: 14px; }
+.acts-card .acts { border-top: 0; }
+.tip-card { background: linear-gradient(160deg, var(--brass-soft), transparent 70%), var(--panel); }
+/* ---------- SAT detail ---------- */
+.score-note { display: flex; justify-content: space-between; margin: 2px 0 0 104px; font: 500 10.5px var(--mono); color: var(--muted); letter-spacing: .04em; }
+.reg { display: flex; flex-direction: column; gap: 8px; }
+.mini-check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); cursor: pointer; }
+.q-prompt { font-size: 15.5px; margin: 0 0 14px; white-space: pre-wrap; }
+.q-opts { display: grid; gap: 8px; }
+.q-opt { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: center; text-align: left; padding: 10px 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--panel-2); cursor: pointer; }
+.q-opt b { font: 700 13px var(--mono); width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; border: 1px solid var(--line); }
+.q-opt:hover:not([disabled]) { border-color: var(--brass); }
+.q-opt.right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, var(--panel-2)); }
+.q-opt.wrong { border-color: var(--warn); background: color-mix(in srgb, var(--warn) 14%, var(--panel-2)); }
+.q-opt.dim { opacity: .55; }
+.q-opt[disabled] { cursor: default; color: inherit; }
+.vocab { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+.vocab .ex { font-size: 12.5px; color: var(--muted); font-style: italic; margin-top: 2px; }
+.week li.is-today { background: var(--brass-soft); margin: 0 -14px; padding-left: 14px; padding-right: 14px; }
+.week li.missed .day-title { color: var(--warn); }
+.day-l { display: flex; flex-direction: column; gap: 3px; cursor: pointer; min-width: 0; }
+.day-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+.day-date { font: 600 11px var(--mono); color: var(--muted); min-width: 52px; text-transform: uppercase; }
+.day-title { font-weight: 600; }
+.day-min { margin-left: auto; font: 500 11px var(--mono); color: var(--muted); }
+.day-detail { font-size: 13px; color: var(--muted); }
+.week li.done .day-title { text-decoration: line-through; color: var(--muted); }
+.fmt { display: flex; flex-direction: column; }
+.fmt-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 2px 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.fmt-row:first-child { border-top: 0; padding-top: 0; }
+.fmt-row small { grid-column: 2; color: var(--muted); font-size: 12px; }
+.dom { padding: 7px 0; }
+.dom-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13.5px; font-weight: 500; }
+.dom small { color: var(--muted); font-size: 12px; }
+.bar.thin { height: 5px; margin: 5px 0 4px; }
+.bar.thin > i { background: var(--brass); }
+.strats { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+.kit { list-style: none; margin: 0; padding: 0; }
+.kit li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.kit li:first-child { border-top: 0; }
+.kit li.done label { color: var(--muted); text-decoration: line-through; }
+@media (max-width: 1000px) { .home-hero { grid-template-columns: 1fr; } .home-dial { order: -1; } .home-dial .dial { max-width: 240px; } }
+@media (max-width: 760px) { .home-hero { padding: 22px 18px; } .score-note { margin-left: 82px; } }
+
+.sync { background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+.sync:hover span { text-decoration: underline; }
+.lock-btn { background: none; border: 0; padding: 0; cursor: pointer; font: 500 10.5px var(--mono); color: var(--faint); text-align: left; letter-spacing: .04em; }
+.lock-btn:hover { color: var(--muted); }
+body.locked .rail, body.locked main { visibility: hidden; }
+.lock { position: fixed; inset: 0; display: grid; place-items: center; z-index: 30; padding: 16px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px));
+  background: radial-gradient(90% 70% at 20% 10%, var(--brass-soft), transparent 60%), var(--bg); }
+.lock-card { width: min(380px, 100%); display: flex; flex-direction: column; gap: 14px; }
+.lock-card input { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 16px; }
+.lock-card .btn { justify-content: center; padding: 12px; font-size: 14px; }
+.lock-title { font: 800 clamp(2.6rem, 9vw, 3.8rem)/.9 var(--display); font-stretch: 68%; margin: 6px 0 0; }
+.lock-title em { font-style: normal; color: var(--brass); }
+.lock-err { margin: 0; min-height: 1.2em; font-size: 13px; color: var(--warn); }
+.brand-mark.big { width: 44px; height: 44px; --hand: 200deg; }
+.brand-mark.big::after { height: 15px; top: 6px; }
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; z-index: 25; padding: 16px; }
+.modal-card { width: min(460px, 100%); }
+@media (prefers-reduced-motion: reduce) { .view { animation: none; } }
+</style>
+
+<style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
+</head>
+<body>
+<nav class="rail" aria-label="Sections">
+  <div class="brand"><div class="brand-mark" id="brand-mark"></div><div><b>Brief</b><small id="brand-date">—</small></div></div>
+  <div class="nav" id="nav"></div>
+  <div class="rail-foot">
+    <div class="label">Dubai</div>
+    <div class="clock num" id="clock">--:--</div>
+    <button class="sync" id="sync" type="button" title="Sync settings"><i></i><span>Connecting</span></button>
+    <button class="lock-btn" id="lock-btn" type="button">Lock this device</button>
+  </div>
+</nav>
+<main id="main"><div class="loading">Loading your brief…</div></main>
+
+<script>
+(() => {
+/* ================= utilities ================= */
+const $ = s => document.querySelector(s);
+const el = (tag, attrs = {}, ...kids) => {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === 'class') n.className = v;
+    else if (k === 'text') n.textContent = v;
+    else if (k === 'html') n.innerHTML = v; // only used with static strings written in this file
+    else if (k === 'href') { if (/^https:\/\//.test(v)) { n.href = v; n.target = '_blank'; n.rel = 'noopener'; } else if (v.startsWith('#')) n.href = v; }
+    else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+    else if (k === 'style' && typeof v === 'object') Object.assign(n.style, v);
+    else n.setAttribute(k, v === true ? '' : v);
+  }
+  for (const k of kids.flat(Infinity)) if (k != null && k !== false) n.append(k.nodeType ? k : document.createTextNode(String(k)));
+  return n;
+};
+const svg = (tag, attrs = {}, ...kids) => {
+  const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs)) if (v != null) n.setAttribute(k, v);
+  for (const k of kids.flat()) if (k != null) n.append(k.nodeType ? k : document.createTextNode(String(k)));
+  return n;
+};
+const local = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+const uid = () => Math.random().toString(36).slice(2, 10);
+let TZ = 'Asia/Dubai';
+function zoned(date, tz = TZ) {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', weekday: 'short' }).formatToParts(date).map(x => [x.type, x.value]));
+  return { ymd: `${p.year}-${p.month}-${p.day}`, h: +p.hour + +p.minute / 60 + +p.second / 3600, hh: +p.hour, mm: +p.minute, wd: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].indexOf(p.weekday) };
+}
+const fmtTime = (d, tz = TZ) => new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit' }).format(d).replace(':00', '');
+const fmtDay = (ymd, o) => new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', ...o }).format(new Date(ymd + 'T12:00:00Z'));
+const addDays = (ymd, n) => new Date(new Date(ymd + 'T12:00:00Z').getTime() + n * 864e5).toISOString().slice(0, 10);
+const daysBetween = (a, b) => Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 864e5);
+const hm = s => { if (!s) return null; const [a, b] = s.split(':').map(Number); return a + (b || 0) / 60; };
+const hmStr = h => `${String(Math.floor(h)).padStart(2, '0')}:${String(Math.round((h % 1) * 60)).padStart(2, '0')}`;
+const until = ms => { const m = Math.max(0, Math.round(ms / 6e4)); const h = Math.floor(m / 60); return h ? `${h}h ${String(m % 60).padStart(2, '0')}m` : `${m}m`; };
+const todayYmd = () => zoned(new Date()).ymd;
+let toastT;
+function toast(msg) { document.querySelectorAll('.toast').forEach(t => t.remove()); const t = el('div', { class: 'toast', role: 'status', text: msg }); document.body.append(t); clearTimeout(toastT); toastT = setTimeout(() => t.remove(), 2200); }
+
+/* ================= state ================= */
+const S = { brief: null, db: { sat: null, timetable: null, habits: null, apps: null, focus: null }, dbReady: false, view: 'today', newsFilter: 'all', tipCat: 'Study', openStrat: null, openWeek: null, ttEdit: null };
+
+/* ---------- persistence: private GitHub repo sync, with a local copy ---------- */
+const SYNC = { owner: 'hedibrigui5', repo: 'brief-data', path: 'state.json', sha: null, timer: null, busy: false, dirty: new Set() };
+const ghToken = () => local.get('gh_token', '');
+function b64ToUtf8(b64) { const bin = atob(b64.replace(/\n/g, '')); const bytes = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i); return new TextDecoder().decode(bytes); }
+function utf8ToB64(str) { const bytes = new TextEncoder().encode(str); let bin = ''; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); }
+function setSync(state, text) { const s = $('#sync'); if (!s) return; s.className = 'sync ' + state; s.lastChild.textContent = text; }
+async function gh(method, body) {
+  const r = await fetch(`https://api.github.com/repos/${SYNC.owner}/${SYNC.repo}/contents/${SYNC.path}`, {
+    method, cache: 'no-store', headers: { Authorization: 'Bearer ' + ghToken(), Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(body ? { 'Content-Type': 'application/json' } : {}) },
+    body: body ? JSON.stringify(body) : undefined });
+  return r;
+}
+async function pull(quiet) {
+  if (!ghToken()) return false;
+  try {
+    const r = await gh('GET');
+    if (r.status === 401 || r.status === 403) { setSync('bad', 'Token rejected'); return false; }
+    if (r.status === 404) { SYNC.sha = null; setSync('ok', 'Synced'); return true; }
+    if (!r.ok) throw 0;
+    const j = await r.json();
+    SYNC.sha = j.sha;
+    const remote = JSON.parse(b64ToUtf8(j.content || '') || '{}');
+    let changed = false;
+    for (const k of Object.keys(S.db)) if (!SYNC.dirty.has(k) && JSON.stringify(remote[k] ?? null) !== JSON.stringify(S.db[k])) { S.db[k] = remote[k] ?? null; local.set('cache:' + k, S.db[k]); changed = true; }
+    setSync('ok', 'Synced');
+    if (changed && !quiet && !(document.activeElement && document.activeElement.matches('input[type=text], textarea'))) rerender();
+    return true;
+  } catch { setSync('bad', 'Offline · saved here'); return false; }
+}
+async function push() {
+  if (!ghToken() || SYNC.busy || !SYNC.dirty.size) return;
+  SYNC.busy = true; setSync('', 'Saving…');
+  const sending = new Set(SYNC.dirty);
+  try {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const state = { ...S.db, updated_at: new Date().toISOString() };
+      const r = await gh('PUT', { message: 'Update state', content: utf8ToB64(JSON.stringify(state, null, 1)), ...(SYNC.sha ? { sha: SYNC.sha } : {}) });
+      if (r.ok) { SYNC.sha = (await r.json()).content.sha; sending.forEach(k => SYNC.dirty.delete(k)); setSync('ok', 'Synced'); break; }
+      if (r.status === 409 || r.status === 422) { await pull(true); continue; }
+      if (r.status === 401 || r.status === 403) { setSync('bad', 'Token rejected'); break; }
+      throw 0;
+    }
+  } catch { setSync('bad', 'Offline · saved here'); }
+  SYNC.busy = false;
+  if (SYNC.dirty.size) { clearTimeout(SYNC.timer); SYNC.timer = setTimeout(push, 4000); }
+}
+async function save(name, data) {
+  S.db[name] = data; local.set('cache:' + name, data);
+  SYNC.dirty.add(name);
+  if (!ghToken()) { setSync('bad', 'This device only'); return; }
+  clearTimeout(SYNC.timer); SYNC.timer = setTimeout(push, 900);
+}
+async function initDb() {
+  for (const k of Object.keys(S.db)) S.db[k] = local.get('cache:' + k, null);
+  S.dbReady = true;
+  if (!ghToken()) { setSync('bad', 'This device only'); rerender(); return; }
+  setSync('', 'Connecting');
+  await pull(false); rerender();
+  setInterval(() => { if (!document.hidden && !SYNC.busy && !SYNC.dirty.size) pull(false); }, 60000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && !SYNC.dirty.size) pull(false); });
+}
+function syncDialog() {
+  document.querySelectorAll('.modal').forEach(m => m.remove());
+  const inp = el('input', { type: 'password', id: 'tok', placeholder: 'github_pat_…', autocomplete: 'off', value: ghToken() });
+  const m = el('div', { class: 'modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Sync settings' },
+    el('form', { class: 'card modal-card', onsubmit: async ev => { ev.preventDefault(); local.set('gh_token', inp.value.trim()); m.remove(); toast('Connecting…'); SYNC.dirty = new Set(Object.keys(S.db).filter(k => S.db[k] != null && !SYNC.sha)); const ok = await pull(false); if (ok) { toast('Sync on'); if (SYNC.dirty.size) push(); } else toast('That token did not work. Check it has access to brief-data.'); } },
+      el('h2', { text: 'Sync this device' }),
+      el('p', { class: 'muted', style: { fontSize: '14px' }, text: 'Paste your GitHub fine-grained token (Contents: read and write on the private brief-data repository). It stays in this browser only.' }),
+      el('label', { class: 'field' }, el('span', { text: 'Token' }), inp),
+      el('div', { class: 'form-row', style: { marginTop: '14px' } }, el('button', { class: 'btn solid', type: 'submit', text: 'Save and sync' }), el('button', { class: 'btn ghost', type: 'button', text: 'Cancel', onclick: () => m.remove() }),
+        ghToken() ? el('button', { class: 'btn ghost', type: 'button', style: { marginLeft: 'auto', color: 'var(--warn)' }, text: 'Disconnect', onclick: () => { local.set('gh_token', ''); m.remove(); setSync('bad', 'This device only'); } }) : null)));
+  m.addEventListener('click', e => { if (e.target === m) m.remove(); });
+  document.body.append(m); setTimeout(() => inp.focus(), 0);
+}
+
+/* ---------- encrypted brief: AES-256-CBC, key+iv from PBKDF2-SHA256 (openssl enc -pbkdf2 -iter 200000) ---------- */
+async function decryptBrief(b64, pass) {
+  const raw = Uint8Array.from(atob(b64.replace(/\s+/g, '')), c => c.charCodeAt(0));
+  if (new TextDecoder().decode(raw.slice(0, 8)) !== 'Salted__') throw new Error('format');
+  const salt = raw.slice(8, 16), data = raw.slice(16);
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveBits']);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt, iterations: 200000 }, base, 384));
+  const key = await crypto.subtle.importKey('raw', bits.slice(0, 32), 'AES-CBC', false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-CBC', iv: bits.slice(32, 48) }, key, data);
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+async function loadBrief() {
+  let enc;
+  try { const r = await fetch('brief.enc?t=' + Date.now(), { cache: 'no-store' }); if (!r.ok) throw 0; enc = await r.text(); }
+  catch { $('#main').innerHTML = ''; $('#main').append(el('div', { class: 'loading', text: 'Today’s brief hasn’t been written yet. It appears after the 7:00 run.' })); return; }
+  const saved = local.get('pw', '');
+  if (saved) { try { S.brief = await decryptBrief(enc, saved); TZ = S.brief.timezone || TZ; document.body.classList.remove('locked'); route(); initDb(); return; } catch { local.set('pw', ''); } }
+  lockScreen(enc);
+}
+function lockScreen(enc) {
+  document.body.classList.add('locked');
+  const inp = el('input', { type: 'password', id: 'pw', placeholder: 'Password', autocomplete: 'current-password', 'aria-label': 'Password' });
+  const err = el('p', { class: 'lock-err', role: 'alert' });
+  const f = el('form', { class: 'lock-card' },
+    el('div', { class: 'brand-mark big', 'aria-hidden': 'true' }), el('h1', { class: 'lock-title' }, greeting() + ',', el('br'), el('em', { text: 'Hedi.' })),
+    el('p', { class: 'muted', text: 'Enter your password to open today’s brief.' }), inp, err,
+    el('button', { class: 'btn brass', type: 'submit', text: 'Unlock' }));
+  f.addEventListener('submit', async ev => {
+    ev.preventDefault(); err.textContent = 'Unlocking…';
+    try { S.brief = await decryptBrief(enc, inp.value); local.set('pw', inp.value); TZ = S.brief.timezone || TZ; lock.remove(); document.body.classList.remove('locked'); route(); initDb(); }
+    catch { err.textContent = 'Wrong password. Try again.'; inp.select(); }
+  });
+  const lock = el('div', { class: 'lock' }, f);
+  document.body.append(lock); setTimeout(() => inp.focus(), 0);
+}
+
+/* ================= static content ================= */
+const ICON = {
+  today: '<circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/>',
+  timetable: '<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4M9 14h2M13 14h2M9 17h2"/>',
+  sat: '<path d="M4 19V9l8-4 8 4v10"/><path d="M9 19v-5h6v5"/><path d="M4 19h16"/>',
+  news: '<rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><path d="M7 9h10M7 12.5h10M7 16h6"/>',
+  focus: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6"/>',
+  apps: '<path d="M5 4.5h10l4 4V19.5H5z"/><path d="M15 4.5v4h4M8.5 13l2 2 4-4"/>'
+};
+const VIEWS = [
+  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['sat', 'SAT', '3'], ['news', 'News', '4'], ['focus', 'Focus', '5'], ['apps', 'Applications', '6']
+];
+
+const SAT = {
+  test_date: '2026-12-05', register_by: '2026-11-20', late_by: '2026-11-24',
+  scale: { total: [400, 1600], section: [200, 800] },
+  split: t => { const rw = Math.round((t / 2 - 20) / 10) * 10; return { rw: Math.min(800, rw), math: Math.min(800, t - Math.min(800, rw)) }; },
+  format: [
+    ['Reading & Writing', '2 modules × 27 questions', '32 min per module · ≈71 s per question'],
+    ['Break', '10 minutes', 'between Reading & Writing and Math'],
+    ['Math', '2 modules × 22 questions', '35 min per module · ≈95 s per question · Desmos built in'],
+    ['Total', '98 questions · 2 h 14 min', 'each section 200–800 · total 400–1600 · no penalty for guessing']
+  ],
+  domains: {
+    rw: [['Craft & Structure', 28, '13–15', 'Words in context, text structure and purpose, cross-text connections'],
+         ['Information & Ideas', 26, '12–14', 'Central ideas, command of evidence (text and graphs), inferences'],
+         ['Standard English Conventions', 26, '11–15', 'Boundaries (punctuation) and form, structure, sense'],
+         ['Expression of Ideas', 20, '8–12', 'Transitions and rhetorical synthesis']],
+    math: [['Algebra', 35, '13–15', 'Linear equations, systems, inequalities, linear functions'],
+           ['Advanced Math', 35, '13–15', 'Quadratics, exponentials, polynomials, equivalent expressions'],
+           ['Problem-Solving & Data Analysis', 15, '5–7', 'Ratios, percentages, units, statistics, probability'],
+           ['Geometry & Trigonometry', 15, '5–7', 'Area, volume, lines, angles, triangles, circles, trig']]
+  },
+  days: [
+    ['2026-11-12', 'Register + R&W baseline', 45, 'Register on College Board (regular deadline Nov 20). Then one timed R&W module: 27 questions in 32 minutes. Log every miss by domain.'],
+    ['2026-11-13', 'Math module', 40, 'One timed Math module: 22 questions in 35 minutes. Desmos for every graphable question. Log misses by domain.'],
+    ['2026-11-14', 'Full practice test #1', 180, 'Bluebook full test at 8:00, exactly like test day: 2 h 14 min with the 10-minute break. Log the score here.'],
+    ['2026-11-15', 'Review test #1', 90, 'Every miss and every guess: write the line or rule that proves the right answer. Tag each one by domain.'],
+    ['2026-11-16', 'Craft & Structure', 35, 'Words in context, text structure and purpose, cross-text. 20 questions at ≈70 s each.'],
+    ['2026-11-17', 'Advanced Math', 40, 'Quadratics, exponentials, nonlinear functions, equivalent expressions. 15 hard questions, timed.'],
+    ['2026-11-18', 'Information & Ideas', 35, 'Command of evidence (text and graphs), inferences, central ideas. Claim first, variable pair, only the relevant data.'],
+    ['2026-11-19', 'Algebra + Data Analysis', 40, 'Linear equations, systems, inequalities; ratios, percentages, statistics. 15 questions, timed.'],
+    ['2026-11-20', 'Deadline day + Conventions', 30, 'Confirm your registration. Then Standard English Conventions: commas, semicolons, colons, dashes, verb and pronoun agreement.'],
+    ['2026-11-21', 'Full practice test #2', 180, 'Bluebook full test at 8:00. Hold the one-minute rule. Log the score here.'],
+    ['2026-11-22', 'Review test #2', 90, 'Compare with test #1 domain by domain. Write down your three repeat mistakes.'],
+    ['2026-11-23', 'R&W endurance', 70, 'Both R&W modules back to back: 54 questions in 64 minutes. Watch your accuracy in the last 15 questions.'],
+    ['2026-11-24', 'Math full section', 75, 'Both Math modules back to back: 44 questions in 70 minutes. (Late registration closes today.)'],
+    ['2026-11-25', 'Repeat-mistake drill', 40, 'Only your three repeat mistakes from the error log, about 10 questions of each type.'],
+    ['2026-11-26', 'Expression of Ideas', 30, 'Transitions (name the link before choosing) and rhetorical synthesis (match the stated goal exactly).'],
+    ['2026-11-27', 'Light day', 20, '20 minutes of mixed questions, then stop. Sleep early.'],
+    ['2026-11-28', 'Full practice test #3', 180, 'Final full simulation at 8:00: same breakfast, same break routine, same device as Dec 5.'],
+    ['2026-11-29', 'Review test #3', 75, 'Last full review. Re-read the SAT RW Master Cheatsheet Packet.'],
+    ['2026-11-30', 'Weak-spot polish', 40, 'Your weakest domain from test #3 only.'],
+    ['2026-12-01', 'Math refresh', 30, 'Reference sheet, Desmos tricks (regression, sliders, intersections), 10 hard questions.'],
+    ['2026-12-02', 'Mixed module', 35, 'One mixed R&W module, then review. Nothing new from here on.'],
+    ['2026-12-03', 'Setup check', 20, 'Update Bluebook, complete exam setup, get your admission ticket. A light 15-question set.'],
+    ['2026-12-04', 'Rest', 0, 'No studying. Pack the kit, plan the route, lights out by 22:00.'],
+    ['2026-12-05', 'Test day', 0, 'Protein breakfast, arrive by 7:45, one module at a time. Protect the second half.']
+  ],
+  kit: [['k-bb', 'Bluebook installed and updated on your device'], ['k-setup', 'Exam setup completed in Bluebook'], ['k-ticket', 'Admission ticket printed'], ['k-id', 'Acceptable photo ID'], ['k-charge', 'Device fully charged, charger packed'], ['k-pen', 'Pens or pencils for scratch work'], ['k-snack', 'Water and a snack for the break'], ['k-route', 'Route planned, arrive by 7:45']],
+  strategies: [
+    ['Prove it or kill it', 'Pick an answer only if a line in the text proves it. If you cannot point to the line, kill the choice.'],
+    ['Boring wins inference', 'On inference questions the right answer is usually the modest, boring one. Extreme claims are traps.'],
+    ['Plausible ≠ provable', 'Attractive answers sound true in real life. The test only rewards what the passage supports.'],
+    ['Graphs are reading', 'Read the claim first, find the variable pair it talks about, then look only at that data.'],
+    ['Name the link', 'Before choosing a transition, say the relationship out loud: contrast, example, cause, addition.'],
+    ['One-minute rule', 'Stuck for more than a minute? Flag it, guess, move on. Come back with the time you saved.'],
+    ['Mental labels', 'Use shorthand like IC/DC so question types trigger the right strategy automatically.'],
+    ['Cross-text is small', 'Paired passages only carry two or three main ideas. Find each author’s position and compare.'],
+    ['Protect the second half', 'Your accuracy drops late. Reset at the module break: breathe, posture, re-read the question stem slowly.']
+  ]
+};
+
+const TIPS = {
+  Study: [
+    ['Retrieval beats re-reading', 'Close the book and write what you remember, then check. Testing yourself builds memory far faster than reviewing.'],
+    ['Space it out', 'Review a topic after 1 day, 3 days and a week. Short repeats spread over time stick better than one long session.'],
+    ['Mix problem types', 'Interleave different question types in one set. It feels harder, and that is why it works on the real test.'],
+    ['Explain it simply', 'If you can teach a concept in plain words to someone younger, you understand it. Where you stumble is your gap.']
+  ],
+  Focus: [
+    ['Phone in another room', 'Even a silent phone on the desk drains attention. Out of sight for every deep-work block.'],
+    ['One tab, one task', 'Close everything that is not the current task. Switching costs minutes of focus each time.'],
+    ['Write the next step', 'Before stopping, write the exact next action. Restarting tomorrow takes seconds instead of twenty minutes.'],
+    ['Hard thing first', 'Do the most demanding task in your first block of the day, before messages and social media.']
+  ],
+  Energy: [
+    ['Sleep is the multiplier', 'Memory is consolidated during sleep. Eight hours before a test day is worth more than an extra hour of cramming.'],
+    ['Move between blocks', 'A 5-minute walk or 20 push-ups between sessions resets attention better than scrolling.'],
+    ['Daylight early', 'Ten minutes of outdoor light after waking sets your body clock and makes it easier to sleep on time.'],
+    ['Water and protein', 'Mild dehydration hurts concentration. Keep water on the desk and eat protein before long sessions.']
+  ],
+  Planning: [
+    ['Three priorities, no more', 'Pick three things that would make today a win. Everything else is a bonus.'],
+    ['Time-block the week', 'Put study sessions in the calendar like appointments. Unscheduled work tends not to happen.'],
+    ['Sunday review', 'Ten minutes on Sunday: what worked, what slipped, the three goals for next week.'],
+    ['Two-minute rule', 'If something takes less than two minutes, do it now instead of writing it down.']
+  ]
+};
+const DEFAULT_HABITS = [
+  ['sleep', 'Slept 8 hours'], ['sat', 'SAT work (30+ min)'], ['deep', '2 hours of deep study'], ['move', 'Sport or training'], ['nophone', 'No phone the first hour'], ['read', 'Read 20 minutes']
+];
+const APP_STATUSES = ['Not started', 'In progress', 'Submitted', 'Interview', 'Offer', 'Closed'];
+
+/* ================= shell ================= */
+function buildNav() {
+  const nav = $('#nav'); nav.innerHTML = '';
+  for (const [id, name, key] of VIEWS) {
+    const a = el('a', { href: '#' + id, class: S.view === id ? 'on' : '', 'aria-current': S.view === id ? 'page' : null, 'aria-label': name });
+    const ic = svg('svg', { viewBox: '0 0 24 24', 'aria-hidden': 'true' }); ic.innerHTML = ICON[id];
+    a.append(ic, el('span', { class: 'lbl', text: name }));
+    const badge = id === 'today' ? openAttn() : 0;
+    a.append(badge ? el('span', { class: 'badge', text: badge }) : el('kbd', { text: key }));
+    nav.append(a);
+  }
+}
+function openAttn() { const b = S.brief; if (!b) return 0; return (b.needs_attention || []).filter(i => !local.get(`done:${b.date}:${i.id}`, false)).length; }
+function route() {
+  const h = (location.hash || '').slice(1);
+  S.view = VIEWS.some(v => v[0] === h) ? h : 'today';
+  rerender(true);
+}
+function rerender(scrollTop) {
+  buildNav();
+  const main = $('#main');
+  if (!S.brief) return;
+  const y = window.scrollY;
+  main.innerHTML = '';
+  const head = el('div', { class: 'mob-head' }, el('span', { class: 'label', text: fmtDay(todayYmd(), { weekday: 'long', month: 'short', day: 'numeric' }) }), el('span', { class: 'label num', id: 'mob-clock' }));
+  main.append(head, ({ today: vToday, timetable: vTimetable, sat: vSat, news: vNews, focus: vFocus, apps: vApps })[S.view]());
+  if (scrollTop) window.scrollTo(0, 0); else window.scrollTo(0, y);
+  tick();
+}
+function pageHead(eyebrow, title, sub, right) {
+  return el('header', { class: 'page-head' }, el('div', {}, el('div', { class: 'label', text: eyebrow }), el('h1', { text: title }), sub ? el('p', { text: sub }) : null), right || null);
+}
+
+/* ================= TODAY ================= */
+const C = 160, R = 118;
+const ang = h => (h / 24) * Math.PI * 2 + Math.PI;
+const pt = (h, r = R) => [C + r * Math.sin(ang(h)), C - r * Math.cos(ang(h))];
+function arc(h1, h2, r = R) { const [x1, y1] = pt(h1, r), [x2, y2] = pt(h2, r); const large = ((h2 - h1 + 24) % 24) > 12 ? 1 : 0; return `M${x1.toFixed(1)},${y1.toFixed(1)} A${r},${r} 0 ${large} 1 ${x2.toFixed(1)},${y2.toFixed(1)}`; }
+function dial(B) {
+  const s = svg('svg', { class: 'dial', viewBox: '0 0 320 320', role: 'img', 'aria-label': '24-hour dial of the day with daylight, events and the current time' });
+  const rise = hm(B.sun && B.sun.rise) ?? 6.5, set = hm(B.sun && B.sun.set) ?? 17.6;
+  s.append(svg('circle', { cx: C, cy: C, r: R, fill: 'none', stroke: 'var(--line)', 'stroke-width': 14 }));
+  s.append(svg('path', { d: arc(rise, set), fill: 'none', stroke: 'var(--faint)', 'stroke-opacity': .55, 'stroke-width': 14 }));
+  for (let h = 0; h < 24; h++) { const [x1, y1] = pt(h, R + 11), [x2, y2] = pt(h, R + (h % 6 ? 15 : 21)); s.append(svg('line', { x1, y1, x2, y2, stroke: 'var(--muted)', 'stroke-opacity': h % 6 ? .5 : 1, 'stroke-width': h % 6 ? 1 : 1.6 })); }
+  for (const [h, t] of [[0, '00'], [6, '06'], [12, '12'], [18, '18']]) { const [x, y] = pt(h, R + 33); s.append(svg('text', { x, y: y + 3.5, 'text-anchor': 'middle', 'font-size': 10 }, t)); }
+  for (const e of (B.events || [])) {
+    const a = zoned(new Date(e.start)), b = zoned(new Date(e.end)); if (a.ymd !== B.date) continue;
+    const p = svg('path', { d: arc(a.h, Math.max(b.ymd === a.ymd ? b.h : 24, a.h + .25)), fill: 'none', stroke: 'var(--brass)', 'stroke-width': 14 });
+    p.append(svg('title', {}, `${e.title} ${fmtTime(new Date(e.start))}–${fmtTime(new Date(e.end))}`)); s.append(p);
+  }
+  const g = svg('g', { id: 'hand' });
+  g.append(svg('line', { id: 'hand-l', x1: C, y1: C, x2: C, y2: C - R, stroke: 'var(--ink)', 'stroke-width': 1.8, 'stroke-linecap': 'round' }), svg('circle', { id: 'hand-d', cx: C, cy: C - R, r: 6, fill: 'var(--brass)' }), svg('circle', { cx: C, cy: C, r: 3, fill: 'var(--ink)' }));
+  s.append(g);
+  s.append(svg('text', { id: 'dial-a', x: C, y: C - 10, 'text-anchor': 'middle', 'font-size': 26, style: 'font-family:var(--display);font-stretch:72%;font-weight:700;fill:var(--ink)' }), svg('text', { id: 'dial-b', x: C, y: C + 30, 'text-anchor': 'middle', 'font-size': 9.5 }));
+  return s;
+}
+function itemRow(B, it, mode) {
+  const key = `done:${B.date}:${it.id || it.title}`;
+  const done = mode === 'attn' && local.get(key, false);
+  const li = el('li', { class: `item ${mode}${done ? ' done' : ''}` });
+  let lead;
+  if (mode === 'attn') {
+    lead = el('input', { type: 'checkbox', class: 'tick', id: 'tk-' + (it.id || uid()), 'aria-label': `Mark ${it.title} handled` });
+    lead.checked = !!done;
+    lead.addEventListener('change', () => { local.set(key, lead.checked); li.classList.toggle('done', lead.checked); buildNav(); const c = $('#attn-c'); if (c) c.textContent = attnCount(B); });
+  } else lead = el('span', { class: 'okmark', 'aria-hidden': 'true', text: '✓' });
+  const kindChip = { calendar: 'brass', email: 'blue', deadline: 'warn' }[it.kind] || '';
+  li.append(lead, el('div', {}, it.url ? el('a', { class: 'item-t', href: it.url, text: it.title }) : el('span', { class: 'item-t', text: it.title }),
+    el('p', { text: it.detail || '' }),
+    el('div', { class: 'meta' }, it.kind ? el('span', { class: 'chip ' + kindChip, text: it.kind }) : null, it.source_label ? (it.url ? el('a', { href: it.url, text: it.source_label }) : el('span', { class: 'muted', text: it.source_label })) : null)));
+  return li;
+}
+const attnCount = B => { const all = (B.needs_attention || []).length; const d = all - openAttn(); return all ? `${d}/${all} handled` : ''; };
+function greeting() { const h = zoned(new Date()).hh; return h < 5 ? 'Good night' : h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'; }
+function vToday() {
+  const B = S.brief, v = el('section', { class: 'view' });
+  const today = todayYmd(), stale = B.date < today;
+  const satDays = daysBetween(today, (S.db.sat && S.db.sat.test_date) || SAT.test_date);
+  const open = openAttn();
+  const W = B.weather;
+  const hero = el('div', { class: 'card home-hero' },
+    el('div', { class: 'home-left' },
+      el('div', { class: 'label', text: fmtDay(B.date, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) + (stale ? ' · waiting for the 7:00 refresh' : '') }),
+      el('h1', { class: 'greet' }, el('span', { id: 'greet-word', text: greeting() + ',' }), el('br'), el('em', { text: (B.name || 'Hedi') + '.' })),
+      el('p', { class: 'home-sub', text: B.headline || '' }),
+      el('div', { class: 'home-chips' },
+        el('span', { class: 'chip ' + ({ heavy: 'warn', open: 'ok' }[B.day_type] || 'brass'), text: (B.day_type || 'normal') + ' day' }),
+        W ? el('span', { class: 'chip', text: `${W.summary ? W.summary + ' · ' : ''}${W.high != null ? W.high + '° / ' + W.low + '°' : ''}` }) : null,
+        B.sun ? el('span', { class: 'chip', text: `☀ ${B.sun.rise} – ${B.sun.set}` }) : null,
+        satDays >= 0 ? el('a', { class: 'chip brass', href: '#sat', text: `SAT in ${satDays} days` }) : null,
+        open ? el('span', { class: 'chip warn', text: `${open} thing${open === 1 ? '' : 's'} need${open === 1 ? 's' : ''} you` }) : el('span', { class: 'chip ok', text: 'All clear' }))),
+    el('div', { class: 'home-dial' }, dial(B)));
+  v.append(hero);
+  v.append(el('div', { class: 'card acts-card' }, el('div', { class: 'acts' }, (B.acts || []).map(a => el('div', { class: 'act' }, el('b', { text: a.range }), el('p', { text: a.text }))))));
+  const habitsDone = ((S.db.habits && S.db.habits.log && S.db.habits.log[today]) || []).length;
+  const habitsAll = ((S.db.habits && S.db.habits.list) || DEFAULT_HABITS).length;
+  const sday = SAT.days.find(d => d[0] >= today);
+  v.append(el('div', { class: 'stat-row', style: { marginTop: '16px' } },
+    el('div', { class: 'card stat live' }, el('div', { class: 'label', text: 'Next up' }), el('div', { class: 'big num', id: 'st-next', text: '—' }), el('div', { class: 'sub', id: 'st-next-sub' })),
+    el('a', { class: 'card stat', href: '#sat', style: { textDecoration: 'none' } }, el('div', { class: 'label', text: sday && sday[0] !== today ? `SAT · next on ${fmtDay(sday[0], { weekday: 'short' })}` : 'SAT today' }), el('div', { class: 'big', style: { fontSize: '1.5rem', lineHeight: '1.1' }, text: sday ? sday[1] : '—' }), el('div', { class: 'sub', text: sday ? (sday[2] ? `${sday[2]} min · day ${SAT.days.indexOf(sday) + 1} of ${SAT.days.length}` : 'No study today') : 'Open the SAT plan' })),
+    el('a', { class: 'card stat', href: '#focus', style: { textDecoration: 'none' } }, el('div', { class: 'label', text: 'Habits today' }), el('div', { class: 'big num', text: `${habitsDone}/${habitsAll}` }), el('div', { class: 'sub', text: 'Tick them off in Focus' })),
+    el('div', { class: 'card stat' }, el('div', { class: 'label', text: `Inbox · ${B.inbox ? B.inbox.window_days : 3} days` }), el('div', { class: 'big num', text: B.inbox ? String(B.inbox.threads) : '—' }), el('div', { class: 'sub', text: B.inbox ? `${B.inbox.from_people} from people, ${B.inbox.automated} automated` : '' }))));
+  const attn = B.needs_attention || [], res = B.resolved || [];
+  const left = el('div', { class: 'card s-8' },
+    el('div', { class: 'card-h' }, el('h2', { text: 'Needs you' }), el('span', { class: 'label', id: 'attn-c', text: attnCount(B) })),
+    attn.length ? el('ol', { class: 'items' }, attn.map(i => itemRow(B, i, 'attn'))) : el('p', { class: 'empty', text: 'Nothing needs you this morning.' }),
+    res.length ? el('div', { style: { marginTop: '26px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Sorted' }), el('span', { class: 'label', text: `${res.length} closed` })), el('ol', { class: 'items' }, res.map(i => itemRow(B, i, 'res')))) : null);
+  const right = el('div', { class: 's-4 grid', style: { alignContent: 'start' } });
+  right.append(el('div', { class: 'card', id: 'next-card' }));
+  if (B.tip) right.append(el('a', { class: 'card tip-card', href: '#focus', style: { textDecoration: 'none', display: 'block' } }, el('div', { class: 'label', style: { color: 'var(--brass)' }, text: 'Today’s edge' }), el('p', { class: 'tip-hero', style: { marginTop: '8px' }, text: B.tip.title }), el('span', { class: 'muted', style: { fontSize: '14px' }, text: B.tip.body })));
+  const hz = (B.horizon || []).filter(h => h.date >= today);
+  if (hz.length) right.append(el('div', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Coming up' })),
+    el('ul', { class: 'horizon' }, hz.map(h => { const d = daysBetween(today, h.date);
+      return el('li', {}, el('div', { class: 'date-tile' }, fmtDay(h.date, { month: 'short' }), el('b', { text: fmtDay(h.date, { day: 'numeric' }) })), h.url ? el('a', { href: h.url, text: h.title }) : el('span', { text: h.title }), el('span', { class: 'label', text: d === 0 ? 'today' : `${d}d` })); }))));
+  if ((B.fyi || []).length) right.append(el('div', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Good to know' })),
+    el('ul', { class: 'items' }, B.fyi.map(f => el('li', { class: 'item', style: { gridTemplateColumns: '1fr' } }, el('div', {}, f.url ? el('a', { class: 'item-t', href: f.url, text: f.title }) : el('span', { class: 'item-t', text: f.title }), el('p', { text: f.detail || '' })))))));
+  v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px' } }, left, right));
+  v.append(el('p', { class: 'label', style: { marginTop: '24px' }, text: `Updated ${B.generated_at ? fmtDay(B.generated_at.slice(0, 10), { weekday: 'short' }) + ' ' + fmtTime(new Date(B.generated_at)) : '—'} · refreshes daily at 7:00 · ${(B.sources || []).join(' + ')}` }));
+  return v;
+}
+
+/* ================= TIMETABLE ================= */
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+function vTimetable() {
+  const v = el('section', { class: 'view' });
+  const tt = S.db.timetable || { slots: [] };
+  const slots = tt.slots || [];
+  const z = zoned(new Date());
+  const weekStart = addDays(z.ymd, -z.wd);
+  const cal = (S.brief.week_events || S.brief.events || []).map(e => ({ ...e, a: zoned(new Date(e.start)), b: zoned(new Date(e.end)) })).filter(e => e.a.ymd >= weekStart && e.a.ymd <= addDays(weekStart, 6));
+  const showWeekend = slots.some(s => s.day > 4) || cal.some(e => daysBetween(weekStart, e.a.ymd) > 4);
+  const nDays = showWeekend ? 7 : 5;
+  let minH = 7, maxH = 18;
+  for (const s of slots) { minH = Math.min(minH, Math.floor(hm(s.start))); maxH = Math.max(maxH, Math.ceil(hm(s.end))); }
+  for (const e of cal) { minH = Math.min(minH, Math.floor(e.a.h)); maxH = Math.max(maxH, Math.ceil(e.b.ymd === e.a.ymd ? e.b.h : 24)); }
+  const HR = 54;
+  v.append(pageHead(`Week of ${fmtDay(weekStart, { month: 'long', day: 'numeric' })}`, 'Timetable', 'Your school classes plus everything on Google Calendar this week. Click a class to edit it.',
+    el('button', { class: 'btn solid', onclick: () => { S.ttEdit = { id: null, day: Math.min(z.wd, 4), start: '08:00', end: '09:00', subject: '', room: '' }; rerender(); } }, '+ Add class')));
+  if (S.ttEdit) v.append(ttForm());
+  const grid = el('div', { class: 'tt', style: { '--days': nDays, '--hr': HR + 'px' } });
+  grid.append(el('div', {}));
+  for (let d = 0; d < nDays; d++) { const ymd = addDays(weekStart, d); grid.append(el('div', { class: 'tt-head' + (ymd === z.ymd ? ' today' : ''), text: `${DAYS[d]} ${fmtDay(ymd, { day: 'numeric' })}` })); }
+  const hours = el('div', {}); for (let h = minH; h < maxH; h++) hours.append(el('div', { class: 'tt-hour', text: hmStr(h) })); grid.append(hours);
+  const H = (maxH - minH) * HR;
+  for (let d = 0; d < nDays; d++) {
+    const ymd = addDays(weekStart, d);
+    const col = el('div', { class: 'tt-col', style: { height: H + 'px' } });
+    for (let h = 1; h < maxH - minH; h++) col.append(el('div', { class: 'tt-line', style: { top: h * HR + 'px' } }));
+    for (const s of slots.filter(s => s.day === d)) {
+      const a = hm(s.start), b = hm(s.end); const isNow = ymd === z.ymd && z.h >= a && z.h < b;
+      col.append(el('button', { class: 'slot' + (isNow ? ' now' : ''), style: { top: (a - minH) * HR + 2 + 'px', height: Math.max(22, (b - a) * HR - 4) + 'px' }, title: 'Edit class', onclick: () => { S.ttEdit = { ...s }; rerender(); } },
+        el('b', { text: s.subject }), el('small', { text: `${s.start}–${s.end}${s.room ? ' · ' + s.room : ''}` })));
+    }
+    for (const e of cal.filter(e => e.a.ymd === ymd)) {
+      const a = e.a.h, b = e.b.ymd === e.a.ymd ? e.b.h : 24;
+      const box = el(e.url ? 'a' : 'div', { class: 'slot cal', href: e.url, style: { top: (a - minH) * HR + 2 + 'px', height: Math.max(22, (b - a) * HR - 4) + 'px', textDecoration: 'none' } }, el('b', { text: e.title }), el('small', { text: `${fmtTime(new Date(e.start))}–${fmtTime(new Date(e.end))}` }));
+      col.append(box);
+    }
+    if (ymd === z.ymd && z.h >= minH && z.h <= maxH) col.append(el('div', { class: 'now-line', id: 'tt-now', style: { top: (z.h - minH) * HR + 'px' }, 'data-min': minH, 'data-hr': HR }));
+    grid.append(col);
+  }
+  const card = el('div', { class: 'card' }, el('div', { class: 'tt-wrap' }, grid),
+    el('div', { class: 'legend', style: { marginTop: '14px' } }, el('span', {}, el('i'), 'School class'), el('span', {}, el('i', { class: 'cal' }), 'Google Calendar'), el('span', { text: slots.length ? `${slots.length} classes saved` : '' })));
+  v.append(card);
+  if (!slots.length) v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('h2', { text: 'Add your LFI timetable once' }),
+    el('p', { class: 'muted', text: 'Add each class with "+ Add class". They repeat every week and stay synced on your phone and laptop. Or send Claude a photo or screenshot of your Pronote timetable and it will fill this in for you.' })));
+  // today's classes list
+  const todays = slots.filter(s => s.day === z.wd).sort((a, b) => hm(a.start) - hm(b.start));
+  if (todays.length) v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Today’s classes' })),
+    el('ul', { class: 'horizon' }, todays.map(s => el('li', { style: { gridTemplateColumns: '90px minmax(0,1fr) auto' } }, el('span', { class: 'label num', text: `${s.start}–${s.end}` }), el('span', { text: s.subject }), el('span', { class: 'muted', text: s.room || '' }))))));
+  return v;
+}
+function ttForm() {
+  const e = S.ttEdit;
+  const f = el('form', { class: 'card', style: { marginBottom: '16px' } });
+  const day = el('select', { id: 'tt-day' }, DAYS.map((d, i) => el('option', { value: i, text: d })));
+  day.value = e.day;
+  const subj = el('input', { id: 'tt-subj', type: 'text', value: e.subject, placeholder: 'e.g. Philosophie', required: true });
+  const room = el('input', { id: 'tt-room', type: 'text', value: e.room || '', placeholder: 'Room' });
+  const st = el('input', { id: 'tt-start', type: 'time', value: e.start, required: true });
+  const en = el('input', { id: 'tt-end', type: 'time', value: e.end, required: true });
+  f.append(el('div', { class: 'card-h' }, el('h2', { text: e.id ? 'Edit class' : 'Add class' })),
+    el('div', { class: 'form-row' }, el('label', { class: 'field', style: { flex: '2 1 180px' } }, el('span', { text: 'Subject' }), subj), el('label', { class: 'field' }, el('span', { text: 'Day' }), day),
+      el('label', { class: 'field' }, el('span', { text: 'Start' }), st), el('label', { class: 'field' }, el('span', { text: 'End' }), en), el('label', { class: 'field' }, el('span', { text: 'Room' }), room)),
+    el('div', { class: 'form-row', style: { marginTop: '14px' } }, el('button', { class: 'btn solid', type: 'submit', text: 'Save class' }), el('button', { class: 'btn ghost', type: 'button', text: 'Cancel', onclick: () => { S.ttEdit = null; rerender(); } }),
+      e.id ? el('button', { class: 'btn ghost', type: 'button', style: { color: 'var(--warn)', marginLeft: 'auto' }, text: 'Delete', onclick: () => { const t = S.db.timetable || { slots: [] }; save('timetable', { ...t, slots: t.slots.filter(s => s.id !== e.id) }); S.ttEdit = null; rerender(); toast('Class deleted'); } }) : null));
+  f.addEventListener('submit', ev => {
+    ev.preventDefault();
+    if (hm(en.value) <= hm(st.value)) { toast('End time must be after the start time.'); return; }
+    const t = S.db.timetable || { slots: [] };
+    const slot = { id: e.id || uid(), day: +day.value, start: st.value, end: en.value, subject: subj.value.trim(), room: room.value.trim() };
+    save('timetable', { ...t, slots: [...(t.slots || []).filter(s => s.id !== slot.id), slot] });
+    S.ttEdit = null; rerender(); toast('Class saved');
+  });
+  setTimeout(() => subj.focus(), 0);
+  return f;
+}
+
+/* ================= SAT ================= */
+function satState() { return S.db.sat || { test_date: SAT.test_date, target: 1500, tests: [], done: {} }; }
+function weekKey(ymd) { const d = new Date(ymd + 'T12:00:00Z'); const wd = (d.getUTCDay() + 6) % 7; return addDays(ymd, -wd); }
+function vSat() {
+  const st = satState(), v = el('section', { class: 'view' });
+  const today = todayYmd(), testDate = st.test_date || SAT.test_date;
+  const d = daysBetween(today, testDate);
+  const tests = [...(st.tests || [])].sort((a, b) => a.date < b.date ? -1 : 1);
+  const official = [...tests].reverse().find(t => t.type === 'Official');
+  const cur = official || tests[tests.length - 1];
+  const bestT = tests.reduce((m, t) => (+t.rw) + (+t.math) > m.s ? { s: (+t.rw) + (+t.math), t } : m, { s: 0, t: null });
+  const target = +st.target || 1500, split = SAT.split(target);
+  const done = st.done || {};
+  const setDone = (id, val) => { const s = satState(); save('sat', { ...s, done: { ...(s.done || {}), [id]: val } }); };
+
+  const tgtSel = el('select', { id: 'sat-target', 'aria-label': 'Target score' }, [1400, 1450, 1500, 1550, 1600].map(n => el('option', { value: n, text: `Target ${n} / 1600` })));
+  tgtSel.value = String(target);
+  tgtSel.addEventListener('change', () => { const s = satState(); save('sat', { ...s, target: +tgtSel.value }); rerender(); });
+  v.append(pageHead(`Digital SAT · ${fmtDay(testDate, { weekday: 'long', month: 'long', day: 'numeric' })}`, `SAT · ${target} of 1600`, 'Built on your plan with Aziz: the content is there, so the work is endurance. Every number below is on the real scale: 200–800 per section, 400–1600 total.',
+    el('label', { class: 'field', style: { minWidth: '170px' } }, el('span', { text: 'Your goal' }), tgtSel)));
+
+  // ---- row 1: countdown + score gap
+  const regDone = !!done['reg'] || !!done['k-ticket'];
+  const regDays = daysBetween(today, SAT.register_by), lateDays = daysBetween(today, SAT.late_by);
+  const ptCount = tests.filter(t => t.type === 'Bluebook practice' && t.date >= '2026-11-12').length;
+  const regBox = regDone ? el('span', { class: 'chip ok', text: 'Seat booked' })
+    : el('div', { class: 'reg' }, el('a', { class: 'btn brass', href: 'https://satsuite.collegeboard.org/sat/dates-deadlines', text: regDays >= 0 ? `Register · ${regDays}d left (Nov 20)` : lateDays >= 0 ? `Late registration · ${lateDays}d left` : 'Check registration' }),
+        el('label', { class: 'mini-check' }, (() => { const c = el('input', { type: 'checkbox', class: 'tick', id: 'sat-reg' }); c.addEventListener('change', () => setDone('reg', c.checked)); return c; })(), 'I’ve registered'));
+  const row1 = el('div', { class: 'grid g-12' });
+  row1.append(el('div', { class: 'card s-4 count-card' }, el('div', { class: 'label', text: 'Days to test' }), el('div', { class: 'count-big num', text: d >= 0 ? d : '0' }),
+    el('div', {}, el('div', { class: 'bar' }, el('i', { style: { width: Math.min(100, Math.max(0, (1 - d / SAT.days.length) * 100)) + '%' } })), el('div', { class: 'label', style: { marginTop: '8px' }, text: `${ptCount} of 3 full practice tests done · ${SAT.days.filter(x => done['d' + x[0]]).length} of ${SAT.days.length} plan days` })), regBox));
+  const sc = el('div', { class: 'card s-8' }, el('div', { class: 'card-h' }, el('h2', { text: 'Where you stand' }), el('span', { class: 'label', text: cur ? `${cur.type === 'Official' ? 'Official' : 'Latest'} ${(+cur.rw) + (+cur.math)} · best ${bestT.s}` : 'No scores yet' })));
+  const lines = [['Total', cur ? (+cur.rw) + (+cur.math) : 0, target, 400, 1600], ['Reading & Writing', cur ? +cur.rw : 0, split.rw, 200, 800], ['Math', cur ? +cur.math : 0, split.math, 200, 800]];
+  for (const [name, val, goal, lo, hi] of lines) {
+    const pct = x => ((x - lo) / (hi - lo)) * 100;
+    sc.append(el('div', { class: 'score-line' }, el('span', { class: 'muted', text: name }),
+      el('div', { class: 'bar' }, el('i', { style: { width: pct(val) + '%' } }), el('em', { style: { left: pct(goal) + '%' }, title: 'Target' })),
+      el('span', { class: 'num', style: { textAlign: 'right' } }, el('b', { text: val || '—' }), el('span', { class: 'muted', text: ` / ${hi}` }))));
+    sc.append(el('div', { class: 'score-note' }, el('span', { text: `target ${goal}` }), el('span', { class: val >= goal ? 'up' : '', text: val ? (val >= goal ? 'on target' : `+${goal - val} to go`) : '' })));
+  }
+  sc.append(el('p', { class: 'muted', style: { fontSize: '13px', margin: '12px 0 0' }, text: `A ${target} usually means about ${split.rw >= 750 ? '1–3' : split.rw >= 720 ? '4–6' : '6–9'} misses in Reading & Writing (54 questions) and about ${split.math >= 780 ? '0–2' : split.math >= 760 ? '2–3' : '3–5'} in Math (44 questions). Exact curves change from test to test.` }));
+  row1.append(sc);
+  v.append(row1);
+
+  // ---- question of the day + lesson (refreshed daily by the 7:00 run)
+  const SD = S.brief.sat_daily;
+  if (SD || S.brief.sat_today) {
+    const qd = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: 'Question of the day' }), SD && SD.question ? el('span', { class: 'chip ' + (SD.question.section === 'Math' ? 'blue' : 'brass'), text: `${SD.question.section} · ${SD.question.domain}` }) : null));
+    if (SD && SD.question) {
+      const q = SD.question, key = `qotd:${S.brief.date}`; const picked = local.get(key, null);
+      qd.append(el('p', { class: 'q-prompt', text: q.prompt }));
+      const opts = el('div', { class: 'q-opts' });
+      q.choices.forEach((c, i) => {
+        const state = picked == null ? '' : i === q.answer ? ' right' : i === picked ? ' wrong' : ' dim';
+        opts.append(el('button', { class: 'q-opt' + state, disabled: picked != null ? true : null, onclick: () => { local.set(key, i); rerender(); } }, el('b', { text: 'ABCD'[i] }), el('span', { text: c })));
+      });
+      qd.append(opts);
+      if (picked != null) qd.append(el('div', { class: 'why', style: { marginTop: '12px' } }, el('b', { text: picked === q.answer ? 'Correct' : `Answer ${'ABCD'[q.answer]}` }), q.explanation));
+    } else qd.append(el('p', { class: 'empty', text: 'A new question arrives with the 7:00 refresh.' }));
+    const lesson = el('div', { class: 'card s-5' }, el('div', { class: 'card-h' }, el('h2', { text: 'Today’s session' }), el('span', { class: 'chip brass', text: 'daily' })));
+    if (S.brief.sat_today) lesson.append(el('p', { class: 'today-drill', text: S.brief.sat_today }));
+    if (SD && SD.lesson) lesson.append(el('div', { style: { marginTop: '16px' } }, el('div', { class: 'label', text: 'Micro-lesson' }), el('p', { style: { fontWeight: 600, margin: '6px 0 4px' }, text: SD.lesson.title }), el('p', { class: 'muted', style: { margin: 0, fontSize: '14px' }, text: SD.lesson.body })));
+    if (SD && (SD.vocab || []).length) lesson.append(el('div', { style: { marginTop: '16px' } }, el('div', { class: 'label', text: 'Words to own' }),
+      el('ul', { class: 'vocab' }, SD.vocab.map(w => el('li', {}, el('b', { text: w.word }), el('span', { class: 'muted', text: ` · ${w.meaning}` }), w.example ? el('div', { class: 'ex', text: w.example }) : null)))));
+    v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, qd, lesson));
+  }
+
+  // ---- day-by-day plan
+  const plan = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: `Day-by-day plan · ${SAT.days.length} days` }), el('span', { class: 'label', text: `${SAT.days.filter(x => done['d' + x[0]]).length}/${SAT.days.length} done · ${Math.round(SAT.days.reduce((n, x) => n + x[2], 0) / 60)} h total` })));
+  const groups = {}; for (const day of SAT.days) (groups[weekKey(day[0])] = groups[weekKey(day[0])] || []).push(day);
+  const weeks = el('div', { class: 'weeks' });
+  Object.entries(groups).forEach(([wk, days], wi) => {
+    const isCur = days.some(x => x[0] === today) || (today < SAT.days[0][0] && wi === 0);
+    const open = S.openWeek ? S.openWeek === wk : isCur;
+    const doneN = days.filter(x => done['d' + x[0]]).length;
+    const box = el('div', { class: 'week' + (isCur ? ' current' : '') });
+    box.append(el('button', { 'aria-expanded': open ? 'true' : 'false', onclick: () => { S.openWeek = open ? '-' : wk; rerender(); } },
+      el('span', { class: 'wk-dates', text: `${fmtDay(days[0][0], { month: 'short', day: 'numeric' })} – ${fmtDay(days[days.length - 1][0], { day: 'numeric' })}` }),
+      el('span', { class: 'wk-name', text: ['Lock the seat, build the engine', 'Endurance at test time', 'Sharpen and simulate', 'Test week'][wi] || 'Week ' + (wi + 1) }),
+      el('span', { class: 'wk-prog num' + (doneN === days.length ? ' up' : ''), text: `${doneN}/${days.length}` })));
+    if (open) box.append(el('ul', {}, days.map(([date, title, mins, detail]) => {
+      const id = 'd' + date; const cb = el('input', { type: 'checkbox', class: 'tick', id: 'sat-' + id, 'aria-label': `${title} done` }); cb.checked = !!done[id];
+      cb.addEventListener('change', () => setDone(id, cb.checked));
+      const isToday = date === today;
+      return el('li', { class: (cb.checked ? 'done' : '') + (isToday ? ' is-today' : '') + (date < today && !cb.checked ? ' missed' : '') }, cb,
+        el('label', { for: 'sat-' + id, class: 'day-l' },
+          el('span', { class: 'day-top' }, el('span', { class: 'day-date num', text: fmtDay(date, { weekday: 'short', day: 'numeric' }) }), el('span', { class: 'day-title', text: title }), isToday ? el('span', { class: 'chip brass', text: 'today' }) : null, el('span', { class: 'day-min num', text: mins ? `${mins} min` : 'rest' })),
+          el('span', { class: 'day-detail', text: detail })));
+    })));
+    weeks.append(box);
+  });
+  plan.append(weeks);
+
+  // ---- format + domains
+  const fmt = el('div', { class: 's-5 grid', style: { alignContent: 'start' } });
+  fmt.append(el('div', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'The test, exactly' })),
+    el('div', { class: 'fmt' }, SAT.format.map(([a, b, c]) => el('div', { class: 'fmt-row' }, el('b', { text: a }), el('span', { class: 'num', text: b }), el('small', { text: c })))),
+    el('p', { class: 'muted', style: { fontSize: '13px', margin: '12px 0 0' }, text: 'Module 2 adapts to Module 1: a strong first module unlocks the harder second module, which is the only route to 700+. Bank time on Module 1 accuracy.' })));
+  const dom = el('div', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'What gets tested' })));
+  for (const [sec, label] of [['rw', 'Reading & Writing · 54 questions'], ['math', 'Math · 44 questions']]) {
+    dom.append(el('div', { class: 'label', style: { margin: '6px 0 8px' }, text: label }));
+    for (const [name, pct, q, what] of SAT.domains[sec]) dom.append(el('div', { class: 'dom' }, el('div', { class: 'dom-top' }, el('span', { text: name }), el('span', { class: 'num muted', text: `${q} q · ${pct}%` })), el('div', { class: 'bar thin' }, el('i', { style: { width: pct * 2.4 + '%' } })), el('small', { text: what })));
+  }
+  fmt.append(dom);
+  v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, plan, fmt));
+
+  // ---- rules + kit
+  const strat = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: 'Your rules (from Aziz)' }), el('span', { class: 'label', text: 'tap to open' })));
+  const sg = el('div', { class: 'strats' });
+  SAT.strategies.forEach(([t, body], i) => { const o = S.openStrat === i;
+    sg.append(el('button', { class: 'strat' + (o ? ' open' : ''), 'aria-expanded': o ? 'true' : 'false', onclick: () => { S.openStrat = o ? null : i; rerender(); } }, el('b', { text: t }), el('span', { text: o ? body : body.split('.')[0] + '…' }))); });
+  strat.append(sg);
+  const kit = el('div', { class: 'card s-5' }, el('div', { class: 'card-h' }, el('h2', { text: 'Test-day kit' }), el('span', { class: 'label', text: `${SAT.kit.filter(k => done[k[0]]).length}/${SAT.kit.length}` })));
+  kit.append(el('ul', { class: 'kit' }, SAT.kit.map(([id, text]) => { const c = el('input', { type: 'checkbox', class: 'tick', id: 'kit-' + id }); c.checked = !!done[id]; c.addEventListener('change', () => setDone(id, c.checked)); return el('li', { class: c.checked ? 'done' : '' }, c, el('label', { for: 'kit-' + id, text })); })));
+  kit.append(el('p', { class: 'muted', style: { fontSize: '12.5px', margin: '12px 0 0' }, text: 'Check the exact arrival time and rules on your admission ticket; they can differ by test centre.' }));
+  v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, strat, kit));
+
+  // ---- log + chart
+  const logCard = el('div', { class: 'card', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Score log' }), el('span', { class: 'label', text: `${tests.length} entries · scale 400–1600` })));
+  logCard.append(chart(tests, target));
+  const f = el('form', { class: 'form-row', style: { marginTop: '16px' } });
+  const fd = el('input', { type: 'date', id: 'log-date', value: today, required: true }), ft = el('select', { id: 'log-type' }, ['Bluebook practice', 'Official', 'Single module'].map(x => el('option', { value: x, text: x })));
+  const frw = el('input', { type: 'number', id: 'log-rw', min: 200, max: 800, step: 10, placeholder: '200–800', required: true }), fm = el('input', { type: 'number', id: 'log-m', min: 200, max: 800, step: 10, placeholder: '200–800', required: true });
+  const fn = el('input', { type: 'text', id: 'log-note', placeholder: 'Misses by domain, timing, energy' });
+  f.append(el('label', { class: 'field' }, el('span', { text: 'Date' }), fd), el('label', { class: 'field' }, el('span', { text: 'Type' }), ft), el('label', { class: 'field' }, el('span', { text: 'R&W /800' }), frw), el('label', { class: 'field' }, el('span', { text: 'Math /800' }), fm),
+    el('label', { class: 'field', style: { flex: '3 1 200px' } }, el('span', { text: 'Note' }), fn), el('button', { class: 'btn solid', type: 'submit', text: 'Log score' }));
+  f.addEventListener('submit', ev => { ev.preventDefault(); const s = satState();
+    save('sat', { ...s, tests: [...(s.tests || []), { id: uid(), date: fd.value, type: ft.value, rw: +frw.value, math: +fm.value, note: fn.value.trim() }] }); rerender(); toast('Score logged'); });
+  logCard.append(f);
+  if (tests.length) logCard.append(el('div', { style: { overflowX: 'auto', marginTop: '16px' } }, el('table', { class: 'log' },
+    el('thead', {}, el('tr', {}, ['Date', 'Type', 'R&W /800', 'Math /800', 'Total /1600', 'Note', ''].map(h => el('th', { text: h })))),
+    el('tbody', {}, [...tests].reverse().map(t => el('tr', {}, el('td', { text: fmtDay(t.date, { month: 'short', day: 'numeric', year: '2-digit' }) }), el('td', {}, el('span', { class: 'chip' + (t.type === 'Official' ? ' brass' : ''), text: t.type })), el('td', { text: t.rw }), el('td', { text: t.math }), el('td', {}, el('b', { text: (+t.rw) + (+t.math) })), el('td', { class: 'muted', text: t.note || '' }),
+      el('td', { class: 'x' }, el('button', { class: 'x-btn', 'aria-label': 'Delete entry', title: 'Delete', onclick: () => { const s = satState(); save('sat', { ...s, tests: s.tests.filter(x => x.id !== t.id) }); rerender(); } }, '×'))))))));
+  v.append(logCard);
+  return v;
+}
+
+function chart(tests, target) {
+  const W = 760, Hh = 220, P = { l: 44, r: 16, t: 16, b: 30 };
+  const s = svg('svg', { class: 'chart', viewBox: `0 0 ${W} ${Hh}`, role: 'img', 'aria-label': 'Total SAT score over time with target line' });
+  const lo = 1100, hi = 1600; const y = v => P.t + (1 - (v - lo) / (hi - lo)) * (Hh - P.t - P.b);
+  for (const g of [1200, 1300, 1400, 1500, 1600]) { s.append(svg('line', { x1: P.l, x2: W - P.r, y1: y(g), y2: y(g), stroke: 'var(--line)', 'stroke-width': 1 })); s.append(svg('text', { x: P.l - 8, y: y(g) + 3.5, 'text-anchor': 'end' }, g)); }
+  s.append(svg('line', { x1: P.l, x2: W - P.r, y1: y(target), y2: y(target), stroke: 'var(--brass)', 'stroke-width': 1.5, 'stroke-dasharray': '5 4' }));
+  s.append(svg('text', { x: W - P.r, y: y(target) - 6, 'text-anchor': 'end', style: 'fill:var(--brass)' }, `TARGET ${target}`));
+  if (!tests.length) { s.append(svg('text', { x: W / 2, y: Hh / 2, 'text-anchor': 'middle' }, 'Log a practice test to start the line')); return s; }
+  const n = tests.length; const x = i => n === 1 ? (P.l + W - P.r) / 2 : P.l + 10 + i * ((W - P.r - P.l - 20) / (n - 1));
+  const pts = tests.map((t, i) => [x(i), y(Math.max(lo, Math.min(hi, (+t.rw) + (+t.math))))]);
+  if (n > 1) s.append(svg('path', { d: `M${pts.map(p => p.join(',')).join(' L')} L${pts[n - 1][0]},${Hh - P.b} L${pts[0][0]},${Hh - P.b} Z`, fill: 'var(--ink)', 'fill-opacity': .06 }), svg('path', { d: 'M' + pts.map(p => p.join(',')).join(' L'), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2 }));
+  tests.forEach((t, i) => { const [cx, cy] = pts[i]; const last = i === n - 1;
+    const c = svg('circle', { cx, cy, r: last ? 6 : 4, fill: t.type === 'Official' ? 'var(--brass)' : 'var(--panel)', stroke: t.type === 'Official' ? 'var(--brass)' : 'var(--ink)', 'stroke-width': 2 });
+    c.append(svg('title', {}, `${t.date} · ${t.type} · ${(+t.rw) + (+t.math)} (R&W ${t.rw}, Math ${t.math})`)); s.append(c);
+    if (last || n <= 8) s.append(svg('text', { x: cx, y: cy - 11, 'text-anchor': 'middle', style: 'fill:var(--ink);font-weight:600' }, (+t.rw) + (+t.math)));
+    s.append(svg('text', { x: cx, y: Hh - 10, 'text-anchor': 'middle' }, fmtDay(t.date, { month: 'short', day: 'numeric' }))); });
+  return s;
+}
+
+/* ================= NEWS ================= */
+function vNews() {
+  const B = S.brief, v = el('section', { class: 'view' });
+  const news = B.news || [];
+  v.append(pageHead(B.news_date ? `Edition of ${fmtDay(B.news_date, { weekday: 'long', month: 'long', day: 'numeric' })}` : 'Today', 'Politics & money', 'The few stories that matter, each with why it matters to you. Refreshed every morning at 7:00.'));
+  const m = B.markets;
+  if (m && (m.items || []).length) {
+    v.append(el('div', { class: 'ticker', role: 'list', 'aria-label': 'Market moves' }, m.items.map(i => el('div', { class: 'tick-cell', role: 'listitem' }, el('div', { class: 'label', text: i.name }),
+      el('b', { class: 'num ' + (i.change_pct > 0 ? 'up' : i.change_pct < 0 ? 'down' : ''), text: `${i.change_pct > 0 ? '▲ +' : i.change_pct < 0 ? '▼ ' : ''}${i.change_pct}%` }), i.value ? el('div', { class: 'muted num', style: { fontSize: '12px' }, text: i.value }) : null))));
+    v.append(el('p', { class: 'label', style: { margin: '8px 0 20px' }, text: `${m.as_of || ''} · ${m.source || ''}` }));
+  }
+  const cats = ['all', ...new Set(news.map(n => n.category))];
+  v.append(el('div', { class: 'filters', style: { marginBottom: '16px' } }, cats.map(c => el('button', { 'aria-pressed': S.newsFilter === c ? 'true' : 'false', onclick: () => { S.newsFilter = c; rerender(); }, text: c === 'all' ? `All · ${news.length}` : `${c} · ${news.filter(n => n.category === c).length}` }))));
+  const shown = news.filter(n => S.newsFilter === 'all' || n.category === S.newsFilter);
+  if (!shown.length) v.append(el('div', { class: 'card' }, el('p', { class: 'empty', text: 'No stories in today’s edition yet. They arrive with the 7:00 refresh.' })));
+  v.append(el('div', { class: 'news' }, shown.map(n => el('article', { class: 'card story' },
+    el('div', { class: 'form-row' }, el('span', { class: 'chip ' + (n.category === 'finance' ? 'ok' : 'blue'), text: n.category }), n.region ? el('span', { class: 'label', text: n.region }) : null),
+    el('h3', {}, n.url ? el('a', { href: n.url, text: n.headline }) : n.headline), el('p', { text: n.summary }),
+    n.why ? el('div', { class: 'why' }, el('b', { text: 'Why it matters' }), n.why) : null,
+    el('div', { class: 'meta' }, el('span', { text: n.source || '' }), n.url ? el('a', { href: n.url, text: 'Read source ↗' }) : null)))));
+  return v;
+}
+
+/* ================= FOCUS ================= */
+const T = local.get('timer', { mode: 25, endsAt: null, remaining: 25 * 60, running: false, sessions: {} });
+function timerLeft() { return T.running && T.endsAt ? Math.max(0, Math.round((T.endsAt - Date.now()) / 1000)) : T.remaining; }
+function vFocus() {
+  const v = el('section', { class: 'view' }), today = todayYmd();
+  v.append(pageHead('Deep work', 'Focus', 'Plan three priorities, protect your focus blocks, and keep the daily habits that make the rest easier.'));
+  // timer
+  const R2 = 96, CIRC = 2 * Math.PI * R2;
+  const ring = svg('svg', { viewBox: '0 0 220 220', 'aria-hidden': 'true' },
+    svg('circle', { cx: 110, cy: 110, r: R2, fill: 'none', stroke: 'var(--line)', 'stroke-width': 8 }),
+    svg('circle', { id: 'tm-ring', cx: 110, cy: 110, r: R2, fill: 'none', stroke: 'var(--brass)', 'stroke-width': 8, 'stroke-linecap': 'round', transform: 'rotate(-90 110 110)', 'stroke-dasharray': CIRC, 'stroke-dashoffset': 0 }));
+  const sessions = (T.sessions || {})[today] || 0;
+  const timer = el('div', { class: 'card s-5 timer' },
+    el('div', { class: 'card-h', style: { width: '100%' } }, el('h2', { text: 'Focus timer' }), el('span', { class: 'label', id: 'tm-sess', text: `${sessions} block${sessions === 1 ? '' : 's'} today` })),
+    el('div', { style: { position: 'relative', display: 'grid', placeItems: 'center' } }, ring, el('div', { style: { position: 'absolute', textAlign: 'center' } }, el('div', { class: 'timer-time num', id: 'tm-time' }), el('div', { class: 'label', id: 'tm-state', text: T.running ? 'focusing' : 'ready' }))),
+    el('div', { class: 'seg', role: 'group', 'aria-label': 'Block length' }, [25, 50, 90].map(n => el('button', { 'aria-pressed': T.mode === n ? 'true' : 'false', onclick: () => { if (T.running) return toast('Stop the current block first.'); T.mode = n; T.remaining = n * 60; local.set('timer', T); rerender(); }, text: `${n} min` }))),
+    el('div', { class: 'form-row' }, el('button', { class: 'btn solid', id: 'tm-go', onclick: () => { if (T.running) { T.remaining = timerLeft(); T.running = false; T.endsAt = null; } else { T.running = true; T.endsAt = Date.now() + timerLeft() * 1000; } local.set('timer', T); rerender(); }, text: T.running ? 'Pause' : 'Start' }),
+      el('button', { class: 'btn ghost', onclick: () => { T.running = false; T.endsAt = null; T.remaining = T.mode * 60; local.set('timer', T); rerender(); }, text: 'Reset' })));
+  // priorities
+  const F = S.db.focus || { days: {} }; const day = (F.days || {})[today] || { p: ['', '', ''], done: [false, false, false] };
+  const pr = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: 'Today’s three' }), el('span', { class: 'label', text: `${day.done.filter(Boolean).length}/3 done` })));
+  const rows = el('div', { class: 'prio' });
+  const persist = () => { const f = S.db.focus || { days: {} }; const days = { ...(f.days || {}), [today]: day }; const keep = Object.keys(days).sort().slice(-30); save('focus', { days: Object.fromEntries(keep.map(k => [k, days[k]])) }); };
+  let deb;
+  [0, 1, 2].forEach(i => {
+    const cb = el('input', { type: 'checkbox', class: 'tick', id: 'pr-c' + i, 'aria-label': `Priority ${i + 1} done` }); cb.checked = !!day.done[i];
+    const inp = el('input', { type: 'text', id: 'pr-' + i, value: day.p[i] || '', placeholder: ['The one thing that makes today a win', 'Second priority', 'Third priority'][i], 'aria-label': `Priority ${i + 1}` });
+    const row = el('div', { class: 'prio-row' + (cb.checked ? ' done' : '') }, el('span', { class: 'n', text: i + 1 }), cb, inp);
+    cb.addEventListener('change', () => { day.done[i] = cb.checked; row.classList.toggle('done', cb.checked); persist(); });
+    inp.addEventListener('input', () => { day.p[i] = inp.value; clearTimeout(deb); deb = setTimeout(persist, 700); });
+    inp.addEventListener('blur', () => { clearTimeout(deb); persist(); });
+    rows.append(row);
+  });
+  pr.append(rows, el('p', { class: 'muted', style: { fontSize: '13px', margin: '14px 0 0' }, text: 'Suggestion for today: ' + (S.brief.sat_today ? 'SAT session · ' : '') + ((S.brief.needs_attention || [])[0] ? S.brief.needs_attention[0].title : 'one deep-study block') }));
+  v.append(el('div', { class: 'grid g-12' }, timer, pr));
+  // habits
+  const Hb = S.db.habits || { list: DEFAULT_HABITS.map(([id, name]) => ({ id, name })), log: {} };
+  const list = Hb.list && Hb.list.length ? Hb.list : DEFAULT_HABITS.map(([id, name]) => ({ id, name }));
+  const log = Hb.log || {};
+  const todayDone = new Set(log[today] || []);
+  const last7 = Array.from({ length: 7 }, (_, i) => addDays(today, i - 6));
+  const streak = id => { let n = 0; for (let i = 0; i < 60; i++) { const d = addDays(today, -i); if ((log[d] || []).includes(id)) n++; else if (i > 0) break; } return n; };
+  const habCard = el('div', { class: 'card s-6' }, el('div', { class: 'card-h' }, el('h2', { text: 'Habits' }), el('span', { class: 'label', text: `${todayDone.size}/${list.length} today` })));
+  const hl = el('div', { class: 'habits' });
+  list.forEach(h => {
+    const cb = el('input', { type: 'checkbox', class: 'tick', id: 'hb-' + h.id, 'aria-label': h.name }); cb.checked = todayDone.has(h.id);
+    cb.addEventListener('change', () => { const cur = S.db.habits || { list, log: {} }; const set = new Set((cur.log || {})[today] || []); cb.checked ? set.add(h.id) : set.delete(h.id);
+      const nl = { ...(cur.log || {}), [today]: [...set] }; const keep = Object.keys(nl).sort().slice(-90); save('habits', { list: cur.list && cur.list.length ? cur.list : list, log: Object.fromEntries(keep.map(k => [k, nl[k]])) }); rerender(); });
+    const sk = streak(h.id);
+    hl.append(el('div', { class: 'habit' }, cb, el('label', { for: 'hb-' + h.id }, h.name, sk > 1 ? el('span', { class: 'label', style: { marginLeft: '8px', color: 'var(--brass)' }, text: `${sk}-day streak` }) : null),
+      el('div', { class: 'dots', title: 'Last 7 days' }, last7.map(d => el('i', { class: (log[d] || []).includes(h.id) ? 'on' : '' })))));
+  });
+  habCard.append(hl);
+  const addH = el('form', { class: 'form-row', style: { marginTop: '12px' } }); const hi = el('input', { type: 'text', id: 'hb-new', placeholder: 'Add a habit', 'aria-label': 'New habit' });
+  addH.append(el('label', { class: 'field', style: { flex: '1 1 160px' } }, hi), el('button', { class: 'btn sm', type: 'submit', text: 'Add' }));
+  addH.addEventListener('submit', ev => { ev.preventDefault(); const name = hi.value.trim(); if (!name) return; const cur = S.db.habits || { list, log: {} }; save('habits', { list: [...(cur.list && cur.list.length ? cur.list : list), { id: uid(), name }], log: cur.log || {} }); rerender(); });
+  habCard.append(addH);
+  // tips
+  const tips = el('div', { class: 'card s-6' }, el('div', { class: 'card-h' }, el('h2', { text: 'Playbook' })));
+  if (S.brief.tip) tips.append(el('div', { style: { marginBottom: '14px' } }, el('div', { class: 'label', style: { color: 'var(--brass)' }, text: 'Today' }), el('p', { class: 'tip-hero', style: { marginTop: '6px' }, text: S.brief.tip.title }), el('span', { class: 'muted', text: S.brief.tip.body })));
+  if ((S.brief.tips || []).length) tips.append(el('div', { style: { marginBottom: '16px' } }, el('div', { class: 'label', style: { color: 'var(--brass)' }, text: 'Fresh today' }), S.brief.tips.map(t => el('div', { class: 'tip' }, el('span', { class: 'chip', style: { marginBottom: '6px' }, text: t.category }), el('b', { text: t.title }), el('span', { text: t.body }), t.source ? el('small', { class: 'label', style: { display: 'block', marginTop: '4px' }, text: t.source }) : null))));
+  tips.append(el('div', { class: 'label', text: 'Library' }));
+  tips.append(el('div', { class: 'filters tips-tabs' }, Object.keys(TIPS).map(c => el('button', { 'aria-pressed': S.tipCat === c ? 'true' : 'false', onclick: () => { S.tipCat = c; rerender(); }, text: c }))));
+  tips.append(el('div', {}, TIPS[S.tipCat].map(([t, b]) => el('div', { class: 'tip' }, el('b', { text: t }), el('span', { text: b })))));
+  v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, habCard, tips));
+  return v;
+}
+
+/* ================= APPLICATIONS ================= */
+function vApps() {
+  const v = el('section', { class: 'view' }), today = todayYmd();
+  const A = S.db.apps || { items: [] }; const items = [...(A.items || [])].sort((a, b) => ((a.status === 'Closed') - (b.status === 'Closed')) || String(a.deadline || '9').localeCompare(String(b.deadline || '9')));
+  const active = items.filter(i => i.status !== 'Closed');
+  v.append(pageHead('Universities & exams', 'Applications', 'Every application, its status and the single next step. Change a status and it syncs everywhere.'));
+  const statusCounts = APP_STATUSES.map(s => [s, items.filter(i => i.status === s).length]).filter(([, n]) => n);
+  v.append(el('div', { class: 'stat-row', style: { marginBottom: '16px' } },
+    el('div', { class: 'card stat' }, el('div', { class: 'label', text: 'Active' }), el('div', { class: 'big num', text: active.length })),
+    el('div', { class: 'card stat live' }, el('div', { class: 'label', text: 'Next deadline' }), (() => { const nx = active.filter(i => i.deadline && i.deadline >= today).sort((a, b) => a.deadline < b.deadline ? -1 : 1)[0]; return [el('div', { class: 'big num', text: nx ? `${daysBetween(today, nx.deadline)}d` : '—' }), el('div', { class: 'sub', text: nx ? nx.name : 'No dated deadlines' })]; })()),
+    el('div', { class: 'card stat', style: { gridColumn: 'span 2' } }, el('div', { class: 'label', text: 'By status' }), el('div', { class: 'form-row', style: { marginTop: '10px' } }, statusCounts.length ? statusCounts.map(([s, n]) => el('span', { class: 'chip ' + chipFor(s), text: `${s} · ${n}` })) : el('span', { class: 'muted', text: 'Nothing tracked yet' })))));
+  const card = el('div', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Tracker' })));
+  const list = el('div', { class: 'apps' });
+  if (!items.length) list.append(el('p', { class: 'empty', text: 'No applications yet. Add the first one below.' }));
+  for (const it of items) {
+    const sel = el('select', { 'aria-label': `Status for ${it.name}`, id: 'ap-' + it.id }, APP_STATUSES.map(s => el('option', { value: s, text: s }))); sel.value = it.status;
+    sel.addEventListener('change', () => { const a = S.db.apps || { items: [] }; save('apps', { items: a.items.map(x => x.id === it.id ? { ...x, status: sel.value } : x) }); rerender(); toast('Status updated'); });
+    const dd = it.deadline ? daysBetween(today, it.deadline) : null;
+    list.append(el('div', { class: 'app-row', style: it.status === 'Closed' ? { opacity: .6 } : null },
+      el('div', {}, it.url ? el('a', { href: it.url, style: { textDecoration: 'none' } }, el('b', { text: it.name })) : el('b', { text: it.name }), el('small', { text: it.org || '' })),
+      sel, el('div', { class: 'next' }, el('small', { text: 'Next step' }), el('span', { text: it.next || '—' })),
+      el('span', { class: 'due' + (dd != null && dd >= 0 && dd <= 10 ? ' soon' : ''), text: it.deadline ? `${fmtDay(it.deadline, { month: 'short', day: 'numeric' })}${dd >= 0 ? ` · ${dd}d` : ' · passed'}` : 'no date' }),
+      el('button', { class: 'x-btn', 'aria-label': `Remove ${it.name}`, title: 'Remove', onclick: () => { const a = S.db.apps || { items: [] }; save('apps', { items: a.items.filter(x => x.id !== it.id) }); rerender(); } }, '×')));
+  }
+  card.append(list);
+  const f = el('form', { class: 'form-row', style: { marginTop: '18px', paddingTop: '16px', borderTop: '1px solid var(--line)' } });
+  const n = el('input', { type: 'text', id: 'ap-name', placeholder: 'e.g. McGill BCom', required: true }), o = el('input', { type: 'text', id: 'ap-org', placeholder: 'Via UCAS, Talenvia…' }), nx = el('input', { type: 'text', id: 'ap-next', placeholder: 'Next step' }), dl = el('input', { type: 'date', id: 'ap-dl' });
+  f.append(el('label', { class: 'field', style: { flex: '2 1 160px' } }, el('span', { text: 'Application' }), n), el('label', { class: 'field' }, el('span', { text: 'Through' }), o), el('label', { class: 'field', style: { flex: '2 1 160px' } }, el('span', { text: 'Next step' }), nx), el('label', { class: 'field' }, el('span', { text: 'Deadline' }), dl), el('button', { class: 'btn solid', type: 'submit', text: 'Add' }));
+  f.addEventListener('submit', ev => { ev.preventDefault(); const a = S.db.apps || { items: [] }; save('apps', { items: [...(a.items || []), { id: uid(), name: n.value.trim(), org: o.value.trim(), next: nx.value.trim(), deadline: dl.value || null, status: 'In progress' }] }); rerender(); toast('Application added'); });
+  card.append(f);
+  v.append(card);
+  return v;
+}
+const chipFor = s => ({ 'Offer': 'ok', 'Submitted': 'blue', 'Interview': 'brass', 'In progress': 'brass', 'Closed': '' })[s] || '';
+
+/* ================= live tick ================= */
+function tick() {
+  const now = new Date(), z = zoned(now);
+  const c = $('#clock'); if (c) c.textContent = hmStr(z.hh + z.mm / 60);
+  const mc = $('#mob-clock'); if (mc) mc.textContent = hmStr(z.hh + z.mm / 60) + ' Dubai';
+  const bm = $('#brand-mark'); if (bm) bm.style.setProperty('--hand', (z.h / 24) * 360 + 180 + 'deg');
+  const bd = $('#brand-date'); if (bd) bd.textContent = fmtDay(z.ymd, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+  const gw = $('#greet-word'); if (gw && gw.textContent !== greeting() + ',') gw.textContent = greeting() + ',';
+  const B = S.brief; if (!B) return;
+  const isToday = z.ymd === B.date;
+  const [x, y] = pt(z.h, R);
+  const hl = $('#hand-l'), hd = $('#hand-d'), hand = $('#hand');
+  if (hl) { hl.setAttribute('x2', x); hl.setAttribute('y2', y); hd.setAttribute('cx', x); hd.setAttribute('cy', y); hand.style.display = isToday ? '' : 'none'; }
+  const evs = (B.events || []).map(e => ({ ...e, S: new Date(e.start), E: new Date(e.end) })).filter(e => e.E > now).sort((a, b) => a.S - b.S);
+  const nx = evs[0];
+  const da = $('#dial-a'), db = $('#dial-b');
+  if (da) { da.textContent = isToday ? hmStr(z.hh + z.mm / 60) : fmtDay(B.date, { weekday: 'short' }).toUpperCase(); db.textContent = nx ? (nx.S <= now ? 'IN ' + nx.title.toUpperCase() : `NEXT ${nx.title.toUpperCase().slice(0, 18)} · ${until(nx.S - now)}`) : 'NOTHING SCHEDULED'; }
+  const sn = $('#st-next'), ss = $('#st-next-sub');
+  if (sn) { sn.textContent = nx ? (nx.S <= now ? 'Now' : until(nx.S - now)) : 'Clear'; ss.textContent = nx ? `${nx.title} · ${fmtTime(nx.S)}` : 'No more events'; }
+  const card = $('#next-card');
+  const cardKey = nx ? `${nx.title}|${nx.S <= now}|${z.mm}` : 'none';
+  if (card && card.dataset.k !== cardKey) {
+    card.dataset.k = cardKey;
+    card.innerHTML = '';
+    card.append(el('div', { class: 'card-h' }, el('h2', { text: nx && nx.S <= now ? 'Happening now' : 'Next up' }), nx && nx.rsvp === 'needsAction' ? el('span', { class: 'chip warn', text: 'not replied' }) : null));
+    if (!nx) card.append(el('p', { class: 'empty', text: 'Nothing else on the calendar.' }));
+    else card.append(el('p', { class: 'next-title', text: nx.title }),
+      el('div', { class: 'mono num', style: { marginTop: '8px', fontSize: '13px' }, text: `${fmtTime(nx.S)}–${fmtTime(nx.E)}${nx.other_tz ? ` · ${fmtTime(nx.S, nx.other_tz.zone)} ${nx.other_tz.label}` : ''}` }),
+      nx.with ? el('div', { class: 'muted', style: { fontSize: '13px', marginTop: '2px' }, text: nx.with }) : null,
+      el('div', { class: 'form-row', style: { marginTop: '14px' } }, nx.join_url ? el('a', { class: 'btn solid', href: nx.join_url, text: 'Join call' }) : null, nx.url ? el('a', { class: 'btn', href: nx.url, text: nx.rsvp === 'needsAction' ? 'Reply to invite' : 'Open event' }) : null));
+  }
+  const nl = $('#tt-now'); if (nl) nl.style.top = (z.h - +nl.dataset.min) * +nl.dataset.hr + 'px';
+  // timer
+  const tt = $('#tm-time');
+  if (T.running && timerLeft() === 0) {
+    T.running = false; T.endsAt = null; T.remaining = T.mode * 60; T.sessions = { ...(T.sessions || {}), [todayYmd()]: ((T.sessions || {})[todayYmd()] || 0) + 1 }; local.set('timer', T);
+    toast('Block complete. Take a 5-minute break.'); if (S.view === 'focus') rerender();
+  }
+  if (tt) { const left = timerLeft(); tt.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
+    const ring = $('#tm-ring'); const CIRC = 2 * Math.PI * 96; ring.setAttribute('stroke-dashoffset', CIRC * (1 - left / (T.mode * 60))); }
+}
+
+/* ================= boot ================= */
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.target.matches('input, textarea, select')) return;
+  const v = VIEWS.find(v => v[2] === e.key); if (v) location.hash = v[0];
+});
+window.addEventListener('hashchange', route);
+$('#sync').addEventListener('click', syncDialog);
+$('#lock-btn').addEventListener('click', () => { local.set('pw', ''); location.reload(); });
+loadBrief();
+setInterval(tick, 1000);
+tick();
+})();
+</script>
+
+</body>
+</html>
