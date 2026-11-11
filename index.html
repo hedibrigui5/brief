@@ -338,6 +338,17 @@ body.locked .rail, body.locked main { visibility: hidden; }
 .brand-mark.big::after { height: 15px; top: 6px; }
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; z-index: 25; padding: 16px; }
 .modal-card { width: min(460px, 100%); }
+
+.slot.subj-maths { box-shadow: inset 3px 0 0 #6c8fd6; } .slot.subj-ses { box-shadow: inset 3px 0 0 #c9a46a; } .slot.subj-philo { box-shadow: inset 3px 0 0 #c4746a; }
+.slot.subj-hg { box-shadow: inset 3px 0 0 #7fb2c9; } .slot.subj-lang { box-shadow: inset 3px 0 0 #a58cc4; } .slot.subj-sci { box-shadow: inset 3px 0 0 #8fb07a; }
+.slot.subj-sport { box-shadow: inset 3px 0 0 #5fbfa6; } .slot.subj-other { box-shadow: inset 3px 0 0 #9aa2ad; }
+.slot.now { outline: 2px solid var(--brass); outline-offset: -1px; }
+.slot .tch { display: block; color: var(--faint); }
+.slot { position: absolute; } .wk-tag { position: absolute; top: 5px; right: 6px; font: 700 10px var(--mono); font-style: normal; color: var(--brass); border: 1px solid var(--brass); border-radius: 4px; padding: 0 4px; }
+.class-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.class-list li { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; font-size: 14px; align-items: baseline; }
+.class-list li.past { opacity: .45; } .class-list li.now b { color: var(--brass); }
+.class-list .t { font: 600 12px var(--mono); color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .view { animation: none; } }
 </style>
 
@@ -369,7 +380,7 @@ const el = (tag, attrs = {}, ...kids) => {
     else if (k === 'html') n.innerHTML = v; // only used with static strings written in this file
     else if (k === 'href') { if (/^https:\/\//.test(v)) { n.href = v; n.target = '_blank'; n.rel = 'noopener'; } else if (v.startsWith('#')) n.href = v; }
     else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
-    else if (k === 'style' && typeof v === 'object') Object.assign(n.style, v);
+    else if (k === 'style' && typeof v === 'object') { for (const [sk, sv] of Object.entries(v)) { if (sk.startsWith('--')) n.style.setProperty(sk, sv); else n.style[sk] = sv; } }
     else n.setAttribute(k, v === true ? '' : v);
   }
   for (const k of kids.flat(Infinity)) if (k != null && k !== false) n.append(k.nodeType ? k : document.createTextNode(String(k)));
@@ -729,6 +740,11 @@ function vToday() {
     res.length ? el('div', { style: { marginTop: '26px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Sorted' }), el('span', { class: 'label', text: `${res.length} closed` })), el('ol', { class: 'items' }, res.map(i => itemRow(B, i, 'res')))) : null);
   const right = el('div', { class: 's-4 grid', style: { alignContent: 'start' } });
   right.append(el('div', { class: 'card', id: 'next-card' }));
+  { const cl = classesOn(today); if (cl) { const nowH = zoned(new Date()).h;
+    right.append(el('a', { class: 'card', href: '#timetable', style: { textDecoration: 'none', display: 'block' } },
+      el('div', { class: 'card-h' }, el('h2', { text: 'Classes today' }), el('span', { class: 'chip brass', text: cl.holiday ? 'holiday' : 'week ' + cl.letter })),
+      cl.list.length ? el('ul', { class: 'class-list' }, cl.list.map(s => { const a = hm(s.start), b = hm(s.end); return el('li', { class: b <= nowH ? 'past' : a <= nowH ? 'now' : '' }, el('span', { class: 't', text: `${s.start}–${s.end}` }), el('span', {}, el('b', { text: s.subject }), s.room ? el('span', { class: 'muted', text: ' · ' + s.room }) : null)); }))
+        : el('p', { class: 'empty', text: cl.holiday ? 'Holiday week. No classes.' : 'No classes today.' }))); } }
   if (B.tip) right.append(el('a', { class: 'card tip-card', href: '#focus', style: { textDecoration: 'none', display: 'block' } }, el('div', { class: 'label', style: { color: 'var(--brass)' }, text: 'Today’s edge' }), el('p', { class: 'tip-hero', style: { marginTop: '8px' }, text: B.tip.title }), el('span', { class: 'muted', style: { fontSize: '14px' }, text: B.tip.body })));
   const hz = (B.horizon || []).filter(h => h.date >= today);
   if (hz.length) right.append(el('div', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Coming up' })),
@@ -743,74 +759,101 @@ function vToday() {
 
 /* ================= TIMETABLE ================= */
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const TT_DEFAULT_WEEKS = { start: '2026-08-31', holidays: [7, 16, 17, 18, 28, 32] };
+/* Pronote numbers every week of the school year from Aug 31; holiday weeks are skipped when A/B alternates. Odd school weeks are A. */
+function weekInfo(ymd, cfg) {
+  cfg = cfg || TT_DEFAULT_WEEKS;
+  const n = Math.floor(daysBetween(cfg.start, ymd) / 7) + 1;
+  if (n < 1) return { n, letter: null, holiday: false };
+  if ((cfg.holidays || []).includes(n)) return { n, letter: null, holiday: true };
+  const school = n - (cfg.holidays || []).filter(h => h < n).length;
+  return { n, letter: school % 2 === 1 ? 'A' : 'B', holiday: false };
+}
+const slotIn = (s, letter) => !s.wk || s.wk === 'AB' || s.wk === letter;
+function classesOn(ymd) {
+  const tt = S.db.timetable; if (!tt || !(tt.slots || []).length) return null;
+  const wi = weekInfo(addDays(ymd, -((new Date(ymd + 'T12:00:00Z').getUTCDay() + 6) % 7)), tt.weeks);
+  if (wi.holiday) return { holiday: true, list: [] };
+  const wd = (new Date(ymd + 'T12:00:00Z').getUTCDay() + 6) % 7;
+  return { holiday: false, letter: wi.letter, list: tt.slots.filter(s => s.day === wd && slotIn(s, wi.letter)).sort((a, b) => hm(a.start) - hm(b.start)) };
+}
 function vTimetable() {
   const v = el('section', { class: 'view' });
   const tt = S.db.timetable || { slots: [] };
   const slots = tt.slots || [];
   const z = zoned(new Date());
-  const weekStart = addDays(z.ymd, -z.wd);
+  const off = S.ttOff || 0;
+  const weekStart = addDays(addDays(z.ymd, -z.wd), off * 7);
+  const wi = weekInfo(weekStart, tt.weeks);
+  const shown = wi.holiday ? [] : slots.filter(s => slotIn(s, wi.letter));
   const cal = (S.brief.week_events || S.brief.events || []).map(e => ({ ...e, a: zoned(new Date(e.start)), b: zoned(new Date(e.end)) })).filter(e => e.a.ymd >= weekStart && e.a.ymd <= addDays(weekStart, 6));
-  const showWeekend = slots.some(s => s.day > 4) || cal.some(e => daysBetween(weekStart, e.a.ymd) > 4);
+  const showWeekend = shown.some(s => s.day > 4) || cal.some(e => daysBetween(weekStart, e.a.ymd) > 4);
   const nDays = showWeekend ? 7 : 5;
-  let minH = 7, maxH = 18;
-  for (const s of slots) { minH = Math.min(minH, Math.floor(hm(s.start))); maxH = Math.max(maxH, Math.ceil(hm(s.end))); }
+  let minH = 7.5, maxH = 17.5;
+  for (const s of shown) { minH = Math.min(minH, Math.floor(hm(s.start) * 2) / 2); maxH = Math.max(maxH, Math.ceil(hm(s.end) * 2) / 2); }
   for (const e of cal) { minH = Math.min(minH, Math.floor(e.a.h)); maxH = Math.max(maxH, Math.ceil(e.b.ymd === e.a.ymd ? e.b.h : 24)); }
-  const HR = 54;
-  v.append(pageHead(`Week of ${fmtDay(weekStart, { month: 'long', day: 'numeric' })}`, 'Timetable', 'Your school classes plus everything on Google Calendar this week. Click a class to edit it.',
-    el('button', { class: 'btn solid', onclick: () => { S.ttEdit = { id: null, day: Math.min(z.wd, 4), start: '08:00', end: '09:00', subject: '', room: '' }; rerender(); } }, '+ Add class')));
+  const HR = 58;
+  const nav = el('div', { class: 'form-row', style: { alignItems: 'center' } },
+    el('button', { class: 'btn sm', 'aria-label': 'Previous week', onclick: () => { S.ttOff = off - 1; rerender(); } }, '‹'),
+    el('button', { class: 'btn sm' + (off === 0 ? ' solid' : ''), onclick: () => { S.ttOff = 0; rerender(); } }, 'This week'),
+    el('button', { class: 'btn sm', 'aria-label': 'Next week', onclick: () => { S.ttOff = off + 1; rerender(); } }, '›'),
+    el('button', { class: 'btn solid', style: { marginLeft: '8px' }, onclick: () => { S.ttEdit = { id: null, day: Math.min(z.wd, 4), start: '08:00', end: '09:00', subject: '', room: '', teacher: '', wk: 'AB' }; rerender(); } }, '+ Add class'));
+  v.append(pageHead(`Week of ${fmtDay(weekStart, { month: 'long', day: 'numeric' })}`, wi.holiday ? 'Holiday week' : `Timetable · Week ${wi.letter || '–'}`,
+    wi.holiday ? 'No school this week. Calendar events still show below.' : `LFI classes for Week ${wi.letter}, with your Google Calendar events in brass. Weeks alternate A/B and skip holidays. Click a class to edit it.`, nav));
   if (S.ttEdit) v.append(ttForm());
   const grid = el('div', { class: 'tt', style: { '--days': nDays, '--hr': HR + 'px' } });
   grid.append(el('div', {}));
   for (let d = 0; d < nDays; d++) { const ymd = addDays(weekStart, d); grid.append(el('div', { class: 'tt-head' + (ymd === z.ymd ? ' today' : ''), text: `${DAYS[d]} ${fmtDay(ymd, { day: 'numeric' })}` })); }
-  const hours = el('div', {}); for (let h = minH; h < maxH; h++) hours.append(el('div', { class: 'tt-hour', text: hmStr(h) })); grid.append(hours);
+  const hours = el('div', { style: { position: 'relative', height: (maxH - minH) * HR + 'px' } });
+  for (let h = Math.ceil(minH); h < maxH; h++) hours.append(el('div', { class: 'tt-hour', style: { position: 'absolute', top: (h - minH) * HR + 'px', right: 0, height: 'auto' }, text: hmStr(h) }));
+  grid.append(hours);
   const H = (maxH - minH) * HR;
   for (let d = 0; d < nDays; d++) {
     const ymd = addDays(weekStart, d);
     const col = el('div', { class: 'tt-col', style: { height: H + 'px' } });
-    for (let h = 1; h < maxH - minH; h++) col.append(el('div', { class: 'tt-line', style: { top: h * HR + 'px' } }));
-    for (const s of slots.filter(s => s.day === d)) {
+    for (let h = Math.ceil(minH); h < maxH; h++) col.append(el('div', { class: 'tt-line', style: { top: (h - minH) * HR + 'px' } }));
+    for (const s of shown.filter(s => s.day === d)) {
       const a = hm(s.start), b = hm(s.end); const isNow = ymd === z.ymd && z.h >= a && z.h < b;
-      col.append(el('button', { class: 'slot' + (isNow ? ' now' : ''), style: { top: (a - minH) * HR + 2 + 'px', height: Math.max(22, (b - a) * HR - 4) + 'px' }, title: 'Edit class', onclick: () => { S.ttEdit = { ...s }; rerender(); } },
-        el('b', { text: s.subject }), el('small', { text: `${s.start}–${s.end}${s.room ? ' · ' + s.room : ''}` })));
+      col.append(el('button', { class: 'slot subj-' + (s.color || 'x') + (isNow ? ' now' : ''), style: { top: (a - minH) * HR + 2 + 'px', height: Math.max(22, (b - a) * HR - 4) + 'px' }, title: `${s.subject}${s.teacher ? ' · ' + s.teacher : ''}${s.room ? ' · ' + s.room : ''} (edit)`, onclick: () => { S.ttEdit = { ...s }; rerender(); } },
+        el('b', { text: s.subject }), el('small', { text: `${s.start}–${s.end}${s.room ? ' · ' + s.room : ''}` }), (b - a) >= 1.5 && s.teacher ? el('small', { class: 'tch', text: s.teacher }) : null, s.wk && s.wk !== 'AB' ? el('i', { class: 'wk-tag', text: s.wk }) : null));
     }
     for (const e of cal.filter(e => e.a.ymd === ymd)) {
       const a = e.a.h, b = e.b.ymd === e.a.ymd ? e.b.h : 24;
-      const box = el(e.url ? 'a' : 'div', { class: 'slot cal', href: e.url, style: { top: (a - minH) * HR + 2 + 'px', height: Math.max(22, (b - a) * HR - 4) + 'px', textDecoration: 'none' } }, el('b', { text: e.title }), el('small', { text: `${fmtTime(new Date(e.start))}–${fmtTime(new Date(e.end))}` }));
-      col.append(box);
+      col.append(el(e.url ? 'a' : 'div', { class: 'slot cal', href: e.url, style: { top: (a - minH) * HR + 2 + 'px', height: Math.max(22, (b - a) * HR - 4) + 'px', textDecoration: 'none' } }, el('b', { text: e.title }), el('small', { text: `${fmtTime(new Date(e.start))}–${fmtTime(new Date(e.end))}` })));
     }
     if (ymd === z.ymd && z.h >= minH && z.h <= maxH) col.append(el('div', { class: 'now-line', id: 'tt-now', style: { top: (z.h - minH) * HR + 'px' }, 'data-min': minH, 'data-hr': HR }));
     grid.append(col);
   }
-  const card = el('div', { class: 'card' }, el('div', { class: 'tt-wrap' }, grid),
-    el('div', { class: 'legend', style: { marginTop: '14px' } }, el('span', {}, el('i'), 'School class'), el('span', {}, el('i', { class: 'cal' }), 'Google Calendar'), el('span', { text: slots.length ? `${slots.length} classes saved` : '' })));
-  v.append(card);
-  if (!slots.length) v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('h2', { text: 'Add your LFI timetable once' }),
-    el('p', { class: 'muted', text: 'Add each class with "+ Add class". They repeat every week and stay synced on your phone and laptop. Or send Claude a photo or screenshot of your Pronote timetable and it will fill this in for you.' })));
-  // today's classes list
-  const todays = slots.filter(s => s.day === z.wd).sort((a, b) => hm(a.start) - hm(b.start));
-  if (todays.length) v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Today’s classes' })),
-    el('ul', { class: 'horizon' }, todays.map(s => el('li', { style: { gridTemplateColumns: '90px minmax(0,1fr) auto' } }, el('span', { class: 'label num', text: `${s.start}–${s.end}` }), el('span', { text: s.subject }), el('span', { class: 'muted', text: s.room || '' }))))));
+  v.append(el('div', { class: 'card' }, el('div', { class: 'tt-wrap' }, grid),
+    el('div', { class: 'legend', style: { marginTop: '14px' } }, el('span', {}, el('i'), 'School class'), el('span', {}, el('i', { class: 'cal' }), 'Google Calendar'), el('span', { text: 'A / B tag = only that week' }), el('span', { text: `${shown.length} classes this week` }))));
+  if (!slots.length) v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('h2', { text: 'Add your LFI timetable' }), el('p', { class: 'muted', text: 'Use "+ Add class". Classes repeat every week (or only Week A or B).' })));
+  // per-day summary for the shown week
+  const hoursBy = [0, 1, 2, 3, 4].map(d => shown.filter(s => s.day === d).reduce((n, s) => n + hm(s.end) - hm(s.start), 0));
+  const ends = [0, 1, 2, 3, 4].map(d => shown.filter(s => s.day === d).reduce((m, s) => Math.max(m, hm(s.end)), 0));
+  if (shown.length) v.append(el('div', { class: 'stat-row', style: { marginTop: '16px', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' } }, [0, 1, 2, 3, 4].map(d =>
+    el('div', { class: 'card stat' + (addDays(weekStart, d) === z.ymd ? ' live' : '') }, el('div', { class: 'label', text: DAYS[d] }), el('div', { class: 'big num', style: { fontSize: '1.6rem' }, text: ends[d] ? `out ${hmStr(ends[d])}` : 'free' }), el('div', { class: 'sub', text: `${hoursBy[d].toFixed(1).replace('.0', '')} h of class` })))));
   return v;
 }
 function ttForm() {
   const e = S.ttEdit;
   const f = el('form', { class: 'card', style: { marginBottom: '16px' } });
-  const day = el('select', { id: 'tt-day' }, DAYS.map((d, i) => el('option', { value: i, text: d })));
-  day.value = e.day;
+  const day = el('select', { id: 'tt-day' }, DAYS.map((d, i) => el('option', { value: i, text: d }))); day.value = e.day;
+  const wk = el('select', { id: 'tt-wk' }, [['AB', 'Every week'], ['A', 'Week A only'], ['B', 'Week B only']].map(([v2, t]) => el('option', { value: v2, text: t }))); wk.value = e.wk || 'AB';
   const subj = el('input', { id: 'tt-subj', type: 'text', value: e.subject, placeholder: 'e.g. Philosophie', required: true });
   const room = el('input', { id: 'tt-room', type: 'text', value: e.room || '', placeholder: 'Room' });
+  const tch = el('input', { id: 'tt-tch', type: 'text', value: e.teacher || '', placeholder: 'Teacher' });
   const st = el('input', { id: 'tt-start', type: 'time', value: e.start, required: true });
   const en = el('input', { id: 'tt-end', type: 'time', value: e.end, required: true });
   f.append(el('div', { class: 'card-h' }, el('h2', { text: e.id ? 'Edit class' : 'Add class' })),
-    el('div', { class: 'form-row' }, el('label', { class: 'field', style: { flex: '2 1 180px' } }, el('span', { text: 'Subject' }), subj), el('label', { class: 'field' }, el('span', { text: 'Day' }), day),
-      el('label', { class: 'field' }, el('span', { text: 'Start' }), st), el('label', { class: 'field' }, el('span', { text: 'End' }), en), el('label', { class: 'field' }, el('span', { text: 'Room' }), room)),
+    el('div', { class: 'form-row' }, el('label', { class: 'field', style: { flex: '2 1 180px' } }, el('span', { text: 'Subject' }), subj), el('label', { class: 'field' }, el('span', { text: 'Day' }), day), el('label', { class: 'field' }, el('span', { text: 'Weeks' }), wk),
+      el('label', { class: 'field' }, el('span', { text: 'Start' }), st), el('label', { class: 'field' }, el('span', { text: 'End' }), en), el('label', { class: 'field' }, el('span', { text: 'Room' }), room), el('label', { class: 'field' }, el('span', { text: 'Teacher' }), tch)),
     el('div', { class: 'form-row', style: { marginTop: '14px' } }, el('button', { class: 'btn solid', type: 'submit', text: 'Save class' }), el('button', { class: 'btn ghost', type: 'button', text: 'Cancel', onclick: () => { S.ttEdit = null; rerender(); } }),
       e.id ? el('button', { class: 'btn ghost', type: 'button', style: { color: 'var(--warn)', marginLeft: 'auto' }, text: 'Delete', onclick: () => { const t = S.db.timetable || { slots: [] }; save('timetable', { ...t, slots: t.slots.filter(s => s.id !== e.id) }); S.ttEdit = null; rerender(); toast('Class deleted'); } }) : null));
   f.addEventListener('submit', ev => {
     ev.preventDefault();
     if (hm(en.value) <= hm(st.value)) { toast('End time must be after the start time.'); return; }
     const t = S.db.timetable || { slots: [] };
-    const slot = { id: e.id || uid(), day: +day.value, start: st.value, end: en.value, subject: subj.value.trim(), room: room.value.trim() };
+    const slot = { ...e, id: e.id || uid(), day: +day.value, wk: wk.value, start: st.value, end: en.value, subject: subj.value.trim(), room: room.value.trim(), teacher: tch.value.trim() };
     save('timetable', { ...t, slots: [...(t.slots || []).filter(s => s.id !== slot.id), slot] });
     S.ttEdit = null; rerender(); toast('Class saved');
   });
