@@ -5,8 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#f4f5f7">
+<meta name="theme-color" content="#1b1f25" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2214%22 fill=%22%231b1f25%22 stroke=%22%23d4af72%22 stroke-width=%222%22/%3E%3Cpath d=%22M16 16 L22 9%22 stroke=%22%23d4af72%22 stroke-width=%222.5%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
-<title>Morning Brief</title>
+<title>Brief</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
@@ -451,6 +458,39 @@ main { padding-left: max(16px, 48px); padding-right: max(16px, env(safe-area-ins
 .why, .ans { background: var(--panel-2); }
 .item { border-color: var(--line); }
 @media (max-width: 760px) { .nav-group { display: none; } .rail { box-shadow: 0 -1px 0 var(--line); } main { padding-block: 18px 96px; } }
+
+/* ---- révisions, search, feuille blanche ---- */
+.rev-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.rev-top .label { margin-left: auto; }
+.rev-card { max-width: 780px; margin: 16px auto 0; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+.rev-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.rev-q { font-size: 19px; font-weight: 600; line-height: 1.45; margin: 0; white-space: pre-wrap; }
+.rev-card .ans { font-size: 15.5px; line-height: 1.6; white-space: pre-wrap; }
+.rev-grade { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.rev-grade .btn { flex-direction: column; gap: 3px; padding: 12px 8px; justify-content: center; color: inherit; }
+.rev-grade small { font: 500 10.5px var(--mono); color: var(--muted); }
+.rev-grade .g-ko { border-color: color-mix(in srgb, var(--warn) 55%, transparent); }
+.rev-grade .g-ok { border-color: color-mix(in srgb, var(--ok) 55%, transparent); }
+.rev-hint { font-size: 13px; color: var(--muted); margin: 0; }
+.rev-big { display: flex; align-items: flex-end; gap: 14px; margin: 4px 0 12px; }
+.rev-big p { margin: 0 0 6px; color: var(--muted); font-size: 14px; }
+.fc { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; height: 130px; }
+.fc > div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; height: 100%; }
+.fc i { width: 100%; max-width: 46px; background: var(--brass); border-radius: 6px 6px 2px 2px; min-height: 2px; display: block; }
+.fc b { font: 600 12px var(--mono); }
+.fc span { font: 500 10px var(--mono); color: var(--muted); text-transform: uppercase; }
+.quiz-hist { list-style: none; margin: 12px 0 0; padding: 0; font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+.modal.search { place-items: start center; padding-top: 10vh; }
+.search-card { width: min(660px, 100%); padding: 14px; }
+.search-card input { width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel-2); color: inherit; }
+.search-res { margin-top: 10px; max-height: 56vh; overflow: auto; display: flex; flex-direction: column; gap: 2px; }
+.search-res button { text-align: left; background: none; border: 0; border-radius: 8px; padding: 9px 10px; cursor: pointer; display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 10px; align-items: start; color: inherit; font: inherit; }
+.search-res button.on, .search-res button:hover { background: var(--panel-2); }
+.search-res b { display: block; font-size: 14px; }
+.search-res .sn { font-size: 12.5px; color: var(--muted); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-res .chip { justify-self: start; }
+.blank-ta { min-height: 190px; font: inherit; font-size: 15px; line-height: 1.55; resize: vertical; color: inherit; }
+@media (max-width: 760px) { .nav a { padding: 8px 5px; } .rev-card { padding: 20px 16px; } .rev-q { font-size: 17px; } .search-res button { grid-template-columns: 1fr; gap: 4px; } }
 </style>
 
 <style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
@@ -460,6 +500,7 @@ main { padding-left: max(16px, 48px); padding-right: max(16px, env(safe-area-ins
   <div class="brand"><div class="brand-mark" id="brand-mark"></div><div><b>Brief</b><small id="brand-date">—</small></div></div>
   <div class="nav" id="nav"></div>
   <div class="rail-foot">
+    <button class="theme-btn" id="search-btn" type="button">Search &nbsp;/</button>
     <button class="theme-btn" id="theme-btn" type="button">Dark mode</button>
     <div class="label">Dubai</div>
     <div class="clock num" id="clock">--:--</div>
@@ -644,10 +685,11 @@ const ICON = {
   apps: '<path d="M5 4.5h10l4 4V19.5H5z"/><path d="M15 4.5v4h4M8.5 13l2 2 4-4"/>',
   maths: '<path d="M4 6h7M7.5 2.5v7M14 6h6M4 17.5l5-5M4 12.5l5 5M14 15h6M14 19h6"/>',
   ses: '<path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/>',
-  python: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>'
+  python: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>',
+  review: '<path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><path d="M9 12l2.2 2.2L15 10.5"/>'
 };
 const VIEWS = [
-  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['news', 'News', '3'], ['sat', 'SAT', '4'], ['maths', 'Spé Maths', '5'], ['ses', 'Spé SES', '6'], ['python', 'Python', '7'], ['focus', 'Focus', '8'], ['apps', 'Applications', '9']
+  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['news', 'News', '3'], ['sat', 'SAT', '4'], ['maths', 'Spé Maths', '5'], ['ses', 'Spé SES', '6'], ['python', 'Python', '7'], ['review', 'Révisions', '0'], ['focus', 'Focus', '8'], ['apps', 'Applications', '9']
 ];
 
 const SAT = {
@@ -767,8 +809,8 @@ function rerender(scrollTop) {
   if (!S.brief) return;
   const y = window.scrollY;
   main.innerHTML = '';
-  const head = el('div', { class: 'mob-head' }, el('span', { class: 'label', text: fmtDay(todayYmd(), { weekday: 'long', month: 'short', day: 'numeric' }) }), el('span', { class: 'label num', id: 'mob-clock' }));
-  main.append(head, ({ today: vToday, timetable: vTimetable, sat: vSat, maths: () => vStudy('maths'), ses: () => vStudy('ses'), python: () => vStudy('python'), news: vNews, focus: vFocus, apps: vApps })[S.view]());
+  const head = el('div', { class: 'mob-head' }, el('span', { class: 'label', text: fmtDay(todayYmd(), { weekday: 'long', month: 'short', day: 'numeric' }) }), el('button', { class: 'btn sm ghost', type: 'button', onclick: () => openSearch(), text: 'Search' }), el('span', { class: 'label num', id: 'mob-clock' }));
+  main.append(head, ({ today: vToday, timetable: vTimetable, sat: vSat, maths: () => vStudy('maths'), ses: () => vStudy('ses'), python: () => vStudy('python'), review: vReview, news: vNews, focus: vFocus, apps: vApps })[S.view]());
   if (scrollTop) window.scrollTo(0, 0); else window.scrollTo(0, y);
   tick();
 }
@@ -852,6 +894,11 @@ function vToday() {
     res.length ? el('div', { style: { marginTop: '26px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Sorted' }), el('span', { class: 'label', text: `${res.length} closed` })), el('ol', { class: 'items' }, res.map(i => itemRow(B, i, 'res')))) : null);
   const right = el('div', { class: 's-4 grid', style: { alignContent: 'start' } });
   right.append(el('div', { class: 'card', id: 'next-card' }));
+  if (STUDY) { const d = revDeck('all'), n = d.due.length + d.newToday.length, stk = revStreak();
+    right.append(el('a', { class: 'card', href: '#review', style: { textDecoration: 'none', display: 'block' } },
+      el('div', { class: 'card-h' }, el('h2', { text: 'Révisions' }), el('span', { class: 'chip ' + (stk ? 'ok' : 'brass'), text: stk ? `série ${stk} j` : 'mémoire' })),
+      el('p', { class: 'next-title', text: n ? `${n} carte${n > 1 ? 's' : ''} à faire` : 'Tout est à jour' }),
+      el('span', { class: 'muted', style: { fontSize: '13px' }, text: n ? `${d.due.length} à revoir · ${d.newToday.length} nouvelle${d.newToday.length > 1 ? 's' : ''} · environ ${Math.max(1, Math.round(n * 0.6))} min` : 'Rien à revoir aujourd’hui.' }))); }
   { const cl = classesOn(today); if (cl) { const nowH = zoned(new Date()).h;
     right.append(el('a', { class: 'card', href: '#timetable', style: { textDecoration: 'none', display: 'block' } },
       el('div', { class: 'card-h' }, el('h2', { text: 'Classes today' }), el('span', { class: 'chip brass', text: cl.holiday ? 'holiday' : 'week ' + cl.letter })),
@@ -1305,13 +1352,14 @@ function chart(tests, target) {
 
 /* ================= SPÉ MATHS / SES ================= */
 let STUDY = null;
-fetch('study.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { STUDY = j; if (S.view === 'maths' || S.view === 'ses') rerender(); }).catch(() => {});
+fetch('study.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { STUDY = j; if (['maths', 'ses', 'python', 'review', 'today'].includes(S.view) && !(document.activeElement && document.activeElement.matches('input, textarea'))) rerender(); }).catch(() => {});
 const STATUS = [['', 'Pas commencé'], ['cours', 'En cours'], ['fait', 'Vu en classe'], ['revu', 'Révisé']];
 const STATUS_CHIP = { '': '', cours: 'brass', fait: 'blue', revu: 'ok' };
 S.studyCh = {}; S.studyTab = {}; S.reveal = new Set();
 function studyState() { return S.db.study || { status: {}, cards: {}, proj: {} }; }
 function chStatus(subj, c) { const s = (studyState().status || {})[subj + ':' + c.id]; return s == null ? (c.current ? 'cours' : '') : s; }
-function saveStudy(patch) { const s = studyState(); save('study', { status: { ...(s.status || {}), ...(patch.status || {}) }, cards: { ...(s.cards || {}), ...(patch.cards || {}) }, proj: { ...(s.proj || {}), ...(patch.proj || {}) } }); }
+const STUDY_MERGE = ['status', 'cards', 'proj', 'srs', 'blank'];
+function saveStudy(patch) { const s = studyState(); const out = { ...s }; for (const k of Object.keys(patch)) out[k] = STUDY_MERGE.includes(k) ? { ...(s[k] || {}), ...patch[k] } : patch[k]; save('study', out); }
 function dayIndex() { return daysBetween('2026-01-01', todayYmd()); }
 function dailyAuto(subj, D) {
   const d = (S.brief.study_daily || {})[subj];
@@ -1368,6 +1416,7 @@ function vChapter(subj, D, c) {
   const tabs = D.static ? [['recap', 'Cours'], ['methods', 'Méthodes'], ['exercises', `Exercices (${(c.exercises || []).length})`]] : [['recap', 'Rappels de cours'], ['methods', 'Méthodes clés'], ['questions', 'Questions de cours'], ['auto', 'Automatismes'], ['bac', subj === 'ses' ? 'Conseils épreuve' : 'Conseils bac']];
   if (c.project) tabs.unshift(['project', 'Évaluation']);
   if (c.fiche) tabs.splice(tabs.findIndex(t => t[0] === 'recap') + 1, 0, ['fiche', 'Fiche de révision']);
+  if ((c.recap || []).length) tabs.push(['blank', 'Feuille blanche']);
   const tab = S.studyTab[subj] || tabs[0][0];
   v.append(el('button', { class: 'btn sm ghost', style: { marginBottom: '14px' }, onclick: () => { S.studyCh[subj] = null; rerender(true); }, text: '← Tous les chapitres' }));
   v.append(pageHead(`${D.title} · chapitre ${c.n}`, c.title, null));
@@ -1416,6 +1465,26 @@ function vChapter(subj, D, c) {
           shown ? el('button', { class: 'btn sm ghost', onclick: ev => { const t = e.solution; const b = ev.currentTarget; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { b.textContent = 'Copié'; }).catch(() => { b.textContent = 'Copie impossible'; }); }, text: 'Copier le code' }) : null));
     })));
   }
+  if (tab === 'blank') {
+    const bk = subj + ':' + c.id;
+    if (!S.blank || S.blank.k !== bk) S.blank = { k: bk, text: '', shown: false, got: new Set() };
+    const B = S.blank, last = (st.blank || {})[bk];
+    body.append(el('div', { class: 'card-h' }, el('h2', { text: 'Feuille blanche' }), last ? el('span', { class: 'chip brass', text: `dernier essai ${last[1]}/${last[2]} · ${frDay(last[0])}` }) : null));
+    body.append(el('p', { class: 'muted', style: { marginTop: 0 }, text: 'Sans regarder le cours, écris tout ce dont tu te souviens sur ce chapitre : définitions, formules, mécanismes, auteurs, exemples. Ensuite compare. Retrouver l’information de mémoire fixe bien mieux que relire.' }));
+    const ta = el('textarea', { class: 'blank-ta', rows: '9', placeholder: 'Écris ici, de mémoire…', 'aria-label': 'Ta feuille blanche' }); ta.value = B.text; ta.addEventListener('input', () => { B.text = ta.value; });
+    body.append(el('label', { class: 'field' }, el('span', { text: 'Ta feuille' }), ta));
+    if (!B.shown) body.append(el('div', { class: 'form-row', style: { marginTop: '14px' } }, el('button', { class: 'btn solid', onclick: () => { B.shown = true; rerender(); }, text: 'Comparer avec le cours' })));
+    else {
+      const cnt = el('span', { class: 'label' }); const upd = () => { cnt.textContent = `${B.got.size}/${c.recap.length} points retrouvés`; };
+      body.append(el('div', { class: 'card-h', style: { marginTop: '22px' } }, el('h2', { text: 'Coche ce que tu avais écrit' }), cnt));
+      body.append(el('ul', { class: 'kit' }, c.recap.map((t, i) => { const cb = el('input', { type: 'checkbox', class: 'tick', id: 'bl-' + i }); cb.checked = B.got.has(i);
+        cb.addEventListener('change', () => { if (cb.checked) B.got.add(i); else B.got.delete(i); upd(); }); return el('li', {}, cb, el('label', { for: 'bl-' + i }, rich(t))); })));
+      upd();
+      body.append(el('div', { class: 'form-row', style: { marginTop: '14px' } },
+        el('button', { class: 'btn solid', onclick: () => { saveStudy({ blank: { [bk]: [todayYmd(), B.got.size, c.recap.length] } }); toast(`Enregistré : ${B.got.size}/${c.recap.length}. Refais-la dans quelques jours.`); rerender(); }, text: 'Enregistrer le résultat' }),
+        el('button', { class: 'btn ghost', onclick: () => { S.blank = null; rerender(true); }, text: 'Recommencer' })));
+    }
+  }
   if (tab === 'project') {
     const P = c.project; const all = P.groups.flatMap(g => g.items); const done = all.filter(([id]) => (st.proj || {})[c.id + ':' + id]).length;
     body.append(el('div', { class: 'card-h' }, el('h2', { text: P.title }), el('span', { class: 'label', text: `${done}/${all.length} faits` })), el('p', { class: 'muted', style: { marginTop: 0 }, text: P.intro }),
@@ -1429,6 +1498,226 @@ function vChapter(subj, D, c) {
   }
   v.append(body);
   return v;
+}
+
+/* ================= RÉVISIONS : répétition espacée + interro ================= */
+const SRS_DAYS = [1, 3, 7, 16, 35], NEW_PER_DAY = 10;
+const SUBJ_NAME = { maths: 'Maths', ses: 'SES', python: 'Python' };
+S.rev = null; S.revSubj = 'all'; S.blank = null;
+const frDay = ymd => new Intl.DateTimeFormat('fr-FR', { timeZone: 'UTC', weekday: 'short', day: 'numeric', month: 'short' }).format(new Date(ymd + 'T12:00:00Z'));
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const mmss = sec => `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`;
+function goView(id) { if (S.view === id && (location.hash || '').slice(1) === id) rerender(true); else location.hash = id; }
+function srsMap() { return studyState().srs || {}; }
+function allCards() {
+  if (!STUDY) return [];
+  const out = [];
+  for (const subj of ['maths', 'ses']) for (const c of STUDY[subj].chapters) {
+    const active = ['cours', 'fait', 'revu'].includes(chStatus(subj, c)), cur = chStatus(subj, c) === 'cours';
+    (c.questions || []).forEach(([q, a], i) => out.push({ key: `${subj}:${c.id}:${i}`, subj, c, q, a, active, cur }));
+    (c.auto || []).forEach(([q, a], i) => out.push({ key: `${subj}:${c.id}:a${i}`, subj, c, q, a, active, cur, auto: true }));
+  }
+  return out;
+}
+function revDeck(subj) {
+  const m = srsMap(), marks = studyState().cards || {}, today = todayYmd();
+  const cards = allCards().filter(k => subj === 'all' || k.subj === subj);
+  const due = [], fresh = [];
+  for (const k of cards) {
+    const e = m[k.key];
+    if (e) { if (e[1] <= today) due.push(k); }
+    else if (marks[k.key] === 'ko') due.push(k);
+    else if (k.active) fresh.push(k);
+  }
+  const dueAt = k => (m[k.key] || [0, ''])[1];
+  due.sort((a, b) => (dueAt(a) < dueAt(b) ? -1 : dueAt(a) > dueAt(b) ? 1 : 0));
+  /* new cards: current chapters first, then one card per chapter in turn so subjects are mixed */
+  const groups = new Map(); for (const k of fresh) { const g = k.subj + ':' + k.c.id; if (!groups.has(g)) groups.set(g, []); groups.get(g).push(k); }
+  const lanes = [...groups.values()].sort((a, b) => (a[0].cur ? 0 : 1) - (b[0].cur ? 0 : 1));
+  fresh.length = 0; for (let i = 0; lanes.some(l => i < l.length); i++) for (const l of lanes) if (i < l.length) fresh.push(l[i]);
+  const newLeft = Math.max(0, NEW_PER_DAY - ((studyState().srsNew || {})[today] || 0));
+  return { cards, due, fresh, newToday: fresh.slice(0, newLeft) };
+}
+function nextGap(k, g) { const e = srsMap()[k.key], box = e ? e[0] : 0; if (g === 'ko') return 1; if (g === 'mid') return Math.min(2, SRS_DAYS[Math.max(1, box) - 1]); return SRS_DAYS[Math.min(5, box + 1) - 1]; }
+function gradeCard(k, g) {
+  const s = studyState(), today = todayYmd(), e = (s.srs || {})[k.key];
+  let box = e ? e[0] : 0;
+  const days = nextGap(k, g);
+  if (g === 'ok') box = Math.min(5, box + 1); else if (g === 'ko') box = 1; else box = Math.max(1, box);
+  const log = {}; for (const [d, n] of Object.entries(s.revLog || {})) if (d >= addDays(today, -120)) log[d] = n;
+  log[today] = (log[today] || 0) + 1;
+  const patch = { srs: { [k.key]: [box, addDays(today, days)] }, revLog: log };
+  if (!e) patch.srsNew = { [today]: ((s.srsNew || {})[today] || 0) + 1 };
+  if (!k.auto) patch.cards = { [k.key]: g === 'ok' ? 'ok' : 'ko' };
+  saveStudy(patch);
+}
+function revStreak() { const log = studyState().revLog || {}; let d = todayYmd(), n = 0; if (!log[d]) d = addDays(d, -1); while (log[d]) { n++; d = addDays(d, -1); } return n; }
+function startRev(mode) {
+  const d = revDeck(S.revSubj), m = srsMap();
+  const queue = mode === 'quiz' ? shuffle(d.cards.filter(k => !k.auto && (k.active || m[k.key]))).slice(0, 10) : [...d.due, ...d.newToday].slice(0, 40);
+  if (!queue.length) { toast('Rien à réviser pour le moment.'); return; }
+  S.rev = { mode, queue, i: 0, shown: false, n: 0, ok: 0, total: queue.length, start: Date.now(), again: new Set(), missed: [], done: false, sec: 0 };
+  rerender(true);
+}
+function answerRev(g) {
+  const r = S.rev; if (!r || r.done) return;
+  const k = r.queue[r.i], first = !r.again.has(k.key);
+  if (first) { gradeCard(k, g); r.n++; if (g === 'ok') r.ok++; else r.missed.push(k); }
+  if (g === 'ko' && first && r.mode === 'srs') { r.again.add(k.key); r.queue.push(k); }
+  r.i++; r.shown = false;
+  if (r.i >= r.queue.length) {
+    r.done = true; r.sec = Math.round((Date.now() - r.start) / 1000);
+    if (r.mode === 'quiz') saveStudy({ quiz: [...(studyState().quiz || []), [todayYmd(), S.revSubj, r.total, r.ok, r.sec]].slice(-12) });
+  }
+  rerender(true);
+}
+function vReview() {
+  const v = el('section', { class: 'view' });
+  if (!STUDY) { v.append(el('div', { class: 'loading', text: 'Chargement des cartes…' })); return v; }
+  if (S.rev) return vRevSession(v);
+  const d = revDeck(S.revSubj), m = srsMap(), today = todayYmd(), st = studyState();
+  const seen = d.cards.filter(k => m[k.key]), strong = seen.filter(k => m[k.key][0] >= 4).length;
+  const n = d.due.length + d.newToday.length, streak = revStreak(), doneToday = (st.revLog || {})[today] || 0;
+  v.append(pageHead('Répétition espacée · Maths et SES', 'Révisions', 'Chaque carte revient juste avant le moment où tu l’oublierais : après 1 jour, 3 jours, 1 semaine, 2 semaines, puis 1 mois. Dix minutes par jour suffisent.',
+    el('div', { class: 'filters', role: 'tablist' }, [['all', 'Tout'], ['maths', 'Maths'], ['ses', 'SES']].map(([id, name]) => el('button', { role: 'tab', 'aria-pressed': S.revSubj === id ? 'true' : 'false', onclick: () => { S.revSubj = id; rerender(); }, text: name })))));
+  const nextDue = d.cards.map(k => m[k.key]).filter(e => e && e[1] > today).map(e => e[1]).sort()[0];
+  const top = el('div', { class: 'grid g-12' });
+  top.append(el('div', { class: 'card s-7 auto-card' },
+    el('div', { class: 'card-h' }, el('h2', { text: 'À faire aujourd’hui' }), el('span', { class: 'chip ' + (streak ? 'ok' : ''), text: streak ? `série de ${streak} jour${streak > 1 ? 's' : ''}` : 'commence ta série' })),
+    el('div', { class: 'rev-big' }, el('div', { class: 'count-big num', text: String(n) }), el('p', { text: n ? `${d.due.length} à revoir · ${d.newToday.length} nouvelle${d.newToday.length > 1 ? 's' : ''} · environ ${Math.max(1, Math.round(n * 0.6))} min` : (nextDue ? `Tout est à jour. Prochaine carte ${frDay(nextDue)}.` : 'Aucune carte pour l’instant.') })),
+    el('div', { class: 'form-row' }, n ? el('button', { class: 'btn brass', onclick: () => startRev('srs'), text: doneToday ? 'Continuer' : 'Commencer' }) : null,
+      el('span', { class: 'muted', style: { fontSize: '13px' }, text: 'Les nouvelles cartes viennent des chapitres « En cours », « Vu en classe » ou « Révisé » (10 par jour au plus).' }))));
+  const qz = (st.quiz || []).slice(-3).reverse();
+  top.append(el('div', { class: 'card s-5' },
+    el('div', { class: 'card-h' }, el('h2', { text: 'Interro surprise' }), el('span', { class: 'chip', text: 'chronométrée' })),
+    el('p', { class: 'muted', style: { margin: '0 0 12px', fontSize: '14px' }, text: '10 questions de cours tirées au hasard dans tes chapitres, comme une interro de début d’heure. Réponds sur papier, puis note-toi honnêtement.' }),
+    el('button', { class: 'btn solid', onclick: () => startRev('quiz'), text: 'Lancer une interro' }),
+    qz.length ? el('ul', { class: 'quiz-hist' }, qz.map(q => el('li', { text: `${frDay(q[0])} · ${q[1] === 'all' ? 'Tout' : SUBJ_NAME[q[1]]} · ${q[3]}/${q[2]} en ${mmss(q[4])}` }))) : null));
+  v.append(top);
+  v.append(el('div', { class: 'stat-row', style: { marginTop: '16px' } },
+    el('div', { class: 'card stat' }, el('div', { class: 'label', text: 'Faites aujourd’hui' }), el('div', { class: 'big num', text: String(doneToday) }), el('div', { class: 'sub', text: 'cartes notées' })),
+    el('div', { class: 'card stat' }, el('div', { class: 'label', text: 'Série' }), el('div', { class: 'big num', text: String(streak) }), el('div', { class: 'sub', text: 'jours de suite' })),
+    el('div', { class: 'card stat' }, el('div', { class: 'label', text: 'Maîtrisées' }), el('div', { class: 'big num', text: `${strong}/${d.cards.length}` }), el('div', { class: 'sub', text: 'sues à plus de 2 semaines d’écart' })),
+    el('div', { class: 'card stat' }, el('div', { class: 'label', text: 'Déjà vues' }), el('div', { class: 'big num', text: `${seen.length}/${d.cards.length}` }), el('div', { class: 'sub', text: 'cartes commencées' }))));
+  const fc = []; for (let i = 0; i < 7; i++) { const day = addDays(today, i); fc.push([day, i === 0 ? d.due.length : d.cards.filter(k => m[k.key] && m[k.key][1] === day).length]); }
+  const mx = Math.max(1, ...fc.map(x => x[1]));
+  v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Les 7 prochains jours' }), el('span', { class: 'label', text: 'cartes déjà vues qui reviennent' })),
+    el('div', { class: 'fc' }, fc.map(([day, c], i) => el('div', {}, el('b', { class: 'num', text: String(c) }), el('i', { style: { height: (c / mx * 72) + '%' } }), el('span', { text: i === 0 ? 'auj.' : frDay(day).split(' ')[0].replace('.', '') }))))));
+  for (const subj of ['maths', 'ses']) {
+    if (S.revSubj !== 'all' && S.revSubj !== subj) continue;
+    const grid = el('div', { class: 'ch-grid' });
+    for (const c of STUDY[subj].chapters) {
+      const cs = d.cards.filter(k => k.subj === subj && k.c === c); if (!cs.length) continue;
+      const sg = cs.filter(k => m[k.key] && m[k.key][0] >= 4).length, du = cs.filter(k => (m[k.key] && m[k.key][1] <= today) || (!m[k.key] && (st.cards || {})[k.key] === 'ko')).length, sn = cs.filter(k => m[k.key]).length;
+      const s = chStatus(subj, c);
+      grid.append(el('div', { class: 'ch-card' + (du ? ' weak' : ''), role: 'button', tabindex: '0', onclick: () => { S.studyCh[subj] = c.id; S.studyTab[subj] = 'questions'; goView(subj); }, onkeydown: e => { if (e.key === 'Enter') e.currentTarget.click(); } },
+        el('div', { class: 'ch-top' }, el('span', { class: 'ch-n num', text: String(c.n).padStart(2, '0') }), el('span', { class: 'chip ' + (du ? 'warn' : STATUS_CHIP[s]), text: du ? `${du} à revoir` : STATUS.find(x => x[0] === s)[1] })),
+        el('b', { class: 'ch-title', text: c.title }),
+        el('div', { class: 'ch-meta' }, el('span', { text: `${sg}/${cs.length} maîtrisées · ${sn} vues` })),
+        el('div', { class: 'bar thin' }, el('i', { style: { width: (sg / cs.length * 100) + '%' } }))));
+    }
+    v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Carte de maîtrise · ' + SUBJ_NAME[subj] }), el('span', { class: 'label', text: 'clique pour ouvrir les questions du chapitre' })), grid));
+  }
+  return v;
+}
+function vRevSession(v) {
+  const r = S.rev, quit = () => { S.rev = null; rerender(true); };
+  if (r.done) {
+    const pct = r.n ? Math.round(r.ok / r.n * 100) : 0;
+    const more = revDeck(S.revSubj); const left = more.due.length + more.newToday.length;
+    v.append(pageHead(r.mode === 'quiz' ? 'Interro surprise' : 'Séance terminée', r.mode === 'quiz' ? `${r.ok}/${r.n}` : `${r.n} carte${r.n > 1 ? 's' : ''} faites`, `${pct} % sues du premier coup · ${mmss(r.sec)}${r.mode === 'quiz' ? ` · ${Math.round(r.sec / Math.max(1, r.n))} s par question` : ''}`));
+    const card = el('div', { class: 'card' });
+    card.append(el('div', { class: 'card-h' }, el('h2', { text: r.missed.length ? 'À relire maintenant' : 'Sans faute' }), el('span', { class: 'label', text: r.missed.length ? `${r.missed.length} carte${r.missed.length > 1 ? 's' : ''} · elles reviennent demain` : 'rien à relire' })));
+    if (r.missed.length) card.append(el('div', { class: 'flash-list' }, r.missed.map(k => el('div', { class: 'flash ko' }, el('div', { class: 'label', text: `${SUBJ_NAME[k.subj]} · ${k.c.title}` }), el('p', { class: 'fq' }, rich(k.q)), el('div', { class: 'ans', style: { whiteSpace: 'pre-wrap' } }, rich(k.a))))));
+    else card.append(el('p', { class: 'empty', text: 'Toutes les cartes de cette séance sont sues. Elles reviendront plus tard, à intervalle plus long.' }));
+    card.append(el('div', { class: 'form-row', style: { marginTop: '16px' } }, el('button', { class: 'btn solid', onclick: quit, text: 'Terminer' }),
+      r.mode === 'srs' && left ? el('button', { class: 'btn', onclick: () => { S.rev = null; startRev('srs'); }, text: `Encore ${left} carte${left > 1 ? 's' : ''}` }) : null,
+      r.mode === 'quiz' ? el('button', { class: 'btn', onclick: () => { S.rev = null; startRev('quiz'); }, text: 'Nouvelle interro' }) : null));
+    v.append(card);
+    return v;
+  }
+  const k = r.queue[r.i], e = srsMap()[k.key];
+  v.append(el('div', { class: 'rev-top' }, el('button', { class: 'btn sm ghost', onclick: quit, text: '← Quitter' }),
+    r.mode === 'quiz' ? el('span', { class: 'chip brass num', id: 'rev-time', text: mmss(Math.round((Date.now() - r.start) / 1000)) }) : null,
+    el('span', { class: 'label num', text: `${r.i + 1} / ${r.queue.length}` })));
+  v.append(el('div', { class: 'bar' }, el('i', { style: { width: (r.i / r.queue.length * 100) + '%', background: 'var(--brass)' } })));
+  const again = r.again.has(k.key);
+  const card = el('div', { class: 'card rev-card' },
+    el('div', { class: 'rev-chips' }, el('span', { class: 'chip brass', text: SUBJ_NAME[k.subj] }), el('span', { class: 'chip', text: k.c.title.length > 46 ? k.c.title.slice(0, 44) + '…' : k.c.title }),
+      k.auto ? el('span', { class: 'chip blue', text: 'automatisme' }) : null, el('span', { class: 'chip ' + (again ? 'warn' : ''), text: again ? 'deuxième passage' : e ? `niveau ${e[0]}/5` : 'nouvelle' })),
+    el('p', { class: 'rev-q' }, rich(k.q)));
+  if (!r.shown) card.append(el('p', { class: 'rev-hint', text: 'Réponds à voix haute ou sur papier avant de regarder.' }),
+    el('div', { class: 'form-row' }, el('button', { class: 'btn solid', id: 'rev-show', onclick: () => { r.shown = true; rerender(); }, text: 'Voir la réponse' }), el('span', { class: 'label', text: 'espace' })));
+  else card.append(el('div', { class: 'ans' }, rich(k.a)),
+    el('div', { class: 'rev-grade' },
+      el('button', { class: 'btn g-ko', onclick: () => answerRev('ko') }, 'À revoir', el('small', { text: again ? 'touche 1' : `1 · revient demain` })),
+      el('button', { class: 'btn', onclick: () => answerRev('mid') }, 'Presque', el('small', { text: again ? 'touche 2' : `2 · dans ${nextGap(k, 'mid')} j` })),
+      el('button', { class: 'btn g-ok', onclick: () => answerRev('ok') }, 'Je savais', el('small', { text: again ? 'touche 3' : `3 · dans ${nextGap(k, 'ok')} j` }))));
+  v.append(card);
+  return v;
+}
+
+/* ================= SEARCH ================= */
+const norm = t => String(t ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+let SEARCH_IDX = null;
+function searchIndex() {
+  if (SEARCH_IDX && SEARCH_IDX.s === STUDY && SEARCH_IDX.l === SATLIB) return SEARCH_IDX.items;
+  const items = [];
+  const add = (kind, title, text, go, w) => { text = String(text ?? ''); items.push({ kind, title, text, go, w, nt: norm(title), nx: norm(text) }); };
+  for (const [id, name] of VIEWS) add('Page', name, '', () => goView(id), 3);
+  if (STUDY) for (const subj of ['maths', 'ses', 'python']) { const D = STUDY[subj]; if (!D) continue;
+    for (const c of D.chapters) {
+      const open = tab => () => { S.studyCh[subj] = c.id; S.studyTab[subj] = tab; goView(subj); };
+      add(SUBJ_NAME[subj], c.title, 'Chapitre ' + c.n, open(c.project ? 'project' : 'recap'), 3);
+      (c.recap || []).forEach(t => add('Cours', c.title, t, open('recap'), 1));
+      (c.methods || []).forEach(t => add('Méthode', c.title, t, open('methods'), 1));
+      (c.questions || []).forEach(([q, a]) => add('Question', c.title, q + ' → ' + a, open('questions'), 1));
+      (c.auto || []).forEach(([q, a]) => add('Automatisme', c.title, q + ' → ' + a, open('auto'), 1));
+      if (c.fiche) for (const sec of c.fiche.sections || []) (sec.items || []).forEach(t => add('Fiche', c.title, t, open('fiche'), 1));
+      (c.exercises || []).forEach(e => add('Exercice', c.title, e.title + ' : ' + e.prompt, open('exercises'), 1));
+    } }
+  if (SATLIB) for (const sk of SATLIB.skills || []) { const open = () => { S.satTab = sk.section; S.satSkill = sk.id; goView('sat'); };
+    add('SAT', sk.name, sk.domain, open, 3);
+    for (const f of ['lesson', 'tips', 'traps', 'desmos']) [].concat(sk[f] || []).forEach(t => add('SAT', sk.name, t, open, 1)); }
+  if (SATLIB) for (const [f, name] of [['desmos', 'Desmos playbook'], ['formulas', 'SAT formulas']]) [].concat(SATLIB[f] || []).forEach(t => add('SAT', name, typeof t === 'string' ? t : Object.values(t).join(' · '), () => { S.satTab = 'math'; S.satSkill = null; goView('sat'); }, 1));
+  SEARCH_IDX = { s: STUDY, l: SATLIB, items };
+  return items;
+}
+function searchFor(q) {
+  const tk = norm(q).split(/\s+/).filter(Boolean); if (!tk.length) return [];
+  const res = [];
+  for (const it of searchIndex()) {
+    if (!tk.every(t => it.nt.includes(t) || it.nx.includes(t))) continue;
+    const inTitle = tk.every(t => it.nt.includes(t));
+    let sn = it.text;
+    if (it.text.length > 110) { const at = Math.max(0, it.nx.indexOf(tk.find(t => it.nx.includes(t)) || tk[0])); const a = Math.max(0, at - 40); sn = (a ? '…' : '') + it.text.slice(a, a + 130) + (a + 130 < it.text.length ? '…' : ''); }
+    res.push({ it, sn, sc: it.w + (inTitle ? 2 : 0) });
+  }
+  return res.sort((a, b) => b.sc - a.sc).slice(0, 40);
+}
+function openSearch() {
+  if (!S.brief) return;
+  document.querySelectorAll('.modal').forEach(m => m.remove());
+  let res = [], sel = 0;
+  const inp = el('input', { type: 'search', placeholder: 'Chercher une notion, un auteur, une formule, a SAT skill…', autocomplete: 'off', 'aria-label': 'Search' });
+  const list = el('div', { class: 'search-res', role: 'listbox' });
+  const close = () => m.remove();
+  const pick = i => { const r = res[i]; if (!r) return; close(); r.it.go(); };
+  const draw = () => { list.innerHTML = '';
+    if (!inp.value.trim()) list.append(el('p', { class: 'empty', style: { padding: '8px 10px' }, text: 'Tout le site : cours, fiches, questions, méthodes, exercices Python et SAT skills.' }));
+    else if (!res.length) list.append(el('p', { class: 'empty', style: { padding: '8px 10px' }, text: 'Aucun résultat.' }));
+    res.forEach((r, i) => list.append(el('button', { type: 'button', class: i === sel ? 'on' : '', role: 'option', onclick: () => pick(i) }, el('span', { class: 'chip', text: r.it.kind }), el('span', {}, el('b', { text: r.it.title }), r.sn ? el('span', { class: 'sn', text: r.sn }) : null))));
+    const on = list.querySelector('.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest' }); };
+  inp.addEventListener('input', () => { res = searchFor(inp.value); sel = 0; draw(); });
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(res.length - 1, sel + 1); draw(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(0, sel - 1); draw(); }
+    else if (e.key === 'Enter') { e.preventDefault(); pick(sel); }
+    else if (e.key === 'Escape') close();
+  });
+  const m = el('div', { class: 'modal search', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Search' }, el('div', { class: 'card search-card' }, inp, list));
+  m.addEventListener('click', e => { if (e.target === m) close(); });
+  document.body.append(m); draw(); setTimeout(() => inp.focus(), 0);
 }
 
 /* ================= NEWS ================= */
@@ -1588,6 +1877,7 @@ function tick() {
       nx.with ? el('div', { class: 'muted', style: { fontSize: '13px', marginTop: '2px' }, text: nx.with }) : null,
       el('div', { class: 'form-row', style: { marginTop: '14px' } }, nx.join_url ? el('a', { class: 'btn solid', href: nx.join_url, text: 'Join call' }) : null, nx.url ? el('a', { class: 'btn', href: nx.url, text: nx.rsvp === 'needsAction' ? 'Reply to invite' : 'Open event' }) : null));
   }
+  const rt = $('#rev-time'); if (rt && S.rev && !S.rev.done) rt.textContent = mmss(Math.round((Date.now() - S.rev.start) / 1000));
   const nl = $('#tt-now'); if (nl) nl.style.top = (z.h - +nl.dataset.min) * +nl.dataset.hr + 'px';
   // timer
   const tt = $('#tm-time');
@@ -1601,14 +1891,25 @@ function tick() {
 
 /* ================= boot ================= */
 document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openSearch(); return; }
   if (e.metaKey || e.ctrlKey || e.altKey || e.target.matches('input, textarea, select')) return;
+  if (e.key === '/') { e.preventDefault(); openSearch(); return; }
+  if (S.view === 'review' && S.rev && !S.rev.done) {
+    if (e.key === 'Escape') { S.rev = null; rerender(true); return; }
+    if (!S.rev.shown) { if ((e.key === ' ' || e.key === 'Enter') && !e.target.matches('button, a')) { e.preventDefault(); S.rev.shown = true; rerender(); } }
+    else if ('123'.includes(e.key)) answerRev(['ko', 'mid', 'ok'][+e.key - 1]);
+    return;
+  }
   const v = VIEWS.find(v => v[2] === e.key); if (v) location.hash = v[0];
 });
 window.addEventListener('hashchange', route);
 (function () { const apply = t => { document.documentElement.dataset.theme = t; $('#theme-btn').textContent = t === 'dark' ? 'Light mode' : 'Dark mode'; };
   apply(local.get('theme', 'light')); $('#theme-btn').addEventListener('click', () => { const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; local.set('theme', t); apply(t); }); })();
 $('#sync').addEventListener('click', syncDialog);
+$('#search-btn').addEventListener('click', () => openSearch());
 $('#lock-btn').addEventListener('click', () => { local.set('pw', ''); location.reload(); });
+if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+document.addEventListener('visibilitychange', () => { if (!document.hidden && S.brief && S.brief.date < todayYmd() && zoned(new Date()).h >= 7.2 && !S.rev) location.reload(); });
 loadBrief();
 setInterval(tick, 1000);
 tick();
