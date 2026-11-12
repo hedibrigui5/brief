@@ -1367,12 +1367,19 @@ function vChapter(subj, D, c) {
   const st = studyState();
   const tabs = D.static ? [['recap', 'Cours'], ['methods', 'Méthodes'], ['exercises', `Exercices (${(c.exercises || []).length})`]] : [['recap', 'Rappels de cours'], ['methods', 'Méthodes clés'], ['questions', 'Questions de cours'], ['auto', 'Automatismes'], ['bac', subj === 'ses' ? 'Conseils épreuve' : 'Conseils bac']];
   if (c.project) tabs.unshift(['project', 'Évaluation']);
+  if (c.fiche) tabs.splice(tabs.findIndex(t => t[0] === 'recap') + 1, 0, ['fiche', 'Fiche de révision']);
   const tab = S.studyTab[subj] || tabs[0][0];
   v.append(el('button', { class: 'btn sm ghost', style: { marginBottom: '14px' }, onclick: () => { S.studyCh[subj] = null; rerender(true); }, text: '← Tous les chapitres' }));
   v.append(pageHead(`${D.title} · chapitre ${c.n}`, c.title, null));
   v.append(el('div', { class: 'filters tabs', role: 'tablist', style: { marginBottom: '16px' } }, tabs.map(([id, name]) => el('button', { role: 'tab', 'aria-pressed': tab === id ? 'true' : 'false', onclick: () => { S.studyTab[subj] = id; rerender(); }, text: name }))));
   const body = el('div', { class: 'card' });
   if (tab === 'recap') body.append(el('div', { class: 'card-h' }, el('h2', { text: 'Rappels de cours' })), el('ol', { class: 'recap' }, c.recap.map(t => el('li', {}, rich(t)))));
+  if (tab === 'fiche' && c.fiche) {
+    body.append(el('div', { class: 'card-h' }, el('h2', { text: 'Fiche de révision' }), el('button', { class: 'btn sm ghost', onclick: () => window.print(), text: 'Imprimer' })));
+    if (c.fiche.intro) body.append(el('p', { style: { margin: '0 0 6px', fontWeight: '600' } }, rich(c.fiche.intro)));
+    for (const sec of c.fiche.sections || []) body.append(el('div', { class: 'label', style: { margin: '18px 0 8px', color: 'var(--brass)' }, text: sec.t }),
+      el('ul', { class: 'tips-list' }, sec.items.map(t => { const k = sec.def ? t.indexOf(' : ') : -1; return k > 0 ? el('li', {}, el('b', { text: t.slice(0, k) }), ...rich(t.slice(k))) : el('li', {}, rich(t)); })));
+  }
   if (tab === 'methods') body.append(el('div', { class: 'card-h' }, el('h2', { text: 'Méthodes les plus importantes' })), el('div', { class: 'methods' }, c.methods.map((t, i) => el('div', { class: 'method' }, el('span', { class: 'm-n num', text: i + 1 }), el('p', {}, rich(t))))));
   if (tab === 'questions') {
     const qs = c.questions || [];

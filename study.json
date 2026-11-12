@@ -724,17 +724,28 @@
    {
     "id": "croissance",
     "n": 1,
-    "title": "Sources et défis de la croissance économique",
+    "title": "Quels sont les sources et les défis de la croissance économique ?",
     "recap": [
-     "Croissance : augmentation durable de la production (PIB en volume). Sources : accumulation des facteurs (capital, travail) et productivité globale des facteurs (PGF).",
-     "La PGF s'explique par le progrès technique, lui-même endogène : il résulte d'investissements (R&D, capital humain, infrastructures) qui ont des effets externes (Romer).",
-     "Institutions : droits de propriété, cadre juridique, stabilité favorisent l'investissement et l'innovation (North).",
-     "Innovation et destruction créatrice (Schumpeter) : nouveaux produits et procédés, disparition d'activités, effets sur les inégalités de revenus.",
-     "Limites écologiques : épuisement des ressources, pollution. Soutenabilité faible (capitaux substituables) vs forte (capital naturel à préserver)."
+     "Introduction — La croissance économique est l'augmentation soutenue de la production d'un pays ; on la mesure par la hausse du PIB (en volume). Elle compte parce qu'en produisant plus, une nation s'enrichit et distribue davantage de revenus. Adam Smith cherchait déjà en 1776 à expliquer la hausse des richesses produites par une nation.",
+     "I. A — L'accumulation des facteurs travail et capital. La dynamique démographique augmente le facteur travail ; l'investissement permet d'accumuler du capital (machines, équipements). Double effet de l'investissement : à court terme il augmente la demande de biens et services, à long terme il augmente l'offre (capacités de production). Plus de travail, c'est aussi plus de revenus distribués, donc plus de consommation.",
+     "I. B — Le rôle du progrès technique. La productivité marginale des facteurs est décroissante : chaque unité supplémentaire de travail ou de capital augmente la production, mais de moins en moins. Sans autre source de croissance, l'économie tend vers l'état stationnaire (croissance nulle). Le progrès technique permet de le dépasser : il améliore la combinaison productive et dégage des gains de productivité (produire plus ou mieux avec les mêmes quantités de facteurs).",
+     "Croissance extensive et intensive. Extensive : elle vient de l'augmentation des quantités de facteurs (travail, capital). Intensive : elle vient d'une meilleure utilisation de ces facteurs, c'est-à-dire de la hausse de la productivité globale des facteurs (PGF), permise par le progrès technique.",
+     "I. C — Le progrès technique est endogène (synthèse à faire en classe). Il n'est pas un « résidu » tombé du ciel : il résulte des décisions des agents économiques. Les investissements en recherche-développement, en capital humain (Lucas), en connaissances (Romer) et en infrastructures publiques produisent des externalités positives : ils profitent à d'autres que ceux qui les financent. La croissance s'auto-entretient : croissance → revenus → investissements → progrès technique → croissance.",
+     "II. A — Les innovations sont à l'origine du progrès technique. Selon Schumpeter, l'innovation prend plusieurs formes : innovation de procédé (méthodes de production), de produit (nouveau bien ou service), organisationnelle (nouvelle organisation du travail). On distingue aussi les innovations majeures (de rupture) et incrémentales (amélioration d'un produit existant). Elle provient avant tout de la R&D menée par les entreprises.",
+     "Effets de l'innovation sur la croissance. Côté demande : de nouveaux produits, plus innovants, séduisent les consommateurs qui achètent davantage. Côté offre : les innovations de procédé et d'organisation permettent de produire plus à coût égal ou moindre ; les gains de productivité financent l'investissement et de meilleurs salaires, qui nourrissent à leur tour la consommation. La croissance devient auto-entretenue.",
+     "II. B — Le rôle des institutions. Innover est long et coûteux : sans protection, personne n'y serait incité. L'État de droit met l'innovateur en confiance. Institutions formelles : lois, système juridique, monnaie. Institutions informelles : réseaux d'entreprises, culture de l'innovation, confiance. Le brevet protège l'innovation de la copie pendant 20 ans : ce monopole temporaire permet d'augmenter le profit et de rentabiliser les dépenses de R&D.",
+     "II. C — La destruction créatrice (synthèse à faire en classe). Pour Schumpeter, l'innovation fait apparaître de nouvelles activités, entreprises et emplois, et rend obsolètes les anciennes, qui disparaissent. La croissance est donc un processus de renouvellement permanent, avec des gagnants et des perdants.",
+     "III. A — Progrès technique et inégalités de revenus entre catégories sociales. Les innovations procurent des rentes à leurs auteurs et augmentent la demande de travail qualifié : les salaires des emplois qualifiés montent, ceux des moins qualifiés stagnent ou baissent, d'où une hausse des inégalités. Mais la destruction créatrice fait aussi émerger de nouveaux entrepreneurs qui remplacent les anciens : elle renouvelle les grandes fortunes, ce qui limite les inégalités.",
+     "III. B — Inégalités entre territoires (synthèse à faire en classe). Les activités innovantes se concentrent dans certains territoires (métropoles, pôles technologiques) qui attirent emplois qualifiés et revenus, tandis que les territoires spécialisés dans des activités en déclin perdent des emplois.",
+     "III. C — Les limites écologiques (synthèse à faire en classe). Une croissance soutenable se heurte à l'épuisement des ressources, à la pollution et au réchauffement climatique.",
+     "III. D — L'innovation peut reculer ces limites : énergies et ressources renouvelables en amont, recyclage des déchets en aval, procédés moins polluants. Soutenabilité faible : le progrès technique permet de substituer du capital produit au capital naturel, donc la croissance peut continuer. Soutenabilité forte : malgré le progrès technique, la dégradation de l'environnement persiste ; il faut préserver le capital naturel, donc ralentir ou abandonner la croissance au profit d'autres modes de vie."
     ],
     "methods": [
-     "Chaîne : investissement en R&D → innovation → gains de productivité → baisse des coûts / hausse des revenus → hausse de la demande → croissance.",
-     "Distinguer variation absolue, taux de variation et coefficient multiplicateur en EC2."
+     "EC1 (mobilisation des connaissances) : définir les notions du sujet, expliquer le mécanisme étape par étape, illustrer par un exemple. C'est la méthode travaillée sur ce chapitre.",
+     "Chaîne « offre » : R&D → innovation de procédé → gains de productivité → baisse des coûts → hausse des profits et des salaires → investissement et consommation → croissance.",
+     "Chaîne « rendements décroissants » : accumulation de capital → productivité marginale décroissante → état stationnaire → seul le progrès technique (hausse de la PGF) relance la croissance.",
+     "Chaîne « institutions » : brevet → monopole temporaire (20 ans) → profit attendu → incitation à investir en R&D → innovation → croissance.",
+     "En EC2, distinguer variation absolue, taux de variation et coefficient multiplicateur ; une contribution à la croissance s'exprime en points de pourcentage."
     ],
     "questions": [
      [
@@ -748,6 +759,46 @@
      [
       "Soutenabilité faible et forte ?",
       "Faible : les capitaux sont substituables, on peut remplacer du capital naturel par du capital physique. Forte : une partie du capital naturel est irremplaçable et doit être préservée."
+     ],
+     [
+      "Comment mesure-t-on la croissance économique et pourquoi est-elle recherchée ?",
+      "Par la hausse du PIB en volume. Elle est recherchée parce qu'en produisant plus, un pays s'enrichit et distribue davantage de revenus. Piège : ne pas confondre croissance (quantitative) et développement (qualitatif)."
+     ],
+     [
+      "Explique le double effet de l'investissement sur la croissance.",
+      "À court terme, investir c'est acheter des biens d'équipement : la demande augmente. À long terme, le capital accumulé augmente les capacités de production : l'offre augmente."
+     ],
+     [
+      "Que signifie « la productivité marginale des facteurs est décroissante » ?",
+      "Chaque unité supplémentaire de travail ou de capital augmente la production totale, mais de moins en moins. À terme, l'accumulation seule ne produit plus de croissance : c'est l'état stationnaire. Piège : la production totale continue d'augmenter, c'est le supplément qui diminue."
+     ],
+     [
+      "Distingue croissance extensive et croissance intensive.",
+      "Extensive : hausse de la production due à l'augmentation des quantités de travail et de capital. Intensive : hausse due à une meilleure efficacité des facteurs, donc à la PGF et au progrès technique."
+     ],
+     [
+      "Quelles formes d'innovation Schumpeter distingue-t-il ?",
+      "Innovation de procédé (nouvelle méthode de production), de produit (nouveau bien), organisationnelle (nouvelle organisation du travail). On oppose aussi innovations majeures (de rupture) et incrémentales (améliorations)."
+     ],
+     [
+      "Montre que l'innovation agit à la fois sur l'offre et sur la demande.",
+      "Demande : de nouveaux produits attirent les consommateurs. Offre : procédés et organisation plus efficaces → gains de productivité → coûts plus bas, investissement et salaires plus élevés, qui relancent à leur tour la consommation. La croissance s'auto-entretient."
+     ],
+     [
+      "Pourquoi le brevet favorise-t-il l'innovation ?",
+      "Il protège l'innovation de la copie pendant 20 ans. Ce monopole temporaire garantit un profit qui rembourse les dépenses de R&D : l'entreprise est incitée à innover. Sans lui, l'innovation serait copiée et l'investissement non rentable."
+     ],
+     [
+      "Distingue institutions formelles et informelles et donne un exemple de chacune.",
+      "Formelles : règles écrites et organisations (lois, système juridique, monnaie, brevets). Informelles : normes non écrites (confiance, culture de l'innovation, réseaux d'entreprises)."
+     ],
+     [
+      "Comment le progrès technique peut-il accroître les inégalités de revenus ?",
+      "Il augmente la demande de travail qualifié : les salaires des qualifiés montent pendant que ceux des moins qualifiés stagnent ou baissent. Les innovateurs perçoivent en plus des rentes. Nuance du cours : la destruction créatrice renouvelle les fortunes et peut réduire certaines inégalités."
+     ],
+     [
+      "Comment l'innovation peut-elle reculer les limites écologiques de la croissance ?",
+      "En amont par l'exploitation de ressources renouvelables, en aval par le recyclage des déchets, et par des procédés et produits moins polluants. C'est l'argument de la soutenabilité faible ; les partisans de la soutenabilité forte répondent que la dégradation persiste malgré ces progrès."
      ]
     ],
     "auto": [
@@ -758,28 +809,132 @@
      [
       "Cite deux institutions favorables à la croissance.",
       "Les droits de propriété (dont la propriété intellectuelle) et un système juridique stable qui fait respecter les contrats."
+     ],
+     [
+      "Qu'est-ce que l'état stationnaire ?",
+      "Une situation de croissance nulle, atteinte quand l'accumulation des facteurs ne rapporte plus rien à cause des rendements décroissants."
+     ],
+     [
+      "Durée de protection d'un brevet ?",
+      "20 ans."
+     ],
+     [
+      "D'où provient avant tout l'innovation ?",
+      "De la recherche-développement (R&D) menée par les entreprises."
+     ],
+     [
+      "Innovation incrémentale : définition.",
+      "Amélioration d'un produit ou d'un procédé existant, par opposition à l'innovation majeure (de rupture)."
+     ],
+     [
+      "Trois limites écologiques de la croissance ?",
+      "Épuisement des ressources, pollution, réchauffement climatique."
+     ],
+     [
+      "Qui a écrit sur la richesse des nations en 1776 ?",
+      "Adam Smith."
      ]
     ],
     "bac": [
-     "Pour un sujet sur les limites écologiques, mobilise soutenabilité faible et forte et un exemple chiffré (émissions de CO₂, ressources)."
-    ]
+     "EC1 probables : « Montrez que le progrès technique est endogène », « Expliquez comment les institutions influent sur la croissance », « Montrez que l'innovation s'accompagne d'un processus de destruction créatrice ».",
+     "Sujets de raisonnement et de dissertation à préparer : « Quel est le rôle du progrès technique dans la croissance ? », « L'innovation permet-elle de reculer les limites écologiques de la croissance ? », « Le progrès technique est-il source d'inégalités ? ».",
+     "Méthodes corrigées par la professeure sur ce chapitre : dissertation sur les facteurs de production et EC3 sur le progrès technique endogène (sur le Padlet, rubrique Méthodes).",
+     "Pour un sujet sur les limites écologiques, oppose toujours soutenabilité faible et soutenabilité forte, avec un exemple concret (énergies renouvelables, recyclage)."
+    ],
+    "fiche": {
+     "intro": "Problématique : d'où vient la croissance économique, et à quels défis (inégalités, limites écologiques) se heurte-t-elle ?",
+     "sections": [
+      {
+       "t": "Plan du cours",
+       "items": [
+        "I. Les sources de la croissance : A. accumulation du travail et du capital · B. rôle du progrès technique · C. le progrès technique est endogène",
+        "II. Le rôle des innovations : A. les innovations à l'origine du progrès technique · B. le rôle des institutions · C. la destruction créatrice",
+        "III. Les défis de la croissance : A. inégalités entre catégories sociales · B. inégalités entre territoires · C. limites écologiques · D. l'innovation peut reculer ces limites"
+       ]
+      },
+      {
+       "t": "Notions à savoir définir",
+       "def": true,
+       "items": [
+        "Croissance économique : augmentation soutenue de la production, mesurée par la hausse du PIB en volume.",
+        "Accumulation des facteurs : augmentation des quantités de travail et de capital utilisées pour produire.",
+        "Investissement : achat de biens de production durables, qui accumule du capital.",
+        "Productivité : rapport entre la production et les facteurs utilisés pour l'obtenir.",
+        "Productivité globale des facteurs (PGF) : part de la croissance qui ne vient pas de la hausse des quantités de facteurs, mais de l'efficacité de leur combinaison.",
+        "Progrès technique : ensemble des innovations qui améliorent l'efficacité de la combinaison productive.",
+        "Croissance extensive : croissance obtenue par l'augmentation des quantités de facteurs.",
+        "Croissance intensive : croissance obtenue par la hausse de la PGF.",
+        "Croissance endogène : croissance qui s'auto-entretient parce que le progrès technique résulte des investissements des agents (R&D, capital humain, infrastructures).",
+        "Innovation : application économique d'une invention (produit, procédé, organisation).",
+        "Destruction créatrice : remplacement permanent des activités anciennes par des activités nouvelles sous l'effet de l'innovation.",
+        "Développement durable : développement qui répond aux besoins du présent sans compromettre ceux des générations futures."
+       ]
+      },
+      {
+       "t": "Mécanismes à savoir dérouler",
+       "items": [
+        "Investissement → hausse de la demande à court terme + hausse des capacités de production à long terme → croissance.",
+        "Accumulation → productivité marginale décroissante → état stationnaire → besoin du progrès technique.",
+        "R&D → innovation → gains de productivité → baisse des coûts, hausse des profits et des salaires → investissement et consommation → croissance auto-entretenue.",
+        "Brevet → monopole temporaire → profit → incitation à innover.",
+        "Innovation → hausse de la demande de travail qualifié → écart de salaires → inégalités de revenus."
+       ]
+      },
+      {
+       "t": "Auteurs",
+       "def": true,
+       "items": [
+        "Adam Smith (1776) : premier à chercher les causes de la richesse des nations.",
+        "Joseph Schumpeter : l'innovation, portée par l'entrepreneur, est le moteur de la croissance ; elle s'accompagne d'une destruction créatrice.",
+        "Robert Solow : la croissance vient du capital, du travail et d'un « résidu », le progrès technique, qu'il considère comme exogène.",
+        "Paul Romer : le progrès technique est endogène ; les connaissances produisent des externalités positives.",
+        "Robert Lucas : rôle du capital humain dans la croissance endogène."
+       ]
+      },
+      {
+       "t": "Pièges classiques",
+       "items": [
+        "Confondre invention (découverte) et innovation (mise sur le marché).",
+        "Dire que les rendements décroissants font baisser la production : c'est le supplément de production qui diminue.",
+        "Oublier la nuance : la destruction créatrice crée des inégalités mais renouvelle aussi les fortunes.",
+        "Présenter la soutenabilité faible sans la soutenabilité forte (et inversement)."
+       ]
+      },
+      {
+       "t": "À compléter avec tes synthèses de classe",
+       "items": [
+        "I. C (progrès technique endogène), II. C (destruction créatrice), III. B (inégalités entre territoires) et III. C (limites écologiques) sont des synthèses à rédiger par les élèves : les lignes ci-dessus reprennent le programme officiel, vérifie-les avec ta propre synthèse et la fiche « progrès technique endogène » du Padlet."
+       ]
+      }
+     ]
+    }
    },
    {
     "id": "commerce",
     "n": 2,
-    "title": "Fondements du commerce international et internationalisation de la production",
+    "title": "Quels sont les fondements du commerce international et de l'internationalisation de la production ?",
     "current": true,
     "recap": [
-     "Avantages comparatifs (Ricardo) : chaque pays gagne à se spécialiser dans la production où il est relativement le plus efficace.",
-     "Dotations factorielles (modèle HOS) : un pays se spécialise dans les biens qui utilisent intensivement le facteur dont il est abondamment doté.",
-     "Commerce entre pays comparables : différenciation des produits (qualité, marque), recherche de diversité par les consommateurs, économies d'échelle. D'où le commerce intra-branche.",
-     "Fragmentation de la chaîne de valeur : les firmes multinationales répartissent les étapes de production selon les coûts, l'accès aux marchés et les compétences.",
-     "Compétitivité-prix (coûts, taux de change) et hors-prix (qualité, innovation, image).",
-     "Effets du commerce : gains (baisse des prix, diversité, productivité) mais inégalités de revenus internes (perdants dans les secteurs concurrencés) ; débat libre-échange / protectionnisme."
+     "Introduction — Le commerce international est l'ensemble des échanges de biens et de services entre espaces économiques nationaux. Aucun pays ne dispose de toutes les ressources pour produire tout ce que veulent ses consommateurs, et pour importer il faut exporter. Depuis 1945 le commerce croît plus vite que la production mondiale. Repères : OMC créée en 1995, Chine membre depuis 2001, ralentissement et tensions commerciales depuis la crise de 2008.",
+     "I. A. 1 — Adam Smith (1776) : les avantages absolus. L'échange permet la division du travail, qui augmente la productivité. Un pays a un avantage absolu quand il produit un bien avec moins de facteurs de production que les autres ; il doit s'y spécialiser et importer le reste. Smith s'oppose aux mercantilistes. Limite : un pays sans aucun avantage absolu serait exclu de l'échange.",
+     "I. A. 2 — David Ricardo (1817) : les avantages comparatifs. L'échange est mutuellement avantageux même si un pays est plus efficace dans les deux productions : chacun se spécialise là où il est le plus avantagé ou le moins désavantagé. Exemple : heures de travail par unité — Angleterre : drap 100, vin 120 ; Portugal : drap 90, vin 80. Coût relatif du drap : 1,125 unité de vin au Portugal contre 0,83 en Angleterre → l'Angleterre se spécialise dans le drap, le Portugal dans le vin. Gain : avec les mêmes heures, on passe de 2 draps + 2 vins à 2,2 draps + 2,125 vins.",
+     "I. A. 3 — Dotations factorielles et technologiques. Modèle HOS (Heckscher, Ohlin, Samuelson) : un pays se spécialise dans les biens qui utilisent intensivement son facteur relativement abondant, donc bon marché. Dotations technologiques : les pays riches en recherche et en main-d'œuvre qualifiée exportent des biens à forte valeur ajoutée. Les avantages comparatifs ne sont pas figés : ils se construisent (éducation, recherche, infrastructures, transferts de technologie) et un pays peut monter en gamme. Exemple : la Corée du Sud, du textile dans les années 1960 aux semi-conducteurs, navires, automobiles et smartphones. Paradoxe de Leontief (1953) : les États-Unis exportent des biens intensifs en travail, car ce travail est très qualifié (capital humain).",
+     "I. B — L'échange entre pays comparables. Les avantages comparatifs expliquent le commerce inter-branche (du vin contre du drap), mais mal le commerce intra-branche : échange croisé de produits similaires entre pays comparables (la France exporte des automobiles vers l'Allemagne et en importe). Trois explications : la différenciation des produits (horizontale : mêmes qualité et prix, caractéristiques différentes ; verticale : qualité et prix différents), le goût des consommateurs pour la diversité, et les économies d'échelle (Krugman, prix Nobel 2008). S'y ajoute la fragmentation de la chaîne de valeur, qui multiplie les échanges de biens intermédiaires.",
+     "II. A — Productivité des entreprises et compétitivité des pays. La compétitivité d'un pays est son aptitude à exporter, c'est-à-dire à conserver ou gagner des parts de marché. Ce sont les entreprises qui exportent : la compétitivité repose sur leur productivité. Compétitivité-prix : vendre moins cher (coûts de production, coût salarial unitaire, marges, taux de change). Compétitivité hors-prix : vendre indépendamment du prix (qualité, innovation, image de marque, design, service après-vente, délais). Coût salarial unitaire = coût salarial par salarié / productivité par salarié. Seules les entreprises les plus productives exportent, car elles peuvent supporter les coûts de l'exportation (Melitz, 2003). Exemple : l'automobile allemande exporte malgré des coûts salariaux élevés grâce à sa compétitivité hors-prix.",
+     "II. B — L'internationalisation de la chaîne de valeur. La chaîne de valeur est l'ensemble des étapes de production d'un bien, de la conception à la distribution. Les firmes multinationales la découpent et localisent chaque étape là où elle est la plus rentable, par des IDE (création ou rachat de filiales) ou par la sous-traitance internationale ; d'où des délocalisations depuis les années 1980. Rendue possible par la baisse des coûts de transport et de communication. Conception, R&D et marketing (forte valeur ajoutée) restent dans le pays d'origine ; fabrication et assemblage vont dans les pays à bas coûts (courbe du sourire). Exemple : l'iPhone, conçu en Californie, assemblé en Chine et en Inde par Foxconn avec des composants du Japon, de Corée du Sud, de Taïwan et des États-Unis.",
+     "Conséquence sur les échanges et leur mesure. Les biens intermédiaires traversent plusieurs fois les frontières : la fragmentation accroît les échanges internationaux. Les statistiques classiques comptent la valeur totale du bien à chaque passage (doubles comptes) ; l'OCDE et l'OMC mesurent donc aussi le commerce en valeur ajoutée (base TiVA), qui attribue à chaque pays la seule valeur qu'il a créée.",
+     "III. A — Des gains moyens et une réduction des inégalités entre pays. Trois effets : effet de dimension (spécialisation, économies d'échelle, effets d'apprentissage), effet de diversification (plus de choix pour consommateurs et producteurs), effet de concurrence (prix plus bas, incitation à innover). Résultat : baisse des prix et hausse du pouvoir d'achat. Le rattrapage des pays émergents d'Asie (Chine, Inde, Viêt Nam) a réduit les écarts de revenu moyen entre pays et sorti des centaines de millions de personnes de l'extrême pauvreté. Limite : l'Afrique subsaharienne, spécialisée dans les matières premières, en profite moins.",
+     "III. B — Un accroissement des inégalités de revenus au sein de chaque pays. Les gains sont inégalement répartis : il y a des gagnants et des perdants. Mécanisme : ouverture → concurrence des pays à bas salaires dans les secteurs intensifs en travail peu qualifié → délocalisations et suppressions d'emplois → baisse de la demande de travail peu qualifié → pression à la baisse sur les salaires des moins qualifiés → hausse des inégalités. Dans les pays développés, le travail peu qualifié est le facteur rare (modèle HOS, théorème de Stolper-Samuelson). Le progrès technique joue aussi. Pour aller plus loin : le « choc chinois » (Autor, Dorn, Hanson, 2013) et la courbe de l'éléphant (Milanovic).",
+     "III. C. 1 — Les arguments en faveur du protectionnisme. Protectionnisme éducateur de Friedrich List (1841) : protéger temporairement et de façon sélective les industries naissantes, le temps qu'elles deviennent compétitives, avant de revenir au libre-échange. Autres arguments : répondre à une concurrence jugée déloyale (coûts salariaux, protection sociale, normes environnementales), défendre l'emploi, préserver la souveraineté dans les secteurs stratégiques (énergie, médicaments, semi-conducteurs). Outils : mesures tarifaires (droits de douane) et non tarifaires (quotas, normes, subventions, procédures).",
+     "III. C. 2 — Les risques du protectionnisme. Pour les consommateurs : prix plus élevés, pouvoir d'achat et diversité en baisse. Pour les producteurs qui importent des biens intermédiaires : coûts en hausse, compétitivité en baisse. Mesures de rétorsion des partenaires : moins de débouchés et d'économies d'échelle (spirale des années 1930, loi Smoot-Hawley de 1930). Moins de concurrence : moins d'incitation à innover, donc moins de gains de productivité. Actualité : guerre commerciale États-Unis–Chine depuis 2018, relèvement des droits de douane américains en 2025."
     ],
     "methods": [
-     "Mécanisme Ricardo : spécialisation → production mondiale plus grande → échange → chaque pays consomme plus.",
-     "En EC2, distinguer exportations, importations, solde commercial et taux de couverture (X/M × 100)."
+     "Phrase de lecture : « Selon [source], en [année], [champ et signification de la donnée] s'élevait à [valeur et unité]. » On ne commence jamais par le chiffre.",
+     "L'écart entre deux pourcentages s'exprime en points de pourcentage, jamais en %. Taux de variation = (valeur d'arrivée − valeur de départ) / valeur de départ × 100.",
+     "Tableau à double entrée et coûts relatifs : 1) lire une donnée au croisement ligne-colonne ; 2) avantage absolu : comparer les pays dans une même colonne ; 3) coût relatif : dans un même pays, heures d'un bien / heures de l'autre bien ; 4) le pays au coût relatif le plus faible pour un bien y a l'avantage comparatif.",
+     "Solde commercial = exportations − importations de biens : excédent si X > M, déficit si X < M.",
+     "Coût salarial unitaire = coût salarial par salarié / productivité par salarié : un pays à salaires élevés reste compétitif si sa productivité est élevée.",
+     "Mesure en valeur ajoutée : attribuer à chaque pays seulement la valeur qu'il a créée. Les exportations en valeur ajoutée sont toujours inférieures aux exportations brutes."
     ],
     "questions": [
      [
@@ -797,6 +952,74 @@
      [
       "Compétitivité-prix et hors-prix ?",
       "Prix : capacité à vendre moins cher (coûts, change). Hors-prix : capacité à vendre grâce à la qualité, l'innovation, le service, l'image de marque."
+     ],
+     [
+      "Définis l'avantage absolu et donne sa limite.",
+      "Un pays a un avantage absolu dans un bien quand il le produit avec moins de facteurs (moins d'heures de travail) que les autres pays (Smith, 1776). Limite : un pays sans aucun avantage absolu serait exclu de l'échange ; Ricardo y répond."
+     ],
+     [
+      "Avec l'exemple de Ricardo (Angleterre : drap 100 h, vin 120 h ; Portugal : drap 90 h, vin 80 h), qui se spécialise dans quoi ?",
+      "Coût relatif du drap : Portugal 90/80 = 1,125 vin ; Angleterre 100/120 ≈ 0,83 vin → l'Angleterre a l'avantage comparatif dans le drap. Coût relatif du vin : Portugal 80/90 ≈ 0,89 drap ; Angleterre 120/100 = 1,2 drap → le Portugal dans le vin. Piège : le Portugal a l'avantage absolu dans les deux biens, et il gagne quand même à se spécialiser."
+     ],
+     [
+      "Dans le même exemple, montre par le calcul que la spécialisation augmente la production totale.",
+      "Sans échange : 2 draps et 2 vins avec 220 h (Angleterre) et 170 h (Portugal). Avec spécialisation : Angleterre 220/100 = 2,2 draps ; Portugal 170/80 = 2,125 vins. Même quantité de travail, production totale plus élevée."
+     ],
+     [
+      "Exercice du cours : heures par unité — pays A : ordinateur 4, blé 6 ; pays B : ordinateur 12, blé 8. Avantages absolus, comparatifs et gain ?",
+      "A a l'avantage absolu dans les deux biens (4 < 12 et 6 < 8). Coût relatif d'un ordinateur : A 4/6 ≈ 0,67 blé, B 12/8 = 1,5 blé → A se spécialise dans les ordinateurs. Coût relatif du blé : A 6/4 = 1,5 ordinateur, B 8/12 ≈ 0,67 → B se spécialise dans le blé. Sans échange : 2 ordinateurs + 2 blés (A 10 h, B 20 h). Avec spécialisation : A 10/4 = 2,5 ordinateurs, B 20/8 = 2,5 blés."
+     ],
+     [
+      "Explique le modèle HOS.",
+      "Un pays se spécialise dans les biens dont la production utilise intensivement son facteur relativement abondant : ce facteur est bon marché, donc ces biens sont produits à moindre coût."
+     ],
+     [
+      "Montre que les avantages comparatifs ne sont pas figés.",
+      "Ils peuvent être construits par l'investissement dans l'éducation, la recherche et les infrastructures, et par les transferts de technologie : un pays monte en gamme. Exemple : la Corée du Sud, passée du textile aux semi-conducteurs, navires, automobiles et smartphones."
+     ],
+     [
+      "Distingue différenciation horizontale et verticale.",
+      "Horizontale : produits de qualité et de prix comparables, mais aux caractéristiques différentes (design, marque, options). Verticale : produits de niveaux de qualité et de prix différents (gammes)."
+     ],
+     [
+      "Pourquoi des pays comparables échangent-ils des produits similaires ? (EC1 du cours)",
+      "Goût des consommateurs pour la diversité et différenciation des produits ; économies d'échelle : chaque pays se spécialise dans certaines variétés produites en grande quantité à coût unitaire plus faible (Krugman) ; fragmentation de la chaîne de valeur (biens intermédiaires). Exemple : l'automobile entre la France et l'Allemagne."
+     ],
+     [
+      "Montre que la productivité des entreprises est une source de compétitivité pour un pays. (EC1 du cours)",
+      "Une entreprise plus productive a un coût unitaire plus faible (compétitivité-prix) et dégage des ressources pour innover et monter en gamme (compétitivité hors-prix). Seules les plus productives peuvent supporter les coûts de l'exportation. La compétitivité du pays dépend donc de son tissu d'entreprises productives."
+     ],
+     [
+      "En 2018 le coût horaire du travail dans l'industrie est plus élevé en Allemagne qu'en France, et l'Allemagne exporte davantage. Pourquoi ?",
+      "Ce qui compte est le coût rapporté à la productivité (coût salarial unitaire), et surtout la compétitivité hors-prix : qualité, fiabilité et image des produits allemands, positionnés haut de gamme."
+     ],
+     [
+      "Quel est l'effet d'une dépréciation de la monnaie nationale sur la compétitivité ?",
+      "Elle rend les exportations moins chères en devises étrangères : la compétitivité-prix s'améliore."
+     ],
+     [
+      "À l'aide d'un exemple, montre que la fragmentation de la chaîne de valeur accroît les échanges internationaux. (EC1 du cours)",
+      "Les firmes multinationales localisent chaque étape dans le pays le plus rentable (IDE, sous-traitance). Les composants et biens intermédiaires franchissent donc plusieurs frontières avant le produit fini. Exemple : l'iPhone, conçu en Californie, composants du Japon, de Corée du Sud, de Taïwan et des États-Unis, assemblage en Chine et en Inde."
+     ],
+     [
+      "Document 10 du cours : la France vend 3 000 de moteurs à l'Espagne, qui vend 5 000 de voitures au Portugal. Mesure brute et mesure en valeur ajoutée ?",
+      "Brute : 3 000 + 5 000 = 8 000. En valeur ajoutée : France → Portugal 2 000, Espagne → Portugal 2 000, soit 4 000. L'écart vient des doubles comptes : la valeur des moteurs est comptée une seconde fois dans les voitures."
+     ],
+     [
+      "Présente les trois effets à l'origine des gains du commerce international.",
+      "Effet de dimension : spécialisation, production à plus grande échelle, économies d'échelle et apprentissage. Effet de diversification : plus de variétés pour les consommateurs et de biens de production pour les entreprises. Effet de concurrence : prix plus bas et incitation à innover."
+     ],
+     [
+      "Présente deux effets du commerce international sur les inégalités. (EC1 du cours)",
+      "Entre pays, les inégalités se réduisent : le rattrapage des pays émergents d'Asie rapproche les revenus moyens. Au sein de chaque pays, elles augmentent : dans les pays développés, les travailleurs peu qualifiés des secteurs concurrencés perdent emplois et salaires, tandis que les qualifiés et les détenteurs de capital gagnent."
+     ],
+     [
+      "Qu'est-ce que le protectionnisme éducateur ?",
+      "Thèse de Friedrich List (1841) : protéger temporairement et sélectivement les industries naissantes de la concurrence des pays plus avancés, le temps qu'elles se modernisent, avant de passer au libre-échange. Piège : ce n'est ni permanent ni général."
+     ],
+     [
+      "Cite quatre risques des politiques protectionnistes.",
+      "Hausse des prix et baisse du pouvoir d'achat des consommateurs ; hausse des coûts des entreprises qui importent des biens intermédiaires ; mesures de rétorsion des partenaires ; moindre incitation à innover, donc moins de gains de productivité."
      ]
     ],
     "auto": [
@@ -811,12 +1034,140 @@
      [
       "Pourquoi le commerce peut-il accroître les inégalités internes ?",
       "Les travailleurs des secteurs concurrencés par les importations perdent leur emploi ou voient leur salaire baisser, tandis que les secteurs exportateurs et les plus qualifiés gagnent."
+     ],
+     [
+      "Ouvrage et date de Ricardo ?",
+      "Principes de l'économie politique et de l'impôt, 1817."
+     ],
+     [
+      "Que signifie HOS ?",
+      "Heckscher, Ohlin, Samuelson : le modèle des dotations factorielles."
+     ],
+     [
+      "Formule du coût salarial unitaire ?",
+      "Coût salarial par salarié / productivité par salarié."
+     ],
+     [
+      "Définis un IDE.",
+      "Opération par laquelle une entreprise crée une filiale à l'étranger ou acquiert au moins 10 % du capital d'une entreprise étrangère."
+     ],
+     [
+      "Définis une délocalisation.",
+      "Transfert d'une activité du territoire national vers un pays étranger, pour réimporter les biens produits ou servir les mêmes marchés."
+     ],
+     [
+      "Que décrit la courbe du sourire ?",
+      "La valeur ajoutée est élevée en amont (recherche, conception) et en aval (marketing, services), faible au milieu (fabrication, assemblage)."
+     ],
+     [
+      "Mesures tarifaires et non tarifaires ?",
+      "Tarifaires : droits de douane. Non tarifaires : quotas, normes, subventions, procédures administratives."
+     ],
+     [
+      "Création de l'OMC ? Entrée de la Chine ?",
+      "1995 ; 2001."
+     ],
+     [
+      "Qui a montré que seules les firmes les plus productives exportent ?",
+      "Marc Melitz (2003)."
+     ],
+     [
+      "Que montre la courbe de l'éléphant ?",
+      "Entre 1988 et 2008, forts gains pour les classes moyennes des pays émergents et les 1 % les plus riches, stagnation pour les classes moyennes et populaires des pays riches (Milanovic)."
+     ],
+     [
+      "Qu'est-ce que le dumping ?",
+      "Vendre un produit à l'étranger moins cher que sur son marché national, voire en dessous de son coût de production."
      ]
     ],
     "bac": [
-     "Illustre chaque théorie par un exemple concret (Ricardo : vin et drap ; intra-branche : automobile en Europe).",
-     "Sur les effets du commerce, nuance toujours : gains globaux mais répartition inégale."
-    ]
+     "EC1 données par la professeure (4 points) : fragmentation de la chaîne de valeur et échanges ; productivité des entreprises et compétitivité ; commerce entre pays comparables ; deux effets du commerce international sur les inégalités.",
+     "Dissertations possibles données par la professeure : « Les avantages comparatifs suffisent-ils à expliquer le commerce international ? », « Le commerce international profite-t-il à tous ? », « Le protectionnisme est-il une réponse adaptée aux effets du commerce international ? ».",
+     "Illustre chaque théorie par l'exemple du cours : Ricardo (vin et drap), dotations construites (Corée du Sud), intra-branche (automobile France-Allemagne), hors-prix (automobile allemande), chaîne de valeur (iPhone), protectionnisme (Smoot-Hawley 1930, États-Unis–Chine depuis 2018).",
+     "Sur les effets du commerce, nuance toujours : gains en moyenne, mais gagnants et perdants à l'intérieur de chaque pays."
+    ],
+    "fiche": {
+     "intro": "Problématique : pourquoi les pays échangent-ils, pourquoi la production s'organise-t-elle à l'échelle mondiale, et qui y gagne ?",
+     "sections": [
+      {
+       "t": "Plan du cours",
+       "items": [
+        "I. Les fondements du commerce international : A. l'échange de produits différents (Smith, Ricardo, dotations factorielles et technologiques) · B. l'échange entre pays comparables",
+        "II. L'internationalisation de la production : A. productivité des entreprises et compétitivité des pays · B. l'internationalisation de la chaîne de valeur",
+        "III. Les effets du commerce international : A. gains moyens et réduction des inégalités entre pays · B. hausse des inégalités au sein de chaque pays · C. libre-échange ou protectionnisme"
+       ]
+      },
+      {
+       "t": "Notions à savoir définir",
+       "def": true,
+       "items": [
+        "Commerce international : ensemble des échanges de biens et de services entre espaces économiques nationaux.",
+        "Avantage absolu : produire un bien avec moins de facteurs de production que les autres pays.",
+        "Avantage comparatif : production pour laquelle un pays a le coût relatif le plus faible (là où il est le plus avantagé ou le moins désavantagé).",
+        "Spécialisation : concentration de la production d'un pays sur certains biens, qu'il exporte, en important les autres.",
+        "Dotations factorielles : abondance relative des facteurs de production d'un pays (travail, capital, terre, ressources).",
+        "Dotations technologiques : capacités de recherche, d'innovation et main-d'œuvre qualifiée d'un pays.",
+        "Commerce intra-branche : échange croisé de produits similaires d'une même branche entre deux pays.",
+        "Différenciation des produits : horizontale (caractéristiques différentes, qualité et prix comparables) ou verticale (qualité et prix différents).",
+        "Économies d'échelle : baisse du coût unitaire quand les quantités produites augmentent.",
+        "Compétitivité-prix : capacité à vendre moins cher que les concurrents pour un produit comparable.",
+        "Compétitivité hors-prix : capacité à vendre indépendamment du prix (qualité, innovation, image).",
+        "Chaîne de valeur : ensemble des étapes de la production d'un bien, de sa conception à sa distribution.",
+        "Firme multinationale : entreprise qui possède au moins une filiale à l'étranger.",
+        "Investissement direct à l'étranger (IDE) : création d'une filiale à l'étranger ou prise d'au moins 10 % du capital d'une entreprise étrangère.",
+        "Délocalisation : transfert d'une activité du territoire national vers l'étranger.",
+        "Libre-échange : politique qui vise à supprimer les obstacles aux échanges.",
+        "Protectionnisme : mesures qui protègent les producteurs nationaux de la concurrence étrangère."
+       ]
+      },
+      {
+       "t": "Mécanismes à savoir dérouler",
+       "items": [
+        "Spécialisation selon l'avantage comparatif → production totale plus élevée avec le même travail → échange → chaque pays consomme plus.",
+        "Facteur abondant → bon marché → biens qui l'utilisent produits à moindre coût → spécialisation (HOS).",
+        "Goût pour la variété + différenciation + économies d'échelle → commerce intra-branche entre pays comparables.",
+        "Productivité élevée → coût unitaire plus faible (prix) et ressources pour innover (hors-prix) → exportations → compétitivité du pays.",
+        "Baisse des coûts de transport et de communication → fragmentation de la chaîne de valeur par les FMN → biens intermédiaires qui traversent plusieurs frontières → hausse des échanges.",
+        "Ouverture → concurrence des pays à bas salaires → délocalisations → baisse de la demande de travail peu qualifié → pression sur les bas salaires → inégalités internes.",
+        "Droit de douane → hausse du prix des importations → hausse de la production nationale, mais consommateurs perdants, entreprises importatrices pénalisées, rétorsion."
+       ]
+      },
+      {
+       "t": "Auteurs",
+       "def": true,
+       "items": [
+        "Adam Smith (1776) : avantages absolus, division du travail.",
+        "David Ricardo (1817) : avantages comparatifs, exemple du vin et du drap.",
+        "Heckscher, Ohlin, Samuelson (HOS) : dotations factorielles.",
+        "Wassily Leontief (1953) : paradoxe, rôle du capital humain.",
+        "Paul Krugman (Nobel 2008) : différenciation, goût pour la variété, économies d'échelle.",
+        "Marc Melitz (2003) : seules les firmes les plus productives exportent.",
+        "Friedrich List (1841) : protectionnisme éducateur.",
+        "Autor, Dorn, Hanson (2013) : le choc chinois ; Branko Milanovic : la courbe de l'éléphant."
+       ]
+      },
+      {
+       "t": "Exemples et chiffres du cours",
+       "items": [
+        "Ricardo : Angleterre drap 100 h, vin 120 h ; Portugal drap 90 h, vin 80 h. Après spécialisation : 2,2 draps et 2,125 vins au lieu de 2 et 2.",
+        "Corée du Sud : du textile (années 1960) aux semi-conducteurs et smartphones.",
+        "Automobile France-Allemagne : commerce intra-branche ; automobile allemande : compétitivité hors-prix.",
+        "iPhone : conçu en Californie, assemblé en Chine et en Inde, composants d'Asie et des États-Unis.",
+        "Dates : OMC 1995, Chine à l'OMC 2001, crise de 2008, guerre commerciale États-Unis–Chine depuis 2018, loi Smoot-Hawley 1930."
+       ]
+      },
+      {
+       "t": "Pièges classiques",
+       "items": [
+        "Confondre avantage absolu et avantage comparatif : on compare des coûts relatifs, pas des heures.",
+        "Écrire un écart de pourcentages en % au lieu de points de pourcentage.",
+        "Dire que des salaires élevés empêchent d'exporter : c'est le coût salarial unitaire et le hors-prix qui comptent.",
+        "Confondre inégalités entre pays (qui se réduisent) et inégalités au sein des pays (qui augmentent).",
+        "Présenter le protectionnisme éducateur comme permanent ou général : il est temporaire et sélectif."
+       ]
+      }
+     ]
+    }
    },
    {
     "id": "chomage",
@@ -911,16 +1262,26 @@
    {
     "id": "structure",
     "n": 6,
-    "title": "Structure sociale de la société française",
+    "title": "Comment est structurée la société française actuelle ?",
     "recap": [
-     "Évolutions : salarisation, tertiarisation, élévation du niveau de qualification, féminisation des emplois.",
-     "Facteurs de structuration et de hiérarchisation : profession, revenu, diplôme, composition du ménage, position dans le cycle de vie, sexe, lieu de résidence.",
-     "Marx : classes définies par la place dans les rapports de production, classe en soi et classe pour soi (conscience, lutte).",
-     "Weber : stratification multidimensionnelle (ordres économique, social, politique : classes, groupes de statut, partis).",
-     "Débat : moyennisation et brouillage des frontières, ou persistance des classes (inégalités, entre-soi des classes supérieures)."
+     "Pour commencer — La société peut être représentée comme un espace social : un ensemble de positions plus ou moins proches ou éloignées. Certains facteurs rapprochent les individus qui ont des modes de vie semblables : ils structurent l'espace social. Comme certains sont mieux dotés ou plus reconnus que d'autres, ces facteurs le hiérarchisent aussi. L'ensemble de ces positions hiérarchisées forme la stratification sociale.",
+     "I. a — La position dans le cycle de vie. L'âge est un fait social : il influence les revenus, le prestige et l'accès au pouvoir. Le cycle de vie (études, emploi, famille, retraite) explique que le patrimoine augmente avec l'âge. Certaines inégalités sont donc temporaires.",
+     "I. b — La catégorie socioprofessionnelle. La nomenclature des PCS de l'Insee classe les actifs selon leur statut (indépendant ou salarié), leur position hiérarchique et leur secteur d'activité. Six groupes d'actifs : agriculteurs exploitants ; artisans, commerçants et chefs d'entreprise ; cadres et professions intellectuelles supérieures ; professions intermédiaires ; employés ; ouvriers. Exemple : les ouvriers sont beaucoup plus exposés au chômage que les cadres.",
+     "I. c — Revenu et composition du ménage. Le revenu classe les individus du moins riche au plus riche. Pour comparer des ménages de tailles différentes, on calcule le niveau de vie : revenu disponible du ménage divisé par le nombre d'unités de consommation. Les familles monoparentales, le plus souvent dirigées par une femme, sont plus exposées à la pauvreté car elles n'ont souvent qu'un seul revenu.",
+     "I. c — Diplôme, sexe, lieu de résidence. Le diplôme est un indicateur du capital culturel ; pour Bourdieu, il structure l'espace social avec le capital économique (revenu et patrimoine) : il conditionne l'accès aux emplois qualifiés et protège du chômage. Sexe : ségrégation horizontale (femmes et hommes n'occupent pas les mêmes emplois) et verticale (accès plus difficile aux postes élevés : plafond de verre) ; les femmes sont plus souvent à temps partiel. Lieu de résidence : à la fois marqueur de la position sociale et facteur qui l'influence ; vivre dans un quartier dévalorisé peut être stigmatisant. Ces facteurs sont liés et se cumulent : la structure sociale est multidimensionnelle.",
+     "II. a — Salarisation et tertiarisation. Salarisation : la part des salariés dans l'emploi passe de 72 % en 1962 à près de 90 % aujourd'hui, à cause du déclin des indépendants (concentration des exploitations agricoles, grande distribution) ; léger rebond du travail indépendant depuis les années 2000 avec le statut de micro-entrepreneur. Tertiarisation : le tertiaire passe d'un peu plus de 40 % des emplois en 1962 à plus des trois quarts, grâce aux gains de productivité plus forts dans l'agriculture et l'industrie et à la hausse de la demande de services.",
+     "II. b — Élévation du niveau de qualification et féminisation. Les cadres et professions intellectuelles supérieures passent de 4,7 % des emplois en 1962 à près de 18 % en 2016 ; la moitié des travailleurs n'avait aucun diplôme en 1980, contre deux sur dix en 2014 (massification scolaire). Les emplois peu qualifiés n'ont pas disparu : ils se sont déplacés vers les services, d'où une polarisation des emplois. Féminisation : les femmes représentent près de la moitié des personnes en emploi (scolarisation des filles, tertiarisation et salarisation, maîtrise de la fécondité, avancées juridiques). Elle reste inachevée : temps partiel et plafond de verre.",
+     "III. a — Karl Marx. Les classes sont définies par la place dans les rapports de production, c'est-à-dire la propriété ou non des moyens de production. La bourgeoisie les possède ; le prolétariat ne possède que sa force de travail, qu'il vend contre un salaire. Les capitalistes s'approprient la plus-value : c'est l'exploitation. Les intérêts sont opposés et la lutte des classes est le moteur de l'histoire. Classe en soi : mêmes conditions d'existence. Classe pour soi : conscience de classe et organisation. Marx prévoit une polarisation autour de deux classes. Approche réaliste : les classes sont des groupes réels.",
+     "III. b — Max Weber. Analyse multidimensionnelle : trois hiérarchies. Ordre économique : les classes, selon les chances d'accès aux biens et aux revenus sur le marché. Ordre social : les groupes de statut, selon le prestige, qui se traduit par un mode de vie. Ordre politique : les partis, en lutte pour le pouvoir. Approche nominaliste : les classes sont des regroupements construits par le sociologue. Les trois ordres peuvent coïncider (richesse → prestige → pouvoir) ou diverger : nouveau riche sans prestige, aristocrate désargenté, enseignant au prestige supérieur à ses revenus. La classe n'est qu'une dimension de la stratification chez Weber, alors qu'elle en est le fondement chez Marx.",
+     "IV. a — Distances inter-classes et intra-classes. Inter-classes : Henri Mendras défend dans les années 1980 la moyennisation (les modes de vie se rapprochent autour d'une vaste classe moyenne) ; Louis Chauvel montre au contraire un retour des classes sociales, car les inégalités de revenus et de patrimoine persistent. Intra-classes : le groupe ouvrier devient plus hétérogène avec la désindustrialisation, tandis qu'ouvriers et employés non qualifiés se rapprochent au sein des classes populaires.",
+     "IV. b, c, d — Identification subjective : deux tiers des Français avaient le sentiment d'appartenir à une classe en 1966, la moitié en 2003 ; beaucoup se disent « de classe moyenne ». Rapports sociaux de genre : assignation des femmes à des tâches moins valorisées (travail salarié et domestique), normes de genre, escalator de verre dont bénéficient les hommes dans les métiers « de femmes » ; classe et genre sont imbriqués. Individualisation : affaiblissement des collectifs de travail, individualisation des salaires, ce qui rend plus difficile le passage de la classe en soi à la classe pour soi.",
+     "Conclusion — Les classes sociales n'ont pas disparu, mais elles sont moins homogènes et moins conscientes d'elles-mêmes, et elles doivent être croisées avec le genre."
     ],
     "methods": [
-     "Pour un sujet « classes sociales », oppose arguments de pertinence et de non-pertinence avec des données (PCS, revenus, homogamie)."
+     "Dissertation : trouver et classer des arguments. Pour « classes sociales », range d'un côté ce qui confirme leur pertinence (inégalités persistantes, Chauvel, rapprochement des classes populaires), de l'autre ce qui la limite (moyennisation de Mendras, recul de l'identification subjective, individualisation, genre).",
+     "Niveau de vie = revenu disponible du ménage / nombre d'unités de consommation. C'est pourquoi le seuil de revenu pour appartenir à une catégorie change avec la composition du ménage.",
+     "Comparer Marx et Weber sur trois critères : nombre de dimensions (une / trois), nature des classes (réaliste / nominaliste), rôle du conflit (lutte des classes moteur de l'histoire / action collective seulement possible).",
+     "Citer une évolution, c'est donner deux dates et deux chiffres : « la part des salariés passe de 72 % en 1962 à près de 90 % aujourd'hui »."
     ],
     "questions": [
      [
@@ -930,17 +1291,183 @@
      [
       "Quels sont les trois ordres chez Weber ?",
       "Économique (classes), social (groupes de statut fondés sur le prestige), politique (partis)."
+     ],
+     [
+      "Qu'appelle-t-on l'espace social et la stratification sociale ?",
+      "L'espace social est l'ensemble des positions sociales, plus ou moins proches ou éloignées les unes des autres. La stratification sociale est l'ensemble de ces positions une fois hiérarchisées."
+     ],
+     [
+      "Selon quels critères la nomenclature des PCS classe-t-elle les actifs ? Cite les six groupes.",
+      "Statut (indépendant ou salarié), position hiérarchique, secteur d'activité. Agriculteurs exploitants ; artisans, commerçants et chefs d'entreprise ; cadres et professions intellectuelles supérieures ; professions intermédiaires ; employés ; ouvriers."
+     ],
+     [
+      "Pourquoi le seuil de revenu d'une classe varie-t-il selon la composition du ménage ?",
+      "Parce qu'on raisonne en niveau de vie : revenu disponible divisé par le nombre d'unités de consommation. Un même revenu ne procure pas le même niveau de vie à une personne seule et à un couple avec enfant."
+     ],
+     [
+      "Explique la ségrégation horizontale et la ségrégation verticale.",
+      "Horizontale : femmes et hommes n'occupent pas les mêmes métiers ni les mêmes secteurs. Verticale : les femmes accèdent plus difficilement aux postes les plus élevés (plafond de verre)."
+     ],
+     [
+      "En quoi le lieu de résidence structure-t-il l'espace social ?",
+      "Il est un marqueur de la position sociale et un facteur qui l'influence : les territoires n'offrent pas les mêmes ressources, et habiter un quartier dévalorisé peut être stigmatisant et compliquer l'accès à l'emploi."
+     ],
+     [
+      "Présente la salarisation et ses causes.",
+      "Part des salariés dans l'emploi : 72 % en 1962, près de 90 % aujourd'hui. Cause : déclin des indépendants (concentration des exploitations agricoles, essor de la grande distribution). Nuance : léger rebond du travail indépendant depuis les années 2000 (micro-entrepreneurs)."
+     ],
+     [
+      "Présente la tertiarisation et ses causes.",
+      "Le tertiaire passe d'un peu plus de 40 % des emplois en 1962 à plus des trois quarts. Causes : gains de productivité plus élevés dans l'agriculture et l'industrie, qui réduisent leurs besoins en main-d'œuvre, et forte hausse de la demande de services."
+     ],
+     [
+      "Montre que le niveau de qualification s'est élevé sans faire disparaître les emplois peu qualifiés.",
+      "Cadres : 4,7 % des emplois en 1962, près de 18 % en 2016 ; sans diplôme : la moitié des travailleurs en 1980, deux sur dix en 2014. Mais les emplois peu qualifiés se sont déplacés vers les services (commerce, aide à la personne, logistique) : on parle de polarisation des emplois."
+     ],
+     [
+      "Quels facteurs expliquent la féminisation des emplois ? Pourquoi reste-t-elle inachevée ?",
+      "Scolarisation des filles, tertiarisation et salarisation, maîtrise de la fécondité, avancées juridiques. Inachevée : les femmes sont beaucoup plus souvent à temps partiel et accèdent moins aux postes les plus élevés. (Question type bac donnée par la professeure.)"
+     ],
+     [
+      "Qu'est-ce que la plus-value chez Marx ?",
+      "La valeur créée par le travail des ouvriers au-delà de leur salaire, que s'approprient les capitalistes : c'est l'exploitation."
+     ],
+     [
+      "Pourquoi l'approche de Marx est-elle dite réaliste et celle de Weber nominaliste ?",
+      "Réaliste : les classes sont des groupes réels, qui existent indépendamment du sociologue. Nominaliste : les classes sont des regroupements construits par le sociologue à partir de critères, sans conscience commune nécessaire."
+     ],
+     [
+      "Donne un exemple où les trois ordres de Weber divergent.",
+      "Le nouveau riche : élevé dans l'ordre économique mais peu de prestige. L'aristocrate désargenté : prestige sans richesse. L'enseignant : prestige supérieur à ses revenus."
+     ],
+     [
+      "Oppose Mendras et Chauvel.",
+      "Mendras (années 1980) : moyennisation, les modes de vie se rapprochent autour d'une vaste classe moyenne. Chauvel : retour des classes sociales, car les inégalités de revenus et de patrimoine persistent."
+     ],
+     [
+      "Pourquoi faut-il articuler classes sociales et rapports sociaux de genre ?",
+      "Parce qu'ignorer le genre masque l'assignation des femmes à des tâches moins valorisées, le poids des normes de genre, l'escalator de verre et les écarts d'insertion entre diplômés et diplômées. Classe et genre sont imbriqués."
+     ],
+     [
+      "Comment l'individualisation fragilise-t-elle les classes sociales ?",
+      "L'affaiblissement des collectifs de travail et l'individualisation des salaires rendent plus difficile la prise de conscience d'intérêts communs : le passage de la classe en soi à la classe pour soi."
      ]
     ],
     "auto": [
      [
       "Cite trois évolutions de la structure socioprofessionnelle.",
       "Salarisation, tertiarisation, élévation des qualifications (et féminisation)."
+     ],
+     [
+      "Part des salariés dans l'emploi en 1962 et aujourd'hui ?",
+      "72 % en 1962, près de 90 % aujourd'hui."
+     ],
+     [
+      "Part des cadres dans l'emploi en 1962 et en 2016 ?",
+      "4,7 % en 1962, près de 18 % en 2016."
+     ],
+     [
+      "Formule du niveau de vie ?",
+      "Revenu disponible du ménage / nombre d'unités de consommation."
+     ],
+     [
+      "Qu'est-ce que le plafond de verre ?",
+      "L'obstacle invisible qui freine l'accès des femmes aux postes les plus élevés (ségrégation verticale)."
+     ],
+     [
+      "Qu'est-ce que l'escalator de verre ?",
+      "L'avantage de carrière dont bénéficient les hommes dans les métiers majoritairement féminins."
+     ],
+     [
+      "Les trois ordres de Weber et ce qu'on y trouve ?",
+      "Économique : classes. Social : groupes de statut. Politique : partis."
+     ],
+     [
+      "Sentiment d'appartenir à une classe : 1966 et 2003 ?",
+      "Deux tiers des Français en 1966, la moitié en 2003."
+     ],
+     [
+      "Qui défend la thèse de la moyennisation ?",
+      "Henri Mendras, dans les années 1980."
      ]
     ],
     "bac": [
-     "Utilise les PCS de l'INSEE avec des pourcentages précis."
-    ]
+     "Question type bac de la professeure (3,5 points) : « À l'aide de deux exemples, vous montrerez que la structure socioprofessionnelle française s'est transformée depuis la seconde moitié du XXe siècle. »",
+     "Question type bac de la professeure (3,5 points) : « Vous présenterez les facteurs qui expliquent la féminisation des emplois, puis vous montrerez qu'elle reste inachevée. »",
+     "Dissertation à préparer : « L'approche en termes de classes sociales est-elle encore pertinente pour rendre compte de la société française ? » Conclusion du cours : les classes n'ont pas disparu, mais elles sont moins homogènes, moins conscientes d'elles-mêmes, et à croiser avec le genre.",
+     "Donne toujours les chiffres du cours avec leurs dates (1962, 1980, 2003, 2014, 2016)."
+    ],
+    "fiche": {
+     "intro": "Problématique : quels facteurs structurent et hiérarchisent la société française, comment sa structure a-t-elle évolué, et peut-on encore la décrire en termes de classes sociales ?",
+     "sections": [
+      {
+       "t": "Plan du cours",
+       "items": [
+        "I. Les multiples facteurs de structuration et de hiérarchisation : cycle de vie · catégorie socioprofessionnelle · revenu, composition du ménage, lieu de résidence, sexe, diplôme",
+        "II. Les évolutions de la structure socioprofessionnelle : salarisation et tertiarisation · plus de femmes et plus d'actifs diplômés",
+        "III. Les théories des classes et de la stratification : Marx · Weber",
+        "IV. La pertinence de l'approche en classes : distances inter- et intra-classes · identification subjective · rapports sociaux de genre · individualisation"
+       ]
+      },
+      {
+       "t": "Notions à savoir définir",
+       "def": true,
+       "items": [
+        "Stratification sociale : ensemble des positions sociales hiérarchisées d'une société.",
+        "Classe sociale (au sens de Marx) : groupe défini par sa place dans les rapports de production (propriété ou non des moyens de production), qui devient pleinement une classe avec la conscience de classe.",
+        "Position dans le cycle de vie : étape de la vie où se trouve un individu (études, emploi, famille, retraite), qui influence ses revenus et son patrimoine.",
+        "Salarisation : hausse de la part des salariés dans l'emploi.",
+        "Tertiarisation : hausse de la part du secteur des services dans l'emploi.",
+        "Féminisation des emplois : hausse de la part des femmes dans l'emploi.",
+        "Distances inter-classes : écarts de conditions de vie entre les classes.",
+        "Distances intra-classes : écarts à l'intérieur d'une même classe.",
+        "Identification subjective à une classe : sentiment d'appartenir à une classe sociale.",
+        "Rapports sociaux de genre : rapports inégaux entre femmes et hommes, construits socialement."
+       ]
+      },
+      {
+       "t": "Chiffres à connaître",
+       "items": [
+        "Salariés : 72 % de l'emploi en 1962, près de 90 % aujourd'hui.",
+        "Tertiaire : un peu plus de 40 % des emplois en 1962, plus des trois quarts aujourd'hui.",
+        "Cadres et professions intellectuelles supérieures : 4,7 % en 1962, près de 18 % en 2016.",
+        "Travailleurs sans diplôme : la moitié en 1980, deux sur dix en 2014.",
+        "Femmes : près de la moitié des personnes en emploi.",
+        "Sentiment d'appartenir à une classe : deux tiers en 1966, la moitié en 2003."
+       ]
+      },
+      {
+       "t": "Marx et Weber en parallèle",
+       "items": [
+        "Critère : Marx, un seul (place dans les rapports de production) · Weber, trois ordres (économique, social, politique).",
+        "Groupes : Marx, bourgeoisie et prolétariat · Weber, classes, groupes de statut, partis.",
+        "Nature : Marx, réaliste (groupes réels, classe en soi puis pour soi) · Weber, nominaliste (catégories construites).",
+        "Conflit : Marx, la lutte des classes est le moteur de l'histoire · Weber, l'action collective est seulement plus probable quand classe et statut convergent."
+       ]
+      },
+      {
+       "t": "Auteurs",
+       "def": true,
+       "items": [
+        "Karl Marx : classes définies par les rapports de production, exploitation, lutte des classes.",
+        "Max Weber : stratification à trois dimensions (classes, groupes de statut, partis).",
+        "Pierre Bourdieu : l'espace social est structuré par le capital économique et le capital culturel.",
+        "Henri Mendras : moyennisation de la société française (années 1980).",
+        "Louis Chauvel : retour des classes sociales, les inégalités persistent.",
+        "Bernard Lahire et Serge Paugam : auteurs au programme du chapitre (à relier à tes notes de cours)."
+       ]
+      },
+      {
+       "t": "Pièges classiques",
+       "items": [
+        "Confondre PCS (outil statistique de l'Insee) et classes sociales (concept sociologique).",
+        "Confondre revenu et niveau de vie.",
+        "Dire que les emplois peu qualifiés ont disparu : ils se sont déplacés vers les services (polarisation).",
+        "Conclure que les classes ont disparu : le cours conclut qu'elles sont moins homogènes et moins conscientes d'elles-mêmes."
+       ]
+      }
+     ]
+    }
    },
    {
     "id": "ecole",
