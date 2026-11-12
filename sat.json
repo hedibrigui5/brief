@@ -1,0 +1,1037 @@
+{
+ "sections": {
+  "rw": {
+   "name": "Reading and Writing",
+   "modules": "2 modules × 27 questions × 32 min",
+   "pace": 71,
+   "domains": [
+    [
+     "Information and Ideas",
+     26,
+     "12–14"
+    ],
+    [
+     "Craft and Structure",
+     28,
+     "13–15"
+    ],
+    [
+     "Expression of Ideas",
+     20,
+     "8–12"
+    ],
+    [
+     "Standard English Conventions",
+     26,
+     "11–15"
+    ]
+   ],
+   "order_tip": "Questions appear grouped by type in the same order every module: Craft and Structure, then Information and Ideas, then Standard English Conventions, then Expression of Ideas. Conventions questions are the fastest points: never leave them for the last seconds."
+  },
+  "math": {
+   "name": "Math",
+   "modules": "2 modules × 22 questions × 35 min",
+   "pace": 95,
+   "domains": [
+    [
+     "Algebra",
+     35,
+     "13–15"
+    ],
+    [
+     "Advanced Math",
+     35,
+     "13–15"
+    ],
+    [
+     "Problem-Solving and Data Analysis",
+     15,
+     "5–7"
+    ],
+    [
+     "Geometry and Trigonometry",
+     15,
+     "5–7"
+    ]
+   ],
+   "order_tip": "Questions get harder within each module. About a quarter are student-produced responses: enter fractions or decimals, never mixed numbers, and negatives are allowed. Desmos is built in, so use it."
+  }
+ },
+ "formulas": [
+  "Given on the reference sheet: circle area πr² and circumference 2πr; rectangle ℓw; triangle ½bh; c² = a² + b²; special right triangles 30-60-90 (x, x√3, 2x) and 45-45-90 (s, s, s√2); volumes: box ℓwh, cylinder πr²h, sphere 4/3πr³, cone 1/3πr²h, pyramid 1/3ℓwh; 360° in a circle, 2π radians; triangle angles add to 180°.",
+  "NOT given, so memorize: slope (y₂ − y₁)/(x₂ − x₁); y = mx + b; point-slope form; distance √((x₂ − x₁)² + (y₂ − y₁)²); midpoint; quadratic formula and discriminant; vertex x = −b/2a; sum of roots −b/a and product c/a; circle (x − h)² + (y − k)² = r²; arc length (θ/360)·2πr; exponential a(1 ± r)ᵗ; percent change; SOH-CAH-TOA; sin x = cos(90° − x)."
+ ],
+ "desmos": [
+  "Systems: graph both equations and click the intersection.",
+  "Regressions: put data in a table and type y₁ ~ m x₁ + b (or y₁ ~ a·b^x₁ for exponentials).",
+  "Sliders: write an equation with a constant (k), let Desmos create a slider, and drag it to see the 'no solution' or 'one solution' value.",
+  "Quadratics: graph and click the vertex and the roots instead of solving by hand.",
+  "Statistics: mean(L), median(L), stdev(L) on a list L = [ … ].",
+  "Check equivalent expressions: graph both and see whether the curves overlap."
+ ],
+ "skills": [
+  {
+   "id": "rw-central",
+   "section": "rw",
+   "domain": "Information and Ideas",
+   "name": "Central Ideas and Details",
+   "lesson": [
+    "Asks for the main point of a short passage, or for a specific detail it states.",
+    "The central idea is what the WHOLE passage supports. It is often in the last sentence, or right after a pivot word such as however, yet or but.",
+    "For detail questions, the right answer is a close paraphrase of one specific line."
+   ],
+   "tips": [
+    "Before reading the choices, summarize the passage in 6 to 8 words.",
+    "Cross out choices that are true but too narrow (they cover one sentence only) or too broad (they go beyond the text).",
+    "When the passage pivots on 'however', the author's real point is usually after the pivot."
+   ],
+   "traps": [
+    "Choices that reuse the passage's exact words but change their meaning.",
+    "Extreme words (always, never, proves) that the passage doesn't support."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "For decades, researchers assumed that the decline of honeybee colonies was driven mainly by one class of pesticides. A 2019 field study by entomologist Rosa Ibáñez, however, tracked colonies in three climates. Losses were greatest where pesticide exposure coincided with poor forage diversity. Colonies exposed to the same pesticides but surrounded by varied flowering plants fared nearly as well as unexposed colonies.\n\nWhich choice best states the main idea of the text?",
+    "choices": [
+     "Researchers have stopped studying pesticides as a cause of colony decline.",
+     "Pesticides have no measurable effect on honeybee colonies.",
+     "Ibáñez's study suggests that the harm pesticides do to colonies depends heavily on how diverse the available forage is.",
+     "Honeybee colonies in different climates suffer equally from pesticide exposure."
+    ],
+    "answer": 2,
+    "explanation": "The study links losses to pesticides PLUS poor forage. 'No measurable effect' is too extreme, the climates point is never claimed, and nothing says research stopped."
+   }
+  },
+  {
+   "id": "rw-evidence-text",
+   "section": "rw",
+   "domain": "Information and Ideas",
+   "name": "Command of Evidence: Textual",
+   "lesson": [
+    "Asks which quotation or finding would support, weaken or illustrate a claim.",
+    "The right evidence matches EVERY part of the claim, not just its topic.",
+    "For a 'weaken' question, look for the finding that directly contradicts the claim's key part."
+   ],
+   "tips": [
+    "Underline the claim's key terms (who, what, when, compared with what).",
+    "Translate each choice into 'this would mean…' and check it against the claim.",
+    "Being on the same topic is not enough: the evidence has to prove the specific point."
+   ],
+   "traps": [
+    "Evidence that supports a different part of the passage than the one asked about.",
+    "Evidence that is true but only partly matches the claim (for example daytime when the claim is about nighttime)."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "A student claims that urban trees lower nighttime temperatures MORE than daytime temperatures.\n\nWhich finding, if true, would most directly support the student's claim?",
+    "choices": [
+     "Trees reduced daytime street temperatures by 3°C.",
+     "Neighborhoods with more trees had higher property values.",
+     "Residents said they preferred walking on tree-lined streets.",
+     "Tree-covered streets were 2°C cooler than treeless streets at noon and 4°C cooler at midnight."
+    ],
+    "answer": 3,
+    "explanation": "Only the first choice compares night and day, and it shows a bigger effect at night (4°C vs 2°C)."
+   }
+  },
+  {
+   "id": "rw-evidence-quant",
+   "section": "rw",
+   "domain": "Information and Ideas",
+   "name": "Command of Evidence: Quantitative",
+   "lesson": [
+    "Asks you to use data from a table or graph to complete or support a claim.",
+    "Graphs are reading questions: read the claim first, find the variable pair it talks about, then look ONLY at that data.",
+    "The answer must be both accurate to the graph AND relevant to the claim."
+   ],
+   "tips": [
+    "Read the title, axes, units and legend before looking at the numbers.",
+    "Cross out choices that state true data but don't address the claim.",
+    "Check that you're comparing the right group, year or category."
+   ],
+   "traps": [
+    "Choices that are accurate but irrelevant to the claim.",
+    "Comparing across the wrong rows or columns."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "Survey of reading habits (percent of each age group):\n• Ages 18–29: print books 62%, e-books 41%\n• Ages 30–49: print books 58%, e-books 46%\n• Ages 50–64: print books 55%, e-books 33%\n\nA researcher claims that e-book reading is NOT simply most common among the youngest adults. Which choice best uses data from the table to support the claim?",
+    "choices": [
+     "62% of adults aged 18–29 read print books.",
+     "46% of adults aged 30–49 read e-books, more than the 41% of adults aged 18–29.",
+     "Print book reading declines as age increases.",
+     "55% of adults aged 50–64 read print books."
+    ],
+    "answer": 1,
+    "explanation": "The claim is about e-books by age. Only the first choice shows an older group reading more e-books than the youngest."
+   }
+  },
+  {
+   "id": "rw-inferences",
+   "section": "rw",
+   "domain": "Information and Ideas",
+   "name": "Inferences",
+   "lesson": [
+    "Asks you to complete a passage with its most logical conclusion.",
+    "The right answer follows necessarily from what the passage says, without outside knowledge.",
+    "'Boring wins': the correct inference is usually modest and cautious."
+   ],
+   "tips": [
+    "Reread the sentence right before the blank and predict the conclusion yourself.",
+    "Reject any choice that needs information the passage doesn't give.",
+    "Prefer cautious wording ('may', 'only under some conditions') over sweeping claims."
+   ],
+   "traps": [
+    "Choices that go one step too far.",
+    "Choices that sound plausible in real life but aren't supported."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "In laboratory tests, a new coating prevented ice from forming on aircraft wings at temperatures down to −10°C. At −20°C, however, ice formed on coated and uncoated wings at the same rate. The engineers therefore concluded that the coating ______",
+    "choices": [
+     "increases ice formation at very low temperatures.",
+     "is less effective than uncoated wings at −20°C.",
+     "is effective against icing only within a limited temperature range.",
+     "will prevent all ice formation on aircraft in flight."
+    ],
+    "answer": 2,
+    "explanation": "It works down to −10°C and makes no difference at −20°C. 'Less effective than uncoated' is wrong because the rates were the SAME."
+   }
+  },
+  {
+   "id": "rw-wic",
+   "section": "rw",
+   "domain": "Craft and Structure",
+   "name": "Words in Context",
+   "lesson": [
+    "Asks for the most logical and precise word or phrase for a blank, or the meaning of a word as used.",
+    "Context clues: contrast (although, but), cause (because), definition (a colon or dash that explains).",
+    "Common words are often tested in a secondary meaning: 'check' = restrain, 'qualified' = limited, 'arrest' = stop."
+   ],
+   "tips": [
+    "Cover the choices and fill the blank with your own word first.",
+    "Check the tone: should the word be positive, negative or neutral?",
+    "Plug your choice back into the sentence and reread it."
+   ],
+   "traps": [
+    "Words that fit the topic but not the logic of the sentence.",
+    "Choices that are too strong or too weak for the context."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "Although the novelist's early books received glowing reviews, her later work met a more ______ reception: critics praised her style but questioned her plots.",
+    "choices": [
+     "hostile",
+     "measured",
+     "rapturous",
+     "indifferent"
+    ],
+    "answer": 1,
+    "explanation": "Praise mixed with doubts is a 'measured' reception. 'Rapturous' is too positive, 'hostile' too negative, and 'indifferent' doesn't fit critics who praised and criticized."
+   }
+  },
+  {
+   "id": "rw-structure",
+   "section": "rw",
+   "domain": "Craft and Structure",
+   "name": "Text Structure and Purpose",
+   "lesson": [
+    "Asks for the function of a sentence or the main purpose of the whole text.",
+    "Ask 'why did the author include this?' and answer with a verb: introduce, contrast, illustrate, qualify, challenge.",
+    "A purpose answer must fit the WHOLE text, not one sentence."
+   ],
+   "tips": [
+    "Label each sentence's job in 3 words in your head.",
+    "Be wary of strong verbs ('refute', 'prove', 'condemn') unless the text is that strong.",
+    "Watch for pivot words: they usually mark the sentence whose function is being asked about."
+   ],
+   "traps": [
+    "Describing the content instead of the function.",
+    "Purpose answers that only cover the first half of the passage."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "Many people assume that octopuses, because they live alone, lack social intelligence. Yet in 2023, researchers observed octopuses in a dense colony off the coast of Australia signaling to one another with arm postures and color changes.\n\nWhich choice best describes the function of the second sentence?",
+    "choices": [
+     "It describes how researchers locate octopus colonies.",
+     "It provides further support for the assumption in the first sentence.",
+     "It presents an observation that challenges a common assumption.",
+     "It explains why octopuses usually live alone."
+    ],
+    "answer": 2,
+    "explanation": "'Yet' introduces evidence of social behavior, which contradicts the assumption in the first sentence."
+   }
+  },
+  {
+   "id": "rw-crosstext",
+   "section": "rw",
+   "domain": "Craft and Structure",
+   "name": "Cross-Text Connections",
+   "lesson": [
+    "Two short texts. Asks how one author would respond to the other, or how they relate.",
+    "Each text carries only 2–3 ideas: find each author's position.",
+    "The usual relationships are agree, disagree, or qualify (agree in part, add a limit)."
+   ],
+   "tips": [
+    "Write a one-line summary of each text before reading the question.",
+    "Find the exact point Text 2 addresses in Text 1.",
+    "'Qualify' answers are very common: Text 2 accepts part of the claim but adds a condition."
+   ],
+   "traps": [
+    "Choices that exaggerate the disagreement.",
+    "Choices that attribute to an author something only the other one said."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "Text 1: Economist Lena Park argues that four-day workweeks raise productivity because rested employees make fewer errors.\n\nText 2: A 2024 trial at 60 firms found that output per hour rose under a four-day week. But total weekly output fell at firms whose work required constant customer coverage.\n\nBased on the texts, how would the author of Text 2 most likely respond to Park's argument?",
+    "choices": [
+     "By rejecting the idea that rest affects the number of errors employees make.",
+     "By arguing that customer coverage improves productivity.",
+     "By claiming that four-day workweeks always reduce output.",
+     "By agreeing that productivity per hour can rise, while noting that total output may fall in some kinds of firms."
+    ],
+    "answer": 3,
+    "explanation": "Text 2 confirms the per-hour gain (agrees) but adds a limit for some firms (qualifies). It never discusses errors and doesn't say 'always'."
+   }
+  },
+  {
+   "id": "rw-synthesis",
+   "section": "rw",
+   "domain": "Expression of Ideas",
+   "name": "Rhetorical Synthesis",
+   "lesson": [
+    "You get a student's bullet-point notes and must choose the sentence that achieves a stated goal.",
+    "Read the GOAL first: the answer must accomplish exactly that goal (emphasize a difference, introduce something to an unfamiliar audience, state a finding…).",
+    "Being accurate to the notes is necessary but not enough."
+   ],
+   "tips": [
+    "Read the question before the notes, and underline the goal's key words.",
+    "Cross out choices that are true but serve a different goal.",
+    "For 'audience unfamiliar with X', the right choice explains what X is."
+   ],
+   "traps": [
+    "Choices that mention every note but miss the goal.",
+    "Choices that address only half of a two-part goal."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "While researching a topic, a student has taken the following notes:\n• The Atacama Desert, in Chile, averages about 15 mm of rain per year.\n• The Sahara averages about 76 mm of rain per year.\n\nThe student wants to emphasize the difference in rainfall between the two deserts. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+    "choices": [
+     "Deserts receive little rain, and the Atacama is in Chile.",
+     "The Atacama receives about 15 mm of rain a year, roughly a fifth of the Sahara's 76 mm.",
+     "The Sahara averages about 76 mm of rain per year.",
+     "The Atacama and the Sahara are both deserts."
+    ],
+    "answer": 1,
+    "explanation": "Only the first choice compares the two amounts. The others state facts without showing the difference."
+   }
+  },
+  {
+   "id": "rw-transitions",
+   "section": "rw",
+   "domain": "Expression of Ideas",
+   "name": "Transitions",
+   "lesson": [
+    "Asks for the logical connector between two sentences or clauses.",
+    "Name the relationship first: contrast (however, nevertheless), cause/effect (therefore, consequently), addition (moreover, furthermore), example (for instance), sequence (subsequently, finally), concession (granted).",
+    "Read the sentence before AND after the blank."
+   ],
+   "tips": [
+    "Say the link out loud before reading the choices.",
+    "If two choices mean the same thing (therefore and thus), neither one is the answer.",
+    "'Nevertheless' = despite what was just said; 'however' = simple contrast."
+   ],
+   "traps": [
+    "Picking a transition from the right family but with the wrong nuance.",
+    "Reading only the sentence that contains the blank."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "The team's first prototype failed every durability test. ______ the engineers used the data from those failures to design a second version that passed all of them.",
+    "choices": [
+     "Similarly,",
+     "For example,",
+     "Nevertheless,",
+     "In other words,"
+    ],
+    "answer": 2,
+    "explanation": "Despite failing, they succeeded: that's concession/contrast, so 'Nevertheless'. Nothing is similar, exemplified or restated."
+   }
+  },
+  {
+   "id": "rw-boundaries",
+   "section": "rw",
+   "domain": "Standard English Conventions",
+   "name": "Boundaries",
+   "lesson": [
+    "Punctuation between and inside clauses.",
+    "Two independent clauses: join them with a period, a semicolon, or a comma + FANBOYS (for, and, nor, but, or, yet, so). A comma alone is a comma splice.",
+    "A colon follows a complete clause and introduces an explanation or a list. Nonessential information goes between two commas or two dashes (a matching pair).",
+    "Never put a comma between a subject and its verb, or between a verb and its object."
+   ],
+   "tips": [
+    "Find the subject and verb of each side: two complete clauses need strong punctuation.",
+    "Semicolon test: could you put a period there? Then a semicolon works.",
+    "Make sure paired punctuation matches: comma…comma or dash…dash, never comma…dash."
+   ],
+   "traps": [
+    "Comma splices that 'sound fine' when read aloud.",
+    "A colon after an incomplete clause ('The items are: …')."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "The museum's newest exhibit features more than 200 ______ most of them were donated by local families.",
+    "choices": [
+     "artifacts,",
+     "artifacts and",
+     "artifacts",
+     "artifacts;"
+    ],
+    "answer": 3,
+    "explanation": "Both sides are independent clauses. A comma alone is a splice, no punctuation is a run-on, and 'and' without a comma is also a run-on here. The semicolon is correct."
+   }
+  },
+  {
+   "id": "rw-form",
+   "section": "rw",
+   "domain": "Standard English Conventions",
+   "name": "Form, Structure, and Sense",
+   "lesson": [
+    "Grammar inside the sentence: subject–verb agreement, pronouns, verb tense, modifiers, possessives and plurals.",
+    "Agreement: find the TRUE subject and ignore phrases like 'of the …' and 'which …'. Collective nouns (team, committee, collection) are singular.",
+    "Modifiers: the noun right after the comma must be the one doing the action ('Walking home, the rain…' is wrong).",
+    "Possessives: its (possessive) vs it's (it is); their / there / they're."
+   ],
+   "tips": [
+    "Cross out prepositional phrases and nonessential clauses to find the subject.",
+    "Match the verb tense to time clues in the sentence (now, in 1990, has been).",
+    "For pronouns, find the noun they replace and check the number."
+   ],
+   "traps": [
+    "Agreeing the verb with the closest noun instead of the real subject.",
+    "Picking the plural pronoun 'their' for a singular collective noun."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "The collection of rare manuscripts, which scholars from three continents have studied, ______ now available online.",
+    "choices": [
+     "have been",
+     "is",
+     "are",
+     "were"
+    ],
+    "answer": 1,
+    "explanation": "The subject is 'collection' (singular), and 'now' calls for the present tense: 'is'."
+   }
+  },
+  {
+   "id": "m-lin1",
+   "section": "math",
+   "domain": "Algebra",
+   "name": "Linear equations in one variable",
+   "lesson": [
+    "Solve ax + b = cx + d by isolating x. Distribute first and combine like terms.",
+    "No solution: same x-coefficient on both sides but different constants (6x − 15 = 6x + 2).",
+    "Infinitely many solutions: both sides are identical after simplifying."
+   ],
+   "tips": [
+    "For 'no solution / infinitely many' questions, simplify both sides and compare the coefficients and the constants.",
+    "With fractions, multiply both sides by the common denominator first.",
+    "Check your answer by plugging it back in."
+   ],
+   "traps": [
+    "Distributing a negative sign to only the first term.",
+    "Mixing up the conditions for no solution and infinitely many solutions."
+   ],
+   "desmos": "Graph y = 3(2x − 5) and y = 6x + k with a slider for k: the lines coincide when k = −15.",
+   "challenge": {
+    "prompt": "In the equation 3(2x − 5) = 6x + k, k is a constant. For what value of k does the equation have infinitely many solutions?",
+    "choices": [
+     "15",
+     "−5",
+     "0",
+     "−15"
+    ],
+    "answer": 3,
+    "explanation": "3(2x − 5) = 6x − 15. The two sides are identical only if k = −15."
+   }
+  },
+  {
+   "id": "m-linfunc",
+   "section": "math",
+   "domain": "Algebra",
+   "name": "Linear functions",
+   "lesson": [
+    "f(x) = mx + b. The slope m is the rate of change and b is the initial value (f(0)).",
+    "Slope from two points: m = (y₂ − y₁)/(x₂ − x₁).",
+    "In context, interpret m as 'units of y per unit of x' and b as the starting amount."
+   ],
+   "tips": [
+    "Identify the starting value and the rate in word problems before writing the function.",
+    "A decreasing quantity means a negative slope.",
+    "Tables: equal steps in x with equal steps in y mean the relationship is linear."
+   ],
+   "traps": [
+    "Using the value at time t as the starting value.",
+    "Reversing the order in the slope fraction."
+   ],
+   "desmos": "Enter the points (0, 450) and (12, 270) in a table and run y₁ ~ m x₁ + b to get the slope and intercept.",
+   "challenge": {
+    "prompt": "A water tank contains 450 liters and drains at a constant rate. After 12 minutes, it holds 270 liters. Which function gives the volume V, in liters, after t minutes?",
+    "choices": [
+     "V(t) = 450 + 15t",
+     "V(t) = 270 − 15t",
+     "V(t) = 450 − 15t",
+     "V(t) = 450 − 12t"
+    ],
+    "answer": 2,
+    "explanation": "Rate = (450 − 270)/12 = 15 liters per minute, decreasing from 450."
+   }
+  },
+  {
+   "id": "m-lin2",
+   "section": "math",
+   "domain": "Algebra",
+   "name": "Linear equations in two variables",
+   "lesson": [
+    "Forms: y = mx + b (slope-intercept), ax + by = c (standard, slope = −a/b), y − y₁ = m(x − x₁) (point-slope).",
+    "Parallel lines have equal slopes; perpendicular lines have slopes whose product is −1.",
+    "Intercepts: set x = 0 for the y-intercept and y = 0 for the x-intercept."
+   ],
+   "tips": [
+    "Convert to y = mx + b to read the slope quickly.",
+    "For perpendicular lines, flip the slope and change its sign.",
+    "Check which point satisfies an equation by plugging it in."
+   ],
+   "traps": [
+    "Using the reciprocal without changing the sign for perpendicular lines.",
+    "Sign errors when computing −a/b."
+   ],
+   "desmos": "Graph 4x − 6y = 9 and y − 5 = −1.5(x − 2), then click the y-intercept.",
+   "challenge": {
+    "prompt": "Line ℓ is perpendicular to the line 4x − 6y = 9 and passes through the point (2, 5). What is the y-intercept of line ℓ?",
+    "choices": [
+     "2",
+     "5",
+     "8",
+     "11"
+    ],
+    "answer": 2,
+    "explanation": "4x − 6y = 9 has slope 2/3, so ℓ has slope −3/2. Then y − 5 = −3/2(x − 2), so y = −1.5x + 8."
+   }
+  },
+  {
+   "id": "m-systems",
+   "section": "math",
+   "domain": "Algebra",
+   "name": "Systems of two linear equations",
+   "lesson": [
+    "Solve by substitution or elimination. The solution is the intersection point of the two lines.",
+    "No solution: same slope, different intercepts (parallel lines). For ax + by = c and dx + ey = f, that means a/d = b/e ≠ c/f.",
+    "Infinitely many solutions: the equations are proportional (same line)."
+   ],
+   "tips": [
+    "Elimination is fastest when one variable's coefficients are equal or opposite.",
+    "For 'no solution', set the coefficient ratios equal and check that the constants' ratio is different.",
+    "Word problems: define both variables in writing before setting up the equations."
+   ],
+   "traps": [
+    "Forgetting to check the constants' ratio in 'no solution' questions.",
+    "Answering with x when the question asks for x + y or for y."
+   ],
+   "desmos": "Graph both equations with a slider on a and look for the value where the lines become parallel.",
+   "challenge": {
+    "prompt": "In the system below, a is a constant.\nax + 3y = 7\n4x + 6y = 9\nFor what value of a does the system have no solution?",
+    "choices": [
+     "4",
+     "6",
+     "3",
+     "2"
+    ],
+    "answer": 3,
+    "explanation": "No solution needs a/4 = 3/6, so a = 2. Then 7/9 ≠ 3/6, so the lines are parallel and distinct."
+   }
+  },
+  {
+   "id": "m-ineq",
+   "section": "math",
+   "domain": "Algebra",
+   "name": "Linear inequalities in one or two variables",
+   "lesson": [
+    "Solve like an equation, but FLIP the sign when you multiply or divide by a negative number.",
+    "Translate words: 'at least' is ≥, 'at most' / 'no more than' is ≤, 'more than' is >.",
+    "In two variables, the solution set is a half-plane (dashed boundary for < and >, solid for ≤ and ≥)."
+   ],
+   "tips": [
+    "Test a point such as (0, 0) to see which side of the line is shaded.",
+    "In word problems, use the constraint first (the minimum you have to buy), then share out what's left.",
+    "The answer to 'maximum number of items' is a whole number: round DOWN."
+   ],
+   "traps": [
+    "Rounding up when the question asks for a maximum.",
+    "Forgetting to flip the inequality."
+   ],
+   "desmos": "Graph 4x + 1.5y ≤ 60 and y ≥ 10 and look at the largest x in the overlapping region.",
+   "challenge": {
+    "prompt": "A student has $60 to spend on notebooks costing $4 each and pens costing $1.50 each. The student must buy at least 10 pens. What is the maximum number of notebooks the student can buy?",
+    "choices": [
+     "11",
+     "12",
+     "15",
+     "10"
+    ],
+    "answer": 0,
+    "explanation": "4n + 1.5p ≤ 60 with p ≥ 10, so 4n ≤ 60 − 15 = 45, n ≤ 11.25, which gives 11 notebooks."
+   }
+  },
+  {
+   "id": "m-nonlin-func",
+   "section": "math",
+   "domain": "Advanced Math",
+   "name": "Nonlinear functions",
+   "lesson": [
+    "Quadratics: f(x) = a(x − h)² + k has vertex (h, k) and axis x = h. Factored form a(x − r)(x − s) shows the x-intercepts r and s.",
+    "The sum of the roots of ax² + bx + c is −b/a and their product is c/a.",
+    "Exponentials: f(x) = a·bˣ, where a is the initial value. b = 1 + r for growth of r, b = 1 − r for decay.",
+    "Transformations: f(x) + k shifts up, f(x − h) shifts right, −f(x) reflects over the x-axis."
+   ],
+   "tips": [
+    "Read the vertex or intercepts directly from the right form instead of expanding.",
+    "For percent growth over time, write initial × (1 ± rate)^time.",
+    "Use the symmetry of the parabola: the x-intercepts are equidistant from the axis."
+   ],
+   "traps": [
+    "Sign of h in vertex form: (x − 3) means h = +3.",
+    "Confusing linear growth (+ constant) with exponential growth (× constant)."
+   ],
+   "desmos": "Graph the function and click the two x-intercepts.",
+   "challenge": {
+    "prompt": "The function f is defined by f(x) = 2(x − 3)² − 8. What is the sum of the x-intercepts of the graph of y = f(x)?",
+    "choices": [
+     "6",
+     "8",
+     "3",
+     "−6"
+    ],
+    "answer": 0,
+    "explanation": "2(x − 3)² = 8, so (x − 3)² = 4 and x = 1 or x = 5. The sum is 6, twice the axis value 3."
+   }
+  },
+  {
+   "id": "m-nonlin-eq",
+   "section": "math",
+   "domain": "Advanced Math",
+   "name": "Nonlinear equations and systems",
+   "lesson": [
+    "Quadratic formula: x = (−b ± √(b² − 4ac)) / 2a. The discriminant b² − 4ac gives 2, 1 or 0 real solutions.",
+    "A line and a parabola intersect at exactly one point when the resulting quadratic has discriminant 0.",
+    "Radical and rational equations can produce extraneous solutions: always check them."
+   ],
+   "tips": [
+    "For 'exactly one solution' questions, set the discriminant to 0.",
+    "Substitute the linear equation into the quadratic to combine them.",
+    "Try factoring before using the formula."
+   ],
+   "traps": [
+    "Forgetting to move everything to one side before using the discriminant.",
+    "Keeping a solution that makes a square root or denominator invalid."
+   ],
+   "desmos": "Graph both with a slider on k: the line becomes tangent at k = −2.",
+   "challenge": {
+    "prompt": "The graphs of y = x² − 4x + 7 and y = 2x + k, where k is a constant, intersect at exactly one point. What is the value of k?",
+    "choices": [
+     "9",
+     "−2",
+     "2",
+     "−7"
+    ],
+    "answer": 1,
+    "explanation": "x² − 4x + 7 = 2x + k gives x² − 6x + (7 − k) = 0. The discriminant 36 − 4(7 − k) = 0, so 8 + 4k = 0 and k = −2."
+   }
+  },
+  {
+   "id": "m-equiv",
+   "section": "math",
+   "domain": "Advanced Math",
+   "name": "Equivalent expressions",
+   "lesson": [
+    "Factor: difference of squares a² − b² = (a − b)(a + b); trinomials x² + bx + c; GCF first.",
+    "Exponent rules: aᵐ·aⁿ = aᵐ⁺ⁿ, (aᵐ)ⁿ = aᵐⁿ, a^(1/n) = ⁿ√a, a⁻ⁿ = 1/aⁿ.",
+    "Rational expressions: factor the top and bottom, then cancel common FACTORS (never terms)."
+   ],
+   "tips": [
+    "Factor everything before simplifying a fraction.",
+    "To compare expressions, test x = 2 in each: the equivalent one gives the same value.",
+    "Completing the square turns ax² + bx + c into vertex form."
+   ],
+   "traps": [
+    "Cancelling terms that are added instead of multiplied.",
+    "(a + b)² ≠ a² + b²: don't forget the 2ab."
+   ],
+   "desmos": "Graph the original and each choice: the equivalent one overlaps it exactly.",
+   "challenge": {
+    "prompt": "Which expression is equivalent to (x² − 9)/(x² + x − 6), for x ≠ 2 and x ≠ −3?",
+    "choices": [
+     "3/2",
+     "(x − 3)/(x − 2)",
+     "(x − 3)/(x + 2)",
+     "(x + 3)/(x − 2)"
+    ],
+    "answer": 1,
+    "explanation": "(x − 3)(x + 3) / ((x + 3)(x − 2)) = (x − 3)/(x − 2)."
+   }
+  },
+  {
+   "id": "m-ratios",
+   "section": "math",
+   "domain": "Problem-Solving and Data Analysis",
+   "name": "Ratios, rates, proportions and units",
+   "lesson": [
+    "A proportion sets two ratios equal: a/b = c/d.",
+    "Unit conversion: multiply by fractions equal to 1 so the units cancel (km → m × 1000 m / 1 km).",
+    "Rates combine: distance = rate × time; cost = price per unit × quantity."
+   ],
+   "tips": [
+    "Write the units next to every number and cancel them like factors.",
+    "Turn 'per 100 km' into a rate per km before scaling.",
+    "Estimate first to catch answers that are off by a factor of 10."
+   ],
+   "traps": [
+    "Inverting a conversion factor.",
+    "Area and volume units: 1 m² = 10,000 cm², not 100."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "A car uses 6.4 liters of fuel per 100 kilometers. Fuel costs 3.20 AED per liter. What is the fuel cost, in AED, to drive 250 kilometers?",
+    "choices": [
+     "80.00",
+     "20.48",
+     "32.00",
+     "51.20"
+    ],
+    "answer": 3,
+    "explanation": "250 km uses 2.5 × 6.4 = 16 liters, and 16 × 3.20 = 51.20 AED."
+   }
+  },
+  {
+   "id": "m-percent",
+   "section": "math",
+   "domain": "Problem-Solving and Data Analysis",
+   "name": "Percentages",
+   "lesson": [
+    "An increase of p% means × (1 + p/100); a decrease of p% means × (1 − p/100).",
+    "Successive changes multiply, they don't add.",
+    "Percent change = (new − old)/old × 100. To find an original value, divide by the multiplier."
+   ],
+   "tips": [
+    "Always convert to multipliers: +25% is × 1.25, −20% is × 0.80.",
+    "'What percent of A is B' is B/A × 100.",
+    "To undo a 20% discount, divide by 0.8 (don't add 20%)."
+   ],
+   "traps": [
+    "Adding percentage changes.",
+    "Using the new value as the base of a percent change."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "The price of a jacket increased by 25%, and then the new price decreased by 20%. What is the overall percent change from the original price?",
+    "choices": [
+     "0%",
+     "5% decrease",
+     "5% increase",
+     "45% increase"
+    ],
+    "answer": 0,
+    "explanation": "1.25 × 0.80 = 1.00, so the price is back to where it started."
+   }
+  },
+  {
+   "id": "m-onevar",
+   "section": "math",
+   "domain": "Problem-Solving and Data Analysis",
+   "name": "One-variable data: center and spread",
+   "lesson": [
+    "Mean = sum / count; median = middle value of the ordered data; mode = most frequent; range = max − min.",
+    "Outliers pull the mean much more than the median.",
+    "Standard deviation measures spread: data clustered close to the mean has a smaller SD."
+   ],
+   "tips": [
+    "To find a mean after removing or adding a value, work with the SUM: sum = mean × count.",
+    "With frequency tables, the median position is (n + 1)/2 in the ordered list.",
+    "To compare SDs, look at how far values sit from the center, not at the values themselves."
+   ],
+   "traps": [
+    "Averaging two means without weighting by group size.",
+    "Forgetting to order the data before finding the median."
+   ],
+   "desmos": "Type the list into Desmos and use mean(L), median(L), stdev(L).",
+   "challenge": {
+    "prompt": "A data set of 9 values has a mean of 20. One value, 60, is removed because it was recorded in error. What is the mean of the remaining 8 values?",
+    "choices": [
+     "17.5",
+     "15",
+     "13.3",
+     "20"
+    ],
+    "answer": 1,
+    "explanation": "Sum = 9 × 20 = 180. Without 60: 120 / 8 = 15."
+   }
+  },
+  {
+   "id": "m-twovar",
+   "section": "math",
+   "domain": "Problem-Solving and Data Analysis",
+   "name": "Two-variable data: models and scatterplots",
+   "lesson": [
+    "A line of best fit models the trend. Its slope is the predicted change in y per unit of x.",
+    "Predicted value = model(x). Residual = actual − predicted.",
+    "Linear models add a constant amount each step; exponential models multiply by a constant factor."
+   ],
+   "tips": [
+    "Interpret the slope in words with units: 'each extra hour predicts 2.4 more points'.",
+    "Points above the line have positive residuals.",
+    "Avoid predictions far outside the data range."
+   ],
+   "traps": [
+    "Computing predicted − actual instead of actual − predicted.",
+    "Treating a model's prediction as an exact value."
+   ],
+   "desmos": "Enter the data in a table and run y₁ ~ m x₁ + b to get the best-fit line instantly.",
+   "challenge": {
+    "prompt": "The line of best fit y = 2.4x + 13 models the test score y of students who studied x hours. A student who studied 5 hours scored 31. What is the residual (actual − predicted) for this student?",
+    "choices": [
+     "31",
+     "−6",
+     "25",
+     "6"
+    ],
+    "answer": 3,
+    "explanation": "Predicted: 2.4 × 5 + 13 = 25. Residual: 31 − 25 = 6."
+   }
+  },
+  {
+   "id": "m-prob",
+   "section": "math",
+   "domain": "Problem-Solving and Data Analysis",
+   "name": "Probability and conditional probability",
+   "lesson": [
+    "P(event) = favorable outcomes / total outcomes.",
+    "Conditional probability: 'given that…' restricts you to one row or column of the table. The denominator is that row or column's total.",
+    "P(A or B) = P(A) + P(B) − P(A and B)."
+   ],
+   "tips": [
+    "Circle the group named after 'given' or 'if a … is chosen': that's your denominator.",
+    "Double-check whether the question asks for a probability, a count or a percentage.",
+    "Simplify fractions only at the end."
+   ],
+   "traps": [
+    "Using the grand total as the denominator in a conditional question.",
+    "Switching P(A | B) and P(B | A)."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "A school has 120 students in two grades:\n• Juniors: 30 take Spanish, 20 take French\n• Seniors: 28 take Spanish, 42 take French\nIf a student who takes French is chosen at random, what is the probability that the student is a junior?",
+    "choices": [
+     "1/6",
+     "10/31",
+     "31/60",
+     "2/5"
+    ],
+    "answer": 1,
+    "explanation": "French students: 20 + 42 = 62. Juniors among them: 20. 20/62 = 10/31."
+   }
+  },
+  {
+   "id": "m-inference",
+   "section": "math",
+   "domain": "Problem-Solving and Data Analysis",
+   "name": "Inference from samples and margin of error",
+   "lesson": [
+    "A random sample lets you generalize ONLY to the population it was drawn from.",
+    "Estimate ± margin of error gives a range of plausible values for the population.",
+    "Larger samples give smaller margins of error, and so more precise estimates."
+   ],
+   "tips": [
+    "Check who was sampled: one school, one city, one country?",
+    "The right answer usually says 'plausible' and gives the interval.",
+    "A value outside the interval isn't impossible, it's just not plausible."
+   ],
+   "traps": [
+    "Generalizing to a bigger population than the one sampled.",
+    "Treating the estimate as exact."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "A random sample of 400 high school students in Dubai found that 35% plan to study abroad, with a margin of error of 4.5%. Which conclusion is best supported?",
+    "choices": [
+     "More than 39.5% of Dubai high school students plan to study abroad.",
+     "It is plausible that between 30.5% and 39.5% of all Dubai high school students plan to study abroad.",
+     "Exactly 35% of all students in the UAE plan to study abroad.",
+     "The sample is too small to draw any conclusion."
+    ],
+    "answer": 1,
+    "explanation": "35 ± 4.5 gives 30.5% to 39.5%, and only for Dubai high school students (the population sampled)."
+   }
+  },
+  {
+   "id": "m-claims",
+   "section": "math",
+   "domain": "Problem-Solving and Data Analysis",
+   "name": "Evaluating statistical claims: studies and experiments",
+   "lesson": [
+    "Random ASSIGNMENT to treatment groups lets you conclude cause and effect.",
+    "Random SAMPLING lets you generalize to the population.",
+    "An observational study (no assignment) only shows association, not causation."
+   ],
+   "tips": [
+    "Ask two questions: was there random assignment (causation)? Was there random sampling (generalization)?",
+    "Pick the most limited conclusion the design supports."
+   ],
+   "traps": [
+    "Concluding causation from an observational study.",
+    "Generalizing to people outside the sampled group."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "Researchers randomly selected 500 adults from one city. They found that adults who walk daily tend to have lower blood pressure than adults who don't. Which conclusion is best supported?",
+    "choices": [
+     "No conclusion can be drawn from this study.",
+     "Walking daily causes lower blood pressure for all adults.",
+     "Walking daily causes lower blood pressure among adults in that city.",
+     "Among adults in that city, daily walking is associated with lower blood pressure."
+    ],
+    "answer": 3,
+    "explanation": "There was random sampling (so it generalizes to that city) but no random assignment (so association only, not causation)."
+   }
+  },
+  {
+   "id": "m-area",
+   "section": "math",
+   "domain": "Geometry and Trigonometry",
+   "name": "Area and volume",
+   "lesson": [
+    "The reference sheet gives area and volume formulas: circle, rectangle, triangle, cylinder, sphere, cone, pyramid.",
+    "Scaling: multiplying lengths by k multiplies area by k² and volume by k³.",
+    "Composite shapes: add or subtract simple pieces."
+   ],
+   "tips": [
+    "Open the reference sheet right away and copy the formula you need.",
+    "For 'what happens if…' questions, plug the factors into the formula as multipliers.",
+    "Check units: cm, cm², cm³."
+   ],
+   "traps": [
+    "Using diameter instead of radius.",
+    "Scaling area by k instead of k²."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "The radius of a cylinder is doubled and its height is halved. By what factor does its volume change?",
+    "choices": [
+     "2",
+     "1",
+     "1/2",
+     "4"
+    ],
+    "answer": 0,
+    "explanation": "V = πr²h becomes π(2r)²(h/2) = 2πr²h, so the volume doubles."
+   }
+  },
+  {
+   "id": "m-lines",
+   "section": "math",
+   "domain": "Geometry and Trigonometry",
+   "name": "Lines, angles and triangles",
+   "lesson": [
+    "Parallel lines cut by a transversal: corresponding and alternate interior angles are equal; same-side interior angles add to 180°.",
+    "Triangle angles add to 180°. An exterior angle equals the sum of the two remote interior angles.",
+    "Similar triangles: side ratio k, area ratio k². Isosceles triangles have equal base angles."
+   ],
+   "tips": [
+    "Mark every angle you know on the figure, then chain the relationships.",
+    "For similar triangles, match corresponding vertices in order before setting up ratios.",
+    "Figures may not be drawn to scale: trust the given values."
+   ],
+   "traps": [
+    "Using the side ratio for areas.",
+    "Assuming lines are parallel without being told."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "Triangle ABC is similar to triangle DEF, with AB = 6 and DE = 9. The area of triangle ABC is 24. What is the area of triangle DEF?",
+    "choices": [
+     "54",
+     "36",
+     "48",
+     "81"
+    ],
+    "answer": 0,
+    "explanation": "Side ratio 9/6 = 1.5, so the area ratio is 1.5² = 2.25, and 24 × 2.25 = 54."
+   }
+  },
+  {
+   "id": "m-trig",
+   "section": "math",
+   "domain": "Geometry and Trigonometry",
+   "name": "Right triangles and trigonometry",
+   "lesson": [
+    "Pythagoras: a² + b² = c². Common triples: 3-4-5, 5-12-13, 8-15-17.",
+    "Special right triangles: 30-60-90 has sides 1 : √3 : 2; 45-45-90 has sides 1 : 1 : √2.",
+    "SOH-CAH-TOA. Complementary angles: sin x = cos(90° − x).",
+    "Radians: π radians = 180°."
+   ],
+   "tips": [
+    "In a right triangle, sin of one acute angle equals cos of the other.",
+    "Draw the triangle and label opposite, adjacent and hypotenuse relative to the angle asked about.",
+    "Recognize Pythagorean triples to skip calculations."
+   ],
+   "traps": [
+    "Labeling sides relative to the wrong angle.",
+    "Calculator in radians when the question uses degrees."
+   ],
+   "desmos": null,
+   "challenge": {
+    "prompt": "In right triangle ABC, angle C is the right angle and sin A = 5/13. What is cos B?",
+    "choices": [
+     "12/5",
+     "12/13",
+     "13/5",
+     "5/13"
+    ],
+    "answer": 3,
+    "explanation": "A and B are complementary, so cos B = sin A = 5/13."
+   }
+  },
+  {
+   "id": "m-circles",
+   "section": "math",
+   "domain": "Geometry and Trigonometry",
+   "name": "Circles",
+   "lesson": [
+    "Equation: (x − h)² + (y − k)² = r², with center (h, k) and radius r.",
+    "From x² + y² + Dx + Ey + F = 0, complete the square for x and y.",
+    "Arc length = (θ/360) × 2πr; sector area = (θ/360) × πr². An inscribed angle is half its central angle; a tangent is perpendicular to the radius."
+   ],
+   "tips": [
+    "When completing the square, add the same constants to both sides.",
+    "Arc and sector questions: find the fraction of the circle (θ/360) first.",
+    "Radius questions: watch whether the equation shows r or r²."
+   ],
+   "traps": [
+    "Giving r² instead of r.",
+    "Sign errors in the center coordinates."
+   ],
+   "desmos": "Graph the equation, then click the center and an edge point to read the radius.",
+   "challenge": {
+    "prompt": "A circle in the xy-plane has equation x² + y² − 6x + 8y = 11. What is the radius of the circle?",
+    "choices": [
+     "11",
+     "6",
+     "36",
+     "√11"
+    ],
+    "answer": 1,
+    "explanation": "(x − 3)² + (y + 4)² = 11 + 9 + 16 = 36, so r = 6."
+   }
+  }
+ ]
+}

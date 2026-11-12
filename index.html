@@ -350,6 +350,28 @@ body.locked .rail, body.locked main { visibility: hidden; }
 .class-list li.past { opacity: .45; } .class-list li.now b { color: var(--brass); }
 .class-list .t { font: 600 12px var(--mono); color: var(--muted); }
 
+
+/* ---------- SAT library ---------- */
+.sat-tabs { margin: -8px 0 20px; }
+.ch-card.weak { border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
+.dots-rate { display: inline-flex; gap: 4px; }
+.dots-rate button { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--faint); background: transparent; padding: 0; cursor: pointer; }
+.dots-rate button.on { background: var(--brass); border-color: var(--brass); }
+.dots-rate button:hover { border-color: var(--brass); }
+.traps li::marker { color: var(--warn); }
+.challenge { border-color: color-mix(in srgb, var(--brass) 40%, var(--line)); }
+input[type=search] { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; box-sizing: border-box; }
+.pace-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: end; }
+.pace-status { font: 700 1.6rem/1.1 var(--display); font-stretch: 75%; }
+.pace-status.up { color: var(--ok); } .pace-status.down { color: var(--warn); }
+.laps { position: relative; display: flex; align-items: flex-end; gap: 4px; height: 130px; border-bottom: 1px solid var(--line); }
+.lap { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+.lap i { display: block; width: 100%; background: var(--faint); border-radius: 3px 3px 0 0; }
+.lap.slow i { background: var(--warn); }
+.lap-target { position: absolute; left: 0; right: 0; border-top: 1.5px dashed var(--brass); }
+.lap-labels { display: flex; gap: 4px; margin-top: 4px; }
+.lap-labels span { flex: 1; text-align: center; font: 500 9.5px var(--mono); color: var(--muted); }
+@media (max-width: 560px) { .pace-grid { grid-template-columns: 1fr 1fr; } }
 /* ---------- study ---------- */
 code { font: 500 .88em var(--mono); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
 pre.code, code { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
@@ -911,7 +933,7 @@ function ttForm() {
 /* ================= SAT ================= */
 function satState() { return S.db.sat || { test_date: SAT.test_date, target: 1500, tests: [], done: {} }; }
 function weekKey(ymd) { const d = new Date(ymd + 'T12:00:00Z'); const wd = (d.getUTCDay() + 6) % 7; return addDays(ymd, -wd); }
-function vSat() {
+function vSatPlan() {
   const st = satState(), v = el('section', { class: 'view' });
   const today = todayYmd(), testDate = st.test_date || SAT.test_date;
   const d = daysBetween(today, testDate);
@@ -1044,6 +1066,180 @@ function vSat() {
   v.append(logCard);
   return v;
 }
+
+/* ================= SAT skills library, mistake log, pacing timer ================= */
+let SATLIB = null;
+fetch('sat.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { SATLIB = j; if (S.view === 'sat') rerender(); }).catch(() => {});
+S.satTab = 'plan'; S.satSkill = null; S.skillQuery = '';
+const MISTAKE_TYPES = ['Content gap', 'Misread the question', 'Careless error', 'Ran out of time', 'Fell for a trap'];
+function satPatch(p) { const s = satState(); save('sat', { ...s, ...p }); }
+function mastery(id) { return ((satState().mastery || {})[id]) || 0; }
+function chState(sk) { const v = (satState().ch || {})[sk.id]; return v == null ? null : (v === sk.challenge.answer ? 'right' : 'wrong'); }
+function vSat() {
+  const tabs = [['plan', 'Plan'], ['rw', 'Reading & Writing'], ['math', 'Math'], ['mistakes', 'Mistake log'], ['timer', 'Pacing timer']];
+  const bar = el('div', { class: 'filters sat-tabs', role: 'tablist' }, tabs.map(([id, name]) => el('button', { role: 'tab', 'aria-pressed': S.satTab === id ? 'true' : 'false', onclick: () => { S.satTab = id; S.satSkill = null; rerender(true); }, text: name })));
+  let v;
+  if (S.satTab === 'plan') v = vSatPlan();
+  else {
+    v = el('section', { class: 'view' });
+    if (!SATLIB) v.append(el('div', { class: 'loading', text: 'Loading the skills library…' }));
+    else if (S.satTab === 'rw' || S.satTab === 'math') v.append(...vSkills(S.satTab));
+    else if (S.satTab === 'mistakes') v.append(...vMistakes());
+    else v.append(...vPacer());
+  }
+  const head = v.querySelector('.page-head');
+  if (head) head.after(bar); else v.prepend(bar);
+  return v;
+}
+function vSkills(sec) {
+  const L = SATLIB, info = L.sections[sec];
+  if (S.satSkill) { const sk = L.skills.find(s => s.id === S.satSkill); if (sk) return vSkill(sk); }
+  const out = [pageHead(`Digital SAT · ${info.modules}`, info.name, `${L.skills.filter(s => s.section === sec).length} skills, every one tested on the SAT. Open a skill for its lesson, tips, traps and a hard challenge question. Rate your mastery to build your focus list.`)];
+  const mine = L.skills.filter(s => s.section === sec);
+  const errs = (satState().errors || []);
+  const rated = mine.filter(s => mastery(s.id) > 0);
+  const avg = rated.length ? rated.reduce((n, s) => n + mastery(s.id), 0) / rated.length : 0;
+  const solved = mine.filter(s => chState(s) === 'right').length;
+  const weakest = [...mine].sort((a, b) => (mastery(a.id) || 0) - (mastery(b.id) || 0) || errs.filter(e => e.skill === b.id).length - errs.filter(e => e.skill === a.id).length).filter(s => (mastery(s.id) > 0 && mastery(s.id) <= 2) || chState(s) === 'wrong').slice(0, 5);
+  out.push(el('div', { class: 'stat-row' },
+    el('div', { class: 'card stat' }, el('div', { class: 'label', text: 'Pace' }), el('div', { class: 'big num', text: `${info.pace}s` }), el('div', { class: 'sub', text: 'per question on average' })),
+    el('div', { class: 'card stat' }, el('div', { class: 'label', text: 'Skills rated' }), el('div', { class: 'big num', text: `${rated.length}/${mine.length}` }), el('div', { class: 'sub', text: rated.length ? `average mastery ${avg.toFixed(1)}/5` : 'tap the dots on each skill' })),
+    el('div', { class: 'card stat live' }, el('div', { class: 'label', text: 'Challenges solved' }), el('div', { class: 'big num', text: `${solved}/${mine.length}` }), el('div', { class: 'sub', text: 'first attempt counts' })),
+    el('div', { class: 'card stat' }, el('div', { class: 'label', text: 'Logged mistakes' }), el('div', { class: 'big num', text: String(errs.filter(e => mine.some(s => s.id === e.skill)).length) }), el('div', { class: 'sub', text: 'in this section' }))));
+  const focus = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: 'Your focus list' }), el('span', { class: 'label', text: 'lowest mastery and missed challenges' })));
+  if (!weakest.length) focus.append(el('p', { class: 'empty', text: 'Rate your skills (1 to 5 dots) or try the challenges: your weakest skills will appear here.' }));
+  else focus.append(el('ul', { class: 'class-list' }, weakest.map(s => el('li', { style: { gridTemplateColumns: '1fr auto' } }, el('a', { href: '#sat', onclick: e => { e.preventDefault(); S.satSkill = s.id; rerender(true); }, text: s.name }), el('span', { class: 'label', text: `${mastery(s.id) || '–'}/5${chState(s) === 'wrong' ? ' · missed' : ''}` })))));
+  out.push(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, focus,
+    el('div', { class: 'card s-5' }, el('div', { class: 'card-h' }, el('h2', { text: 'How this section works' })), el('p', { class: 'muted', style: { margin: 0, fontSize: '14px' }, text: info.order_tip }))));
+  const q = el('input', { type: 'search', id: 'skill-q', placeholder: 'Search a skill (e.g. transitions, percent, circles)…', value: S.skillQuery || '', 'aria-label': 'Search skills' });
+  q.addEventListener('input', () => { S.skillQuery = q.value; const pos = q.selectionStart; rerender(); const n = $('#skill-q'); if (n) { n.focus(); n.setSelectionRange(pos, pos); } });
+  out.push(el('div', { class: 'card', style: { marginTop: '16px' } }, el('label', { class: 'field' }, el('span', { text: 'Find a skill' }), q)));
+  const query = (S.skillQuery || '').toLowerCase();
+  for (const [dom, pct, qs] of info.domains) {
+    const list = mine.filter(s => s.domain === dom && (!query || (s.name + ' ' + s.lesson.join(' ')).toLowerCase().includes(query)));
+    if (!list.length) continue;
+    out.push(el('div', { class: 'card', style: { marginTop: '16px' } },
+      el('div', { class: 'card-h' }, el('h2', { text: dom }), el('span', { class: 'label', text: `≈${pct}% · ${qs} questions` })),
+      el('div', { class: 'ch-grid' }, list.map(s => {
+        const st = chState(s), nErr = errs.filter(e => e.skill === s.id).length;
+        return el('div', { class: 'ch-card' + (st === 'wrong' || (mastery(s.id) && mastery(s.id) <= 2) ? ' weak' : ''), role: 'button', tabindex: '0', onclick: () => { S.satSkill = s.id; rerender(true); }, onkeydown: e => { if (e.key === 'Enter') e.currentTarget.click(); } },
+          el('b', { class: 'ch-title', text: s.name }),
+          el('div', { class: 'ch-meta' }, dots(s.id), st ? el('span', { class: 'chip ' + (st === 'right' ? 'ok' : 'warn'), text: st === 'right' ? 'challenge ✓' : 'challenge ✗' }) : el('span', { class: 'chip', text: 'challenge' })),
+          nErr ? el('div', { class: 'label', style: { color: 'var(--warn)' }, text: `${nErr} logged mistake${nErr > 1 ? 's' : ''}` }) : null);
+      }))));
+  }
+  if (sec === 'math') out.push(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } },
+    el('div', { class: 'card s-6' }, el('div', { class: 'card-h' }, el('h2', { text: 'Desmos playbook' })), el('ul', { class: 'tips-list' }, L.desmos.map(t => el('li', { text: t })))),
+    el('div', { class: 'card s-6' }, el('div', { class: 'card-h' }, el('h2', { text: 'Formulas' })), L.formulas.map(t => el('p', { style: { fontSize: '14px', margin: '0 0 12px' }, text: t })))));
+  return out;
+}
+function dots(id) {
+  const m = mastery(id);
+  return el('span', { class: 'dots-rate', title: 'Rate your mastery', onclick: e => e.stopPropagation() }, [1, 2, 3, 4, 5].map(n => el('button', { class: n <= m ? 'on' : '', 'aria-label': `Mastery ${n} of 5`, onclick: e => { e.stopPropagation(); satPatch({ mastery: { ...(satState().mastery || {}), [id]: n === m ? 0 : n } }); rerender(); } })));
+}
+function vSkill(sk) {
+  const out = [];
+  out.push(el('button', { class: 'btn sm ghost', style: { marginBottom: '14px' }, onclick: () => { S.satSkill = null; rerender(true); }, text: `← All ${SATLIB.sections[sk.section].name} skills` }));
+  out.push(pageHead(`${SATLIB.sections[sk.section].name} · ${sk.domain}`, sk.name, null, el('div', { class: 'field' }, el('span', { text: 'Your mastery' }), dots(sk.id))));
+  const lesson = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: 'Lesson' })), el('ol', { class: 'recap' }, sk.lesson.map(t => el('li', { text: t }))));
+  const side = el('div', { class: 's-5 grid', style: { alignContent: 'start' } },
+    el('div', { class: 'card tip-card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Tips & tricks' })), el('ul', { class: 'tips-list' }, sk.tips.map(t => el('li', { text: t })))),
+    el('div', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Traps' })), el('ul', { class: 'tips-list traps' }, sk.traps.map(t => el('li', { text: t })))),
+    sk.desmos ? el('div', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Desmos shortcut' })), el('p', { style: { margin: 0, fontSize: '14px' }, text: sk.desmos })) : null);
+  out.push(el('div', { class: 'grid g-12', style: { alignItems: 'start' } }, lesson, side));
+  const C = sk.challenge, picked = (satState().ch || {})[sk.id];
+  const ch = el('div', { class: 'card challenge', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Challenge' }), el('span', { class: 'chip brass', text: 'hard · first attempt counts' })), el('p', { class: 'q-prompt', text: C.prompt }));
+  const opts = el('div', { class: 'q-opts' });
+  C.choices.forEach((c, i) => {
+    const state = picked == null ? '' : i === C.answer ? ' right' : i === picked ? ' wrong' : ' dim';
+    opts.append(el('button', { class: 'q-opt' + state, disabled: picked != null ? true : null, onclick: () => { satPatch({ ch: { ...(satState().ch || {}), [sk.id]: i } }); rerender(); } }, el('b', { text: 'ABCD'[i] }), el('span', { text: c })));
+  });
+  ch.append(opts);
+  if (picked != null) ch.append(el('div', { class: 'why', style: { marginTop: '12px' } }, el('b', { text: picked === C.answer ? 'Correct' : `Answer ${'ABCD'[C.answer]}` }), C.explanation),
+    el('div', { class: 'form-row', style: { marginTop: '12px' } },
+      picked !== C.answer ? el('button', { class: 'btn sm solid', onclick: () => { S.satTab = 'mistakes'; S.mistakeDraft = { skill: sk.id, type: 'Fell for a trap', source: 'Skills library challenge' }; rerender(true); }, text: 'Log this mistake' }) : null,
+      el('button', { class: 'btn sm ghost', onclick: () => { const ch2 = { ...(satState().ch || {}) }; delete ch2[sk.id]; satPatch({ ch: ch2 }); rerender(); }, text: 'Reset challenge' })));
+  out.push(ch);
+  const sib = SATLIB.skills.filter(s => s.section === sk.section), idx = sib.indexOf(sk);
+  out.push(el('div', { class: 'form-row', style: { marginTop: '16px', justifyContent: 'space-between' } },
+    idx > 0 ? el('button', { class: 'btn', onclick: () => { S.satSkill = sib[idx - 1].id; rerender(true); }, text: `← ${sib[idx - 1].name}` }) : el('span'),
+    idx < sib.length - 1 ? el('button', { class: 'btn', onclick: () => { S.satSkill = sib[idx + 1].id; rerender(true); }, text: `${sib[idx + 1].name} →` }) : el('span')));
+  return out;
+}
+function vMistakes() {
+  const out = [pageHead('Error log', 'Mistake log', 'Every question you miss in practice, tagged by skill and by why you missed it. Your repeat mistakes are what the Nov 25 drill day is for.')];
+  const errs = [...(satState().errors || [])].sort((a, b) => (a.date < b.date ? 1 : -1));
+  const d = S.mistakeDraft || {};
+  const skillSel = el('select', { id: 'mk-skill' }, [['rw', 'Reading & Writing'], ['math', 'Math']].map(([sec, name]) => el('optgroup', { label: name }, SATLIB.skills.filter(s => s.section === sec).map(s => el('option', { value: s.id, text: s.name })))));
+  if (d.skill) skillSel.value = d.skill;
+  const typeSel = el('select', { id: 'mk-type' }, MISTAKE_TYPES.map(t => el('option', { value: t, text: t }))); if (d.type) typeSel.value = d.type;
+  const date = el('input', { type: 'date', id: 'mk-date', value: todayYmd() });
+  const src = el('input', { type: 'text', id: 'mk-src', placeholder: 'e.g. Bluebook test 2, M2 Q14', value: d.source || '' });
+  const note = el('input', { type: 'text', id: 'mk-note', placeholder: 'The rule I missed, in one line' });
+  const f = el('form', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Log a mistake' })),
+    el('div', { class: 'form-row' }, el('label', { class: 'field', style: { flex: '2 1 220px' } }, el('span', { text: 'Skill' }), skillSel), el('label', { class: 'field', style: { flex: '1 1 170px' } }, el('span', { text: 'Why' }), typeSel), el('label', { class: 'field' }, el('span', { text: 'Date' }), date)),
+    el('div', { class: 'form-row', style: { marginTop: '10px' } }, el('label', { class: 'field', style: { flex: '1 1 200px' } }, el('span', { text: 'Where' }), src), el('label', { class: 'field', style: { flex: '2 1 260px' } }, el('span', { text: 'Lesson learned' }), note), el('button', { class: 'btn solid', type: 'submit', text: 'Log it' })));
+  f.addEventListener('submit', ev => { ev.preventDefault(); const s = satState(); satPatch({ errors: [...(s.errors || []), { id: uid(), date: date.value, skill: skillSel.value, type: typeSel.value, source: src.value.trim(), note: note.value.trim() }] }); S.mistakeDraft = null; rerender(); toast('Mistake logged'); });
+  out.push(f);
+  const bySkill = {}; errs.forEach(e => { bySkill[e.skill] = (bySkill[e.skill] || 0) + 1; });
+  const byType = {}; errs.forEach(e => { byType[e.type] = (byType[e.type] || 0) + 1; });
+  const top = Object.entries(bySkill).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  const maxT = Math.max(1, ...Object.values(byType));
+  out.push(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } },
+    el('div', { class: 'card s-6' }, el('div', { class: 'card-h' }, el('h2', { text: 'Repeat mistakes' }), el('span', { class: 'label', text: 'top 3 skills' })),
+      top.length ? el('ul', { class: 'class-list' }, top.map(([id, n]) => { const s = SATLIB.skills.find(x => x.id === id); return el('li', { style: { gridTemplateColumns: '1fr auto' } }, el('a', { href: '#sat', onclick: e => { e.preventDefault(); S.satTab = s.section; S.satSkill = id; rerender(true); }, text: s ? s.name : id }), el('span', { class: 'chip warn', text: `${n}×` })); })) : el('p', { class: 'empty', text: 'Nothing logged yet. After each practice test, log every miss here.' })),
+    el('div', { class: 'card s-6' }, el('div', { class: 'card-h' }, el('h2', { text: 'Why you miss' })),
+      Object.keys(byType).length ? MISTAKE_TYPES.filter(t => byType[t]).map(t => el('div', { class: 'dom' }, el('div', { class: 'dom-top' }, el('span', { text: t }), el('span', { class: 'num muted', text: String(byType[t]) })), el('div', { class: 'bar thin' }, el('i', { style: { width: byType[t] / maxT * 100 + '%' } })))) : el('p', { class: 'empty', text: 'Patterns appear after a few entries.' }))));
+  if (errs.length) out.push(el('div', { class: 'card', style: { marginTop: '16px', overflowX: 'auto' } }, el('table', { class: 'log' },
+    el('thead', {}, el('tr', {}, ['Date', 'Skill', 'Why', 'Where', 'Lesson', ''].map(h => el('th', { text: h })))),
+    el('tbody', {}, errs.map(e => { const s = SATLIB.skills.find(x => x.id === e.skill); return el('tr', {}, el('td', { text: fmtDay(e.date, { month: 'short', day: 'numeric' }) }), el('td', { text: s ? s.name : e.skill }), el('td', {}, el('span', { class: 'chip', text: e.type })), el('td', { class: 'muted', text: e.source || '' }), el('td', { text: e.note || '' }),
+      el('td', { class: 'x' }, el('button', { class: 'x-btn', 'aria-label': 'Delete', onclick: () => { satPatch({ errors: (satState().errors || []).filter(x => x.id !== e.id) }); rerender(); } }, '×'))); })))));
+  return out;
+}
+const PACE = { sec: 'rw', running: false, start: 0, laps: [], pausedAt: 0 };
+function paceCfg() { return PACE.sec === 'rw' ? { q: 27, min: 32, name: 'Reading & Writing module' } : { q: 22, min: 35, name: 'Math module' }; }
+function vPacer() {
+  const c = paceCfg();
+  const out = [pageHead('Module simulator', 'Pacing timer', 'Run a real module under test timing. Tap "Next question" each time you answer: the timer shows whether you are ahead or behind the pace you need, and which questions ate your time.')];
+  const seg = el('div', { class: 'seg' }, [['rw', 'R&W · 27 q · 32 min'], ['math', 'Math · 22 q · 35 min']].map(([id, t]) => el('button', { 'aria-pressed': PACE.sec === id ? 'true' : 'false', onclick: () => { if (PACE.running) return toast('Stop the current module first.'); PACE.sec = id; PACE.laps = []; rerender(); }, text: t })));
+  const card = el('div', { class: 'card pacer' }, el('div', { class: 'card-h' }, el('h2', { text: c.name }), seg),
+    el('div', { class: 'pace-grid' },
+      el('div', {}, el('div', { class: 'label', text: 'Time left' }), el('div', { class: 'count-big num', id: 'pc-left', text: `${c.min}:00` })),
+      el('div', {}, el('div', { class: 'label', text: 'Question' }), el('div', { class: 'count-big num', id: 'pc-q', style: { color: 'var(--ink)' }, text: `${Math.min(PACE.laps.length + 1, c.q)}/${c.q}` })),
+      el('div', {}, el('div', { class: 'label', text: 'Pace' }), el('div', { class: 'pace-status', id: 'pc-st', text: PACE.running ? '' : 'Ready' }))),
+    el('div', { class: 'bar', style: { margin: '14px 0' } }, el('i', { id: 'pc-bar', style: { width: '0%', background: 'var(--brass)' } })),
+    el('div', { class: 'form-row' },
+      el('button', { class: 'btn solid', onclick: () => { if (!PACE.running) { PACE.running = true; PACE.start = Date.now() - (PACE.pausedAt || 0); PACE.pausedAt = 0; } else { PACE.pausedAt = Date.now() - PACE.start; PACE.running = false; } rerender(); }, text: PACE.running ? 'Pause' : (PACE.laps.length || PACE.pausedAt ? 'Resume' : 'Start module') }),
+      el('button', { class: 'btn brass', disabled: !PACE.running ? true : null, onclick: () => { const t = Date.now() - PACE.start; PACE.laps.push(t); if (PACE.laps.length >= c.q) { PACE.running = false; PACE.pausedAt = t; toast('Module finished'); } rerender(); }, text: 'Next question ↵' }),
+      el('button', { class: 'btn ghost', onclick: () => { PACE.running = false; PACE.laps = []; PACE.pausedAt = 0; rerender(); }, text: 'Reset' })),
+    el('p', { class: 'muted', style: { fontSize: '13px', margin: '12px 0 0' }, text: `Target: ${Math.round(c.min * 60 / c.q)} s per question. Keyboard: Space = next question. If a question goes past 2× the target, flag it, guess, and move on.` }));
+  out.push(card);
+  if (PACE.laps.length) {
+    const target = c.min * 60 / c.q, per = PACE.laps.map((t, i) => (t - (i ? PACE.laps[i - 1] : 0)) / 1000);
+    const maxP = Math.max(target * 2, ...per);
+    out.push(el('div', { class: 'card', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Time per question' }), el('span', { class: 'label', text: `${per.filter(p => p > target * 1.5).length} slow · brass line = target` })),
+      el('div', { class: 'laps' }, per.map((p, i) => el('div', { class: 'lap' + (p > target * 1.5 ? ' slow' : ''), title: `Q${i + 1}: ${Math.round(p)} s` }, el('i', { style: { height: Math.min(100, p / maxP * 100) + '%' } }))), el('div', { class: 'lap-target', style: { bottom: (target / maxP * 100) + '%' } })),
+      el('div', { class: 'lap-labels' }, per.map((p, i) => el('span', { text: i + 1 })))));
+  }
+  return out;
+}
+function tickPacer() {
+  if (S.view !== 'sat' || S.satTab !== 'timer') return;
+  const c = paceCfg(), el1 = $('#pc-left'); if (!el1) return;
+  const elapsed = PACE.running ? Date.now() - PACE.start : (PACE.pausedAt || 0);
+  const left = Math.max(0, c.min * 60 - elapsed / 1000);
+  el1.textContent = `${Math.floor(left / 60)}:${String(Math.floor(left % 60)).padStart(2, '0')}`;
+  el1.style.color = left < 300 ? 'var(--warn)' : '';
+  $('#pc-bar').style.width = Math.min(100, elapsed / (c.min * 600)) + '%';
+  const expected = elapsed / 1000 / (c.min * 60 / c.q), done = PACE.laps.length, diff = done - expected;
+  const st = $('#pc-st');
+  if (PACE.running || done) { st.textContent = Math.abs(diff) < 0.5 ? 'On pace' : diff > 0 ? `Ahead by ${diff.toFixed(1)} q` : `Behind by ${(-diff).toFixed(1)} q`; st.className = 'pace-status ' + (diff < -1 ? 'down' : diff >= 0 ? 'up' : ''); }
+  if (PACE.running && left <= 0) { PACE.running = false; PACE.pausedAt = c.min * 60000; toast('Time is up'); rerender(); }
+}
+document.addEventListener('keydown', e => {
+  if (S.view === 'sat' && S.satTab === 'timer' && PACE.running && e.code === 'Space' && !e.target.matches('input, textarea, select, button')) { e.preventDefault(); const t = Date.now() - PACE.start; PACE.laps.push(t); if (PACE.laps.length >= paceCfg().q) { PACE.running = false; PACE.pausedAt = t; } rerender(); }
+});
+setInterval(tickPacer, 250);
 
 function chart(tests, target) {
   const W = 760, Hh = 220, P = { l: 44, r: 16, t: 16, b: 30 };
