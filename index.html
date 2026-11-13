@@ -1047,6 +1047,122 @@ body { letter-spacing: -.005em; }
 .mini-ring circle.fg { transition: stroke-dashoffset 1.3s cubic-bezier(.16,.84,.24,1); }
 @media (max-width: 760px) { .mq { padding: 16px 0; margin-bottom: 16px; } .mq-i { gap: 26px; padding-right: 26px; } .nav a::after { display: none; } }
 @media (prefers-reduced-motion: reduce) { #splash { display: none; } .mq-track, #sweep.run, .enter .page-head h1, .enter .page-head .label, .enter .page-head p, .enter .card h2, .loading { animation: none !important; } }
+
+.focus-view .page-head .btn { gap: 8px; }
+.ico { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.tm-stage { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 26px 22px 22px; overflow: hidden; isolation: isolate; }
+.tm-stage::before { content: ""; position: absolute; inset: -40%; z-index: -1; background: conic-gradient(from 0deg, transparent 0 70%, color-mix(in srgb, var(--brass) 22%, transparent) 85%, transparent 100%); opacity: 0; transition: opacity .8s; animation: spinBg 9s linear infinite; }
+.tm-stage.running::before { opacity: 1; }
+.tm-stage.brk::before { background: conic-gradient(from 0deg, transparent 0 70%, color-mix(in srgb, var(--ok) 25%, transparent) 85%, transparent 100%); }
+@keyframes spinBg { to { transform: rotate(360deg); } }
+.tm-wrap { position: relative; width: min(330px, 78vw); aspect-ratio: 1; display: grid; place-items: center; }
+.tm-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.tm-ticks line { stroke: color-mix(in srgb, var(--ink) 18%, transparent); stroke-width: 1.5; stroke-linecap: round; transition: stroke .4s; }
+.tm-ticks line.big { stroke-width: 2.5; }
+.tm-ticks line.lit { stroke: var(--brass); }
+.tm-brk .tm-ticks line.lit, .tm-stage.brk .tm-ticks line.lit { stroke: var(--ok); }
+.tm-track { fill: none; stroke: color-mix(in srgb, var(--ink) 9%, transparent); stroke-width: 12; }
+.tm-prog { fill: none; stroke: url(#tmg); stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 1s linear; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--brass) 55%, transparent)); }
+.tm-stage.brk .tm-prog { stroke: var(--ok); filter: drop-shadow(0 0 10px color-mix(in srgb, var(--ok) 55%, transparent)); }
+#tm-head { transition: transform 1s linear; }
+.tm-dot { fill: #fff; }
+.tm-dot-glow { fill: var(--brass); opacity: .35; transform-origin: 160px 30px; }
+.tm-stage.running .tm-dot-glow { animation: dotPulse 1.6s ease-in-out infinite; }
+@keyframes dotPulse { 50% { opacity: .05; transform: scale(1.9); } }
+.tm-center { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; max-width: 64%; }
+.tm-time { font: 500 clamp(3.4rem, 9vw, 5rem)/1 var(--display); letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.tm-stage.running .tm-time { animation: breathe 4s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: scale(1.025); text-shadow: 0 0 30px color-mix(in srgb, var(--brass) 40%, transparent); } }
+.tm-state { color: var(--brass); }
+.tm-stage.brk .tm-state { color: var(--ok); }
+.tm-for { font-size: 13.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.tm-ctrl { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.tm-btn { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); cursor: pointer; transition: transform .3s cubic-bezier(.34,1.56,.64,1), background .25s, border-color .25s; position: relative; overflow: hidden; }
+.tm-btn:hover { transform: scale(1.08); border-color: var(--faint); }
+.tm-btn:active { transform: scale(.94); }
+.tm-btn.main { width: 76px; height: 76px; background: var(--brass); border-color: var(--brass); color: #111; box-shadow: 0 16px 40px -14px color-mix(in srgb, var(--brass) 80%, transparent); }
+.tm-btn.main .ico { width: 30px; height: 30px; }
+.tm-stage.running .tm-btn.main { animation: mainGlow 2.2s ease-in-out infinite; }
+@keyframes mainGlow { 50% { box-shadow: 0 0 0 12px color-mix(in srgb, var(--brass) 0%, transparent), 0 16px 50px -10px color-mix(in srgb, var(--brass) 90%, transparent); } }
+.tm-btn.ghost { background: transparent; }
+.tm-btn.sm { width: 36px; height: 36px; }
+.tm-btn.sm .ico { width: 15px; height: 15px; }
+.tm-modes { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.tm-modes .seg button, .tm-goalset .seg button { font: 600 12px var(--body); padding: 7px 12px; }
+.tm-task-f { width: min(360px, 100%); }
+.tm-task { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: 500 14px var(--body); color: var(--ink); width: 100%; }
+.tm-keys { margin: 0; font-size: 12px; color: var(--faint); }
+.tm-stats { display: flex; flex-direction: column; }
+.tm-goal { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+.tm-goal-dots { display: flex; gap: 6px; }
+.tm-goal-dots i { width: 22px; height: 22px; border-radius: 7px; background: var(--panel-2); border: 1px solid var(--line); }
+.tm-goal-dots i.on { background: var(--brass); border-color: var(--brass); box-shadow: 0 6px 16px -6px var(--brass); }
+.enter .tm-goal-dots i.on { animation: popIn .6s cubic-bezier(.34,1.56,.64,1) both; animation-delay: var(--d); }
+.tm-goal span { font-size: 13.5px; color: var(--muted); }
+.tm-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; flex: 1; min-height: 130px; margin-top: 18px; }
+.tm-week > div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; }
+.tm-week i { width: 100%; max-width: 30px; height: var(--h); border-radius: 7px 7px 3px 3px; background: color-mix(in srgb, var(--brass) 45%, transparent); transform-origin: bottom; }
+.tm-week i.today { background: linear-gradient(180deg, #f6e2b8, var(--brass)); box-shadow: 0 0 18px -4px var(--brass); }
+.enter .tm-week i { animation: growUp .9s cubic-bezier(.16,.84,.24,1) both; animation-delay: var(--d); }
+@keyframes growUp { from { transform: scaleY(0); } }
+.tm-week span { font: 600 11px var(--body); color: var(--muted); text-transform: uppercase; }
+.tm-goalset { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px; }
+.prio2 { display: grid; grid-template-columns: 38px 24px minmax(0, 1fr) 36px; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
+.prio2:first-of-type { border-top: 0; }
+.p-n { font: 500 2rem/1 var(--display); letter-spacing: -.05em; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--ink) 45%, transparent); text-align: center; }
+.prio2 input[type=text] { background: transparent; border: 0; border-bottom: 1px solid transparent; padding: 8px 2px; width: 100%; min-width: 0; font: 500 15.5px var(--body); color: var(--ink); background-image: linear-gradient(var(--brass), var(--brass)); background-size: 0 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .4s cubic-bezier(.16,.84,.24,1); }
+.prio2 input[type=text]:focus { outline: none; background-size: 100% 1px; }
+.prio2.done input[type=text] { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--brass); }
+.prio2.done .p-n { -webkit-text-stroke-color: var(--brass); }
+.hab-sum { display: flex; align-items: center; gap: 8px; }
+.habs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.hab { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr); grid-template-rows: auto auto auto; column-gap: 10px; row-gap: 3px; text-align: left; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); cursor: pointer; font: inherit; transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s, border-color .3s; overflow: hidden; }
+.hab:hover { transform: translateY(-2px); border-color: var(--faint); }
+.hab:active { transform: scale(.97); }
+.hab b { font-size: 13.5px; line-height: 1.25; grid-column: 2; }
+.hab-meta { grid-column: 2; font-size: 11.5px; color: var(--muted); }
+.hab .dots { grid-column: 2; display: flex; gap: 3px; margin-top: 4px; }
+.hab .dots i { width: 7px; height: 7px; border-radius: 2px; background: color-mix(in srgb, var(--ink) 12%, transparent); }
+.hab .dots i.on { background: var(--brass); }
+.hab-chk { grid-row: 1 / span 3; width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid var(--faint); margin-top: 1px; display: grid; place-items: center; transition: background .25s, border-color .25s, transform .35s cubic-bezier(.34,1.56,.64,1); }
+.hab.on { background: color-mix(in srgb, var(--brass) 14%, var(--panel-2)); border-color: color-mix(in srgb, var(--brass) 55%, transparent); }
+.hab.on .hab-chk { background: var(--brass); border-color: var(--brass); transform: scale(1.1); }
+.hab.on .hab-chk::after { content: ""; width: 9px; height: 5px; border: 2px solid #111; border-top: 0; border-right: 0; transform: rotate(-45deg) translate(1px, -1px); animation: chkIn .35s ease both; }
+@keyframes chkIn { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.hab::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 20px 20px, color-mix(in srgb, var(--brass) 35%, transparent), transparent 60%); opacity: 0; transition: opacity .5s; pointer-events: none; }
+.hab.on::after { opacity: .6; }
+.enter .hab { animation: fadeUp .6s cubic-bezier(.16,.84,.24,1) both; animation-delay: var(--d); }
+.pb-row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(250px, 30%); gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; }
+.pb-row::-webkit-scrollbar { display: none; }
+.pb-card { scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; padding: 18px; border-radius: 16px; border: 1px solid var(--line); background: var(--panel-2); transition: transform .35s cubic-bezier(.16,.84,.24,1), border-color .3s; }
+.pb-card:hover { transform: translateY(-3px); border-color: var(--brass); }
+.pb-card .chip { align-self: flex-start; }
+.pb-card b { font: 600 16px/1.25 var(--display); letter-spacing: -.015em; }
+.pb-card p { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+.pb-card.feat { background: linear-gradient(160deg, color-mix(in srgb, var(--brass) 22%, transparent), transparent 70%), var(--panel-2); border-color: color-mix(in srgb, var(--brass) 45%, transparent); }
+.pb-nav { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+.chev { width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; }
+.chev.l { transform: rotate(135deg); margin-left: 3px; } .chev.r { transform: rotate(-45deg); margin-right: 3px; }
+#zen { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; background: rgba(3,4,6,.82); -webkit-backdrop-filter: blur(30px) saturate(1.2); backdrop-filter: blur(30px) saturate(1.2); color: #fff; animation: zenIn .6s cubic-bezier(.16,.84,.24,1) both; }
+#zen.out { animation: zenOut .45s ease-in forwards; }
+@keyframes zenIn { from { opacity: 0; backdrop-filter: blur(0); } }
+@keyframes zenOut { to { opacity: 0; } }
+.zen-in { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; padding: 24px; }
+.zen-in .label { color: #d9b072; letter-spacing: .3em; }
+#zen-time { font: 400 clamp(5rem, 20vw, 13rem)/.9 var(--display); letter-spacing: -.06em; font-variant-numeric: tabular-nums; animation: zenNum 1.2s cubic-bezier(.16,.84,.24,1) both .1s; }
+@keyframes zenNum { from { opacity: 0; transform: translateY(30px) scale(.96); filter: blur(10px); } }
+.zen-task { font: 500 clamp(1rem, 2vw, 1.3rem) var(--display); color: rgba(255,255,255,.75); max-width: 40ch; }
+.zen-bar { width: min(420px, 70vw); height: 2px; background: rgba(255,255,255,.12); border-radius: 2px; overflow: hidden; }
+.zen-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #d9b072, #f6e2b8); transition: width 1s linear; }
+#zen .tm-btn.main { background: #d9b072; border-color: #d9b072; }
+.zen-x { color: #fff; border-color: rgba(255,255,255,.25); gap: 6px; }
+@media (max-width: 760px) {
+  .habs { grid-template-columns: 1fr 1fr; }
+  .pb-row { grid-auto-columns: 82%; }
+  .prio2 { grid-template-columns: 30px 22px minmax(0, 1fr) 36px; gap: 8px; }
+  .tm-keys { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .tm-stage::before, .tm-stage.running .tm-time, .tm-stage.running .tm-btn.main, .tm-stage.running .tm-dot-glow, #zen, #zen-time, .enter .tm-week i, .enter .hab, .enter .tm-goal-dots i.on { animation: none !important; } }
 </style>
 
 <style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
@@ -1057,7 +1173,6 @@ body { letter-spacing: -.005em; }
   <div class="sp-word" aria-label="Brief"><span>B</span><span>R</span><span>I</span><span>E</span><span>F</span></div>
   <div class="sp-sub">Hedi&nbsp;&nbsp;·&nbsp;&nbsp;Dubai</div>
   <div class="sp-bar"><i></i></div>
-  <button class="sp-enter" type="button">Touch to enter</button>
 </div>
 <div id="sprog" aria-hidden="true"></div><div id="sweep" aria-hidden="true"></div>
 <div id="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -1071,7 +1186,6 @@ body { letter-spacing: -.005em; }
   <div class="rail-foot">
     <button class="theme-btn" id="search-btn" type="button">Search &nbsp;/</button>
     <button class="theme-btn" id="theme-btn" type="button">Dark mode</button>
-    <button class="theme-btn" id="sound-btn" type="button">Sound: on</button>
     <div class="label">Dubai</div>
     <div class="clock num" id="clock">--:--</div>
     <button class="sync" id="sync" type="button" title="Sync settings"><i></i><span>Connecting</span></button>
@@ -1237,7 +1351,7 @@ function lockScreen(enc) {
     el('button', { class: 'btn brass', type: 'submit', text: 'Unlock' }));
   f.addEventListener('submit', async ev => {
     ev.preventDefault(); err.textContent = 'Unlocking…';
-    try { S.brief = await decryptBrief(enc, inp.value); local.set('pw', inp.value); TZ = S.brief.timezone || TZ; lock.classList.add('out'); setTimeout(() => lock.remove(), 520); document.body.classList.remove('locked'); playLaunch(); replayCine(); route(); initDb(); }
+    try { S.brief = await decryptBrief(enc, inp.value); local.set('pw', inp.value); TZ = S.brief.timezone || TZ; lock.classList.add('out'); setTimeout(() => lock.remove(), 520); document.body.classList.remove('locked'); replayCine(); route(); initDb(); }
     catch { err.textContent = 'Wrong password. Try again.'; inp.select(); }
   });
   const lock = el('div', { class: 'lock' }, f);
@@ -2520,7 +2634,7 @@ function cineHero(B, chipsEl, dateLine) {
 function updateIsland(now) {
   const isl = $('#island'); if (!isl) return;
   let txt = '', kind = '', frac = null, to = null;
-  if (S.brief && T.running) { const left = timerLeft(); txt = `Focus · ${mmss(left)}`; kind = 'focus'; frac = 1 - left / (T.mode * 60); to = 'focus'; }
+  if (S.brief && T.running) { const left = timerLeft(); txt = `Focus · ${mmss(left)}`; kind = 'focus'; frac = 1 - left / tmTotal(); to = 'focus'; }
   else if (S.brief) { const nx = (S.brief.events || []).map(e => ({ t: e.title, S: new Date(e.start) })).filter(e => e.S > now && e.S - now < 20 * 6e4).sort((a, b) => a.S - b.S)[0]; if (nx) { txt = `${nx.t} · in ${until(nx.S - now)}`; kind = 'event'; to = 'timetable'; }
     else { const ns = nyseState(now); if (ns.next < 15 * 6e4) { txt = `${ns.nextLabel} in ${until(ns.next)}`; kind = 'event'; to = 'markets'; } } }
   const show = !!txt && !(kind === 'focus' && S.view === 'focus') && !document.body.classList.contains('locked');
@@ -2540,7 +2654,6 @@ function openMore() {
     return el('button', { class: 'sheet-item' + (S.view === id ? ' on' : ''), type: 'button', onclick: () => go(id) }, ic, el('span', { text: name })); });
   const dark = document.documentElement.dataset.theme === 'dark';
   const acts = [['Search', () => { close(); setTimeout(openSearch, 250); }], [dark ? 'Light mode' : 'Dark mode', () => { close(); setTimeout(() => $('#theme-btn').click(), 260); }],
-    [soundOn() ? 'Launch sound: on' : 'Launch sound: off', () => { close(); toggleSound(); }],
     ['Sync settings', () => { close(); setTimeout(syncDialog, 250); }], ['Lock this device', () => { local.set('pw', ''); location.reload(); }, 'danger']];
   const sh = el('div', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'More' }, el('div', { class: 'sheet-grip' }), el('div', { class: 'sheet-grid' }, items),
     el('div', { class: 'sheet-list' }, acts.map(([t, f, c]) => el('button', { type: 'button', class: c || '', onclick: f, text: t }))));
@@ -2889,52 +3002,16 @@ function satCoach() {
     el('button', { class: 'btn', onclick: () => { S.satTab = 'mistakes'; rerender(true); }, text: errs.length ? 'Open log' : 'Mistake log' })));
   return el('div', { class: 'card coach', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Your next moves' }), el('span', { class: 'label', text: 'built from your plan, ratings and mistakes' })), el('ol', { class: 'steps' }, steps));
 }
-const soundOn = () => local.get('sound', true);
-const SND = { ctx: null };
-function audioCtx() { if (!SND.ctx) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; try { SND.ctx = new AC(); } catch { return null; } } return SND.ctx; }
-function playLaunch() {
-  if (!soundOn()) return; const ctx = audioCtx(); if (!ctx) return;
-  if (ctx.state !== 'running') ctx.resume().catch(() => {});
-  try {
-    const t = ctx.currentTime + .04, master = ctx.createGain(), comp = ctx.createDynamicsCompressor();
-    master.gain.value = .42; master.connect(comp); comp.connect(ctx.destination);
-    const nb = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate), nd = nb.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
-    const air = ctx.createBufferSource(); air.buffer = nb; const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = .9;
-    bp.frequency.setValueAtTime(300, t); bp.frequency.exponentialRampToValueAtTime(3800, t + .9); bp.frequency.exponentialRampToValueAtTime(900, t + 1.7);
-    const ag = ctx.createGain(); ag.gain.setValueAtTime(.0001, t); ag.gain.exponentialRampToValueAtTime(.22, t + .55); ag.gain.exponentialRampToValueAtTime(.0001, t + 1.8);
-    air.connect(bp); bp.connect(ag); ag.connect(master); air.start(t); air.stop(t + 1.9);
-    const shaper = ctx.createWaveShaper(), curve = new Float32Array(1024); for (let i = 0; i < 1024; i++) { const x = i / 512 - 1; curve[i] = Math.tanh(3.2 * x); } shaper.curve = curve;
-    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 5;
-    lp.frequency.setValueAtTime(260, t); lp.frequency.exponentialRampToValueAtTime(2200, t + .7); lp.frequency.exponentialRampToValueAtTime(1400, t + 1.0); lp.frequency.exponentialRampToValueAtTime(3000, t + 1.25); lp.frequency.exponentialRampToValueAtTime(300, t + 1.9);
-    const eg = ctx.createGain(); eg.gain.setValueAtTime(.0001, t); eg.gain.exponentialRampToValueAtTime(.34, t + .12); eg.gain.setValueAtTime(.34, t + 1.15); eg.gain.exponentialRampToValueAtTime(.0001, t + 1.95);
-    shaper.connect(lp); lp.connect(eg); eg.connect(master);
-    [[0, 'sawtooth'], [9, 'sawtooth'], [-1200, 'square']].forEach(([det, type]) => { const o = ctx.createOscillator(); o.type = type; o.detune.value = det;
-      o.frequency.setValueAtTime(48, t); o.frequency.exponentialRampToValueAtTime(170, t + .62); o.frequency.exponentialRampToValueAtTime(118, t + .82); o.frequency.exponentialRampToValueAtTime(235, t + 1.2); o.frequency.exponentialRampToValueAtTime(64, t + 1.95);
-      const og = ctx.createGain(); og.gain.value = type === 'square' ? .35 : .5; o.connect(og); og.connect(shaper); o.start(t); o.stop(t + 2); });
-    [[523.25, 0], [783.99, .04], [1046.5, .08], [1567.98, .12]].forEach(([f, d]) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.value = f;
-      const s0 = t + 1.05 + d; g.gain.setValueAtTime(.0001, s0); g.gain.exponentialRampToValueAtTime(.09, s0 + .03); g.gain.exponentialRampToValueAtTime(.0001, s0 + 1.6); o.connect(g); g.connect(master); o.start(s0); o.stop(s0 + 1.7); });
-  } catch {}
-}
-function toggleSound() { local.set('sound', !soundOn()); syncSoundBtn(); if (soundOn()) { const c = audioCtx(); if (c) c.resume().then(playLaunch).catch(() => {}); } toast(soundOn() ? 'Launch sound on' : 'Launch sound off'); }
-function syncSoundBtn() { const b = $('#sound-btn'); if (b) b.textContent = soundOn() ? 'Sound: on' : 'Sound: off'; }
 const SPLASH = { el: null, t0: performance.now(), ready: false, gone: false, needTap: false, skip: false };
 function replayCine() { if (!CINE.wrap || REDUCE()) return; CINE.wrap.classList.remove('intro'); void CINE.wrap.offsetWidth; CINE.wrap.classList.add('intro'); setTimeout(() => CINE.wrap && CINE.wrap.classList.remove('intro'), 3200); }
 function splashReady() { SPLASH.ready = true; maybeEnter(); }
 function maybeEnter() {
   const sp = SPLASH.el; if (!sp || SPLASH.gone || !SPLASH.ready) return;
-  const wait = SPLASH.skip ? 0 : Math.max(0, 2500 - (performance.now() - SPLASH.t0));
-  clearTimeout(SPLASH.tm);
-  SPLASH.tm = setTimeout(() => {
-    if (document.body.classList.contains('locked')) return leaveSplash(false);
-    if (!soundOn() || SPLASH.skip) return leaveSplash(SPLASH.skip);
-    const c = audioCtx();
-    if (c && c.state === 'running') return leaveSplash(true);
-    SPLASH.needTap = true; sp.classList.add('tap'); const b = sp.querySelector('.sp-enter'); if (b) b.focus({ preventScroll: true });
-  }, wait);
+  const wait = SPLASH.skip ? 0 : Math.max(0, 2400 - (performance.now() - SPLASH.t0));
+  clearTimeout(SPLASH.tm); SPLASH.tm = setTimeout(leaveSplash, wait);
 }
-function leaveSplash(sound) {
+function leaveSplash() {
   const sp = SPLASH.el; if (!sp || SPLASH.gone) return; SPLASH.gone = true;
-  if (sound) playLaunch();
   sp.classList.add('out'); replayCine();
   const m = $('#main'); if (m && m.querySelector('.view')) enterAnim(m);
   setTimeout(() => sp.remove(), 1400);
@@ -2942,10 +3019,10 @@ function leaveSplash(sound) {
 function initSplash() {
   const sp = $('#splash'); if (!sp) return; SPLASH.el = sp;
   if (REDUCE()) { sp.remove(); SPLASH.gone = true; return; }
-  const go = () => { const c = soundOn() ? audioCtx() : null; if (c && c.state !== 'running') c.resume().catch(() => {}); if (SPLASH.ready) { SPLASH.skip = true; if (SPLASH.needTap) leaveSplash(true); else maybeEnter(); } else SPLASH.skip = true; };
+  const go = () => { SPLASH.skip = true; maybeEnter(); };
   sp.addEventListener('pointerdown', go);
-  document.addEventListener('keydown', function k(e) { if (SPLASH.gone) { document.removeEventListener('keydown', k); return; } if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
-  setTimeout(() => { if (!SPLASH.gone && !SPLASH.ready) { SPLASH.ready = true; leaveSplash(false); } }, 12000);
+  document.addEventListener('keydown', function k(e) { if (SPLASH.gone) { document.removeEventListener('keydown', k); return; } if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); go(); } });
+  setTimeout(() => { if (!SPLASH.gone && !SPLASH.ready) { SPLASH.ready = true; leaveSplash(); } }, 12000);
 }
 function marquee(B, satDays) {
   const n = STUDY ? (() => { const d = revDeck('all'); return d.due.length + d.newToday.length; })() : 0;
@@ -2997,67 +3074,154 @@ function vNews() {
 
 const T = local.get('timer', { mode: 25, endsAt: null, remaining: 25 * 60, running: false, sessions: {} });
 function timerLeft() { return T.running && T.endsAt ? Math.max(0, Math.round((T.endsAt - Date.now()) / 1000)) : T.remaining; }
+const FOCUS_MODES = [[25, 'Focus 25'], [50, 'Focus 50'], [90, 'Deep 90']], BREAK_MODES = [[5, 'Break 5'], [15, 'Break 15']];
+const ICO = { play: '<path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none"/>', pause: '<path d="M8 5h3v14H8zM13 5h3v14h-3z" fill="currentColor" stroke="none"/>', reset: '<path d="M5 12a7 7 0 1 0 2.1-5"/><path d="M5 4.5V9h4.5"/>', plus: '<path d="M12 6v12M6 12h12"/>', zen: '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>', x: '<path d="M6 6l12 12M18 6L6 18"/>' };
+function ico(n, cls) { const g = svg('svg', { viewBox: '0 0 24 24', class: 'ico' + (cls ? ' ' + cls : ''), 'aria-hidden': 'true' }); g.innerHTML = ICO[n]; return g; }
+function tmTotal() { return T.total || T.mode * 60; }
+function focusMins(d) { return ((T.mins || {})[d]) || 0; }
+function setTimer(patch) { Object.assign(T, patch); local.set('timer', T); }
+function tmStart() { if (T.running) return; if (!T.brk) T.last = T.mode; setTimer({ running: true, endsAt: Date.now() + timerLeft() * 1000, total: tmTotal() }); haptic(10); rerender(); syncZen(); }
+function tmPause() { if (!T.running) return; setTimer({ remaining: timerLeft(), running: false, endsAt: null }); rerender(); syncZen(); }
+function tmToggle() { T.running ? tmPause() : tmStart(); }
+function tmReset() { setTimer({ running: false, endsAt: null, remaining: T.mode * 60, total: T.mode * 60 }); rerender(); syncZen(); }
+function tmMode(n, brk) { if (T.running) { toast('Pause the current block first.'); return; } setTimer({ mode: n, brk: !!brk, remaining: n * 60, total: n * 60 }); if (!brk) T.last = n; rerender(); }
+function tmAdd(min) { if (T.running) setTimer({ endsAt: T.endsAt + min * 6e4, total: tmTotal() + min * 60 }); else setTimer({ remaining: timerLeft() + min * 60, total: tmTotal() + min * 60 }); toast(`+${min} min`); focusTick(); }
+function focusDone() {
+  const d = todayYmd(), wasBreak = !!T.brk, mins = Math.round(tmTotal() / 60);
+  T.running = false; T.endsAt = null;
+  if (!wasBreak) {
+    T.sessions = { ...(T.sessions || {}), [d]: ((T.sessions || {})[d] || 0) + 1 };
+    const mm = { ...(T.mins || {}), [d]: focusMins(d) + mins }; T.mins = Object.fromEntries(Object.keys(mm).sort().slice(-90).map(k => [k, mm[k]]));
+    T.brk = true; T.mode = T.sessions[d] % 4 === 0 ? 15 : 5;
+    toast(`Block done: ${mins} min of focus. Break time, ${T.mode} min.`); confetti(innerWidth / 2, innerHeight * .4, 130);
+  } else { T.brk = false; T.mode = T.last || 25; toast('Break over. Ready for the next block.'); }
+  T.total = T.mode * 60; T.remaining = T.mode * 60; local.set('timer', T);
+  if (S.view === 'focus' || S.view === 'today') rerender(); syncZen();
+}
+let FOCUS_LIT = -1;
+function focusTick() {
+  const left = timerLeft(), tot = tmTotal(), p = tot ? Math.min(1, Math.max(0, 1 - left / tot)) : 0;
+  const txt = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
+  const tt = $('#tm-time'); if (tt && tt.textContent !== txt) tt.textContent = txt;
+  const ring = $('#tm-ring'); if (ring) ring.setAttribute('stroke-dashoffset', (+ring.dataset.c * (1 - p)).toFixed(2));
+  const hd = $('#tm-head'); if (hd) hd.setAttribute('transform', `rotate(${(p * 360).toFixed(2)} 160 160)`);
+  const lit = Math.floor(p * 60), ticks = document.querySelectorAll('.tm-ticks line');
+  if (ticks.length && (lit !== FOCUS_LIT || !ticks[0].dataset.done)) { ticks.forEach((l, i) => l.classList.toggle('lit', i < lit)); FOCUS_LIT = lit; ticks[0].dataset.done = '1'; }
+  const zt = $('#zen-time'); if (zt && zt.textContent !== txt) zt.textContent = txt;
+  const zb = $('#zen-bar'); if (zb) zb.style.width = (p * 100).toFixed(2) + '%';
+  const want = T.running ? `${txt} · ${T.brk ? 'Break' : 'Focus'}` : 'Brief'; if (document.title !== want) document.title = want;
+}
+function focusRing() {
+  const R = 130, C = 2 * Math.PI * R;
+  return svg('svg', { viewBox: '0 0 320 320', class: 'tm-svg', 'aria-hidden': 'true' },
+    svg('defs', {}, svg('linearGradient', { id: 'tmg', x1: '0', y1: '0', x2: '1', y2: '1' }, svg('stop', { offset: '0', style: 'stop-color: var(--brass)' }), svg('stop', { offset: '1', style: 'stop-color: #f6e2b8' }))),
+    svg('g', { class: 'tm-ticks' }, Array.from({ length: 60 }, (_, i) => { const a = i / 60 * Math.PI * 2, r1 = i % 5 ? 147 : 141, r2 = 153; return svg('line', { x1: (160 + r1 * Math.sin(a)).toFixed(2), y1: (160 - r1 * Math.cos(a)).toFixed(2), x2: (160 + r2 * Math.sin(a)).toFixed(2), y2: (160 - r2 * Math.cos(a)).toFixed(2), class: i % 5 ? '' : 'big' }); })),
+    svg('circle', { class: 'tm-track', cx: 160, cy: 160, r: R }),
+    svg('circle', { class: 'tm-prog', id: 'tm-ring', cx: 160, cy: 160, r: R, transform: 'rotate(-90 160 160)', 'stroke-dasharray': C.toFixed(2), 'stroke-dashoffset': C.toFixed(2), 'data-c': C.toFixed(2) }),
+    svg('g', { id: 'tm-head' }, svg('circle', { class: 'tm-dot-glow', cx: 160, cy: 30, r: 16 }), svg('circle', { class: 'tm-dot', cx: 160, cy: 30, r: 7 })));
+}
+function openZen() {
+  if ($('#zen')) return;
+  const z = el('div', { id: 'zen', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Zen mode' },
+    el('div', { class: 'zen-in' }, el('div', { class: 'label', text: T.brk ? 'Break' : 'Deep focus' }), el('div', { id: 'zen-time', class: 'num', text: '--:--' }),
+      el('div', { class: 'zen-task', text: T.task || (T.brk ? 'Stand up. Breathe. Drink water.' : 'One task. Phone in another room.') }), el('div', { class: 'zen-bar' }, el('i', { id: 'zen-bar' })),
+      el('div', { class: 'tm-ctrl' }, el('button', { class: 'tm-btn main', type: 'button', id: 'zen-go', 'aria-label': 'Start or pause', onclick: tmToggle }, ico(T.running ? 'pause' : 'play')),
+        el('button', { class: 'btn ghost zen-x', type: 'button', onclick: closeZen }, ico('x'), 'Exit'))));
+  document.body.append(z); focusTick();
+  try { if (document.documentElement.requestFullscreen && matchMedia('(hover: hover)').matches) document.documentElement.requestFullscreen().catch(() => {}); } catch {}
+}
+function syncZen() { const b = $('#zen-go'); if (b) b.replaceChildren(ico(T.running ? 'pause' : 'play')); const l = document.querySelector('#zen .label'); if (l) l.textContent = T.brk ? 'Break' : 'Deep focus'; }
+function closeZen() { const z = $('#zen'); if (!z) return; z.classList.add('out'); setTimeout(() => z.remove(), 450); try { if (document.fullscreenElement) document.exitFullscreen(); } catch {} }
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey || (e.target.matches && e.target.matches('input, textarea, select'))) return;
+  const zen = $('#zen');
+  if (zen && e.key === 'Escape') { closeZen(); return; }
+  if (!(S.view === 'focus' || zen) || (SPLASH.el && !SPLASH.gone)) return;
+  if (e.key === ' ' && !(e.target.matches && e.target.matches('button, a'))) { e.preventDefault(); tmToggle(); }
+  else if (e.key === 'r' || e.key === 'R') tmReset();
+  else if ((e.key === 'f' || e.key === 'F') && !zen) openZen();
+});
+function toggleHabit(id, list, node) {
+  const today = todayYmd(), cur = S.db.habits || { list, log: {} }, set = new Set((cur.log || {})[today] || []);
+  const on = !set.has(id); on ? set.add(id) : set.delete(id);
+  if (on && node) burstFrom(node, set.size >= list.length ? 150 : 22); haptic(on ? 10 : 5);
+  const nl = { ...(cur.log || {}), [today]: [...set] }, keep = Object.keys(nl).sort().slice(-90);
+  save('habits', { list: cur.list && cur.list.length ? cur.list : list, log: Object.fromEntries(keep.map(k => [k, nl[k]])) }); rerender();
+}
 function vFocus() {
-  const v = el('section', { class: 'view' }), today = todayYmd();
-  v.append(pageHead('Deep work', 'Focus', 'Plan three priorities, protect your focus blocks, and keep the daily habits that make the rest easier.'));
-  const R2 = 96, CIRC = 2 * Math.PI * R2;
-  const ring = svg('svg', { viewBox: '0 0 220 220', 'aria-hidden': 'true' },
-    svg('circle', { cx: 110, cy: 110, r: R2, fill: 'none', stroke: 'var(--line)', 'stroke-width': 8 }),
-    svg('circle', { id: 'tm-ring', cx: 110, cy: 110, r: R2, fill: 'none', stroke: 'var(--brass)', 'stroke-width': 8, 'stroke-linecap': 'round', transform: 'rotate(-90 110 110)', 'stroke-dasharray': CIRC, 'stroke-dashoffset': 0 }));
-  const sessions = (T.sessions || {})[today] || 0;
-  const timer = el('div', { class: 'card s-5 timer' },
-    el('div', { class: 'card-h', style: { width: '100%' } }, el('h2', { text: 'Focus timer' }), el('span', { class: 'label', id: 'tm-sess', text: `${sessions} block${sessions === 1 ? '' : 's'} today` })),
-    el('div', { style: { position: 'relative', display: 'grid', placeItems: 'center' } }, ring, el('div', { style: { position: 'absolute', textAlign: 'center' } }, el('div', { class: 'timer-time num', id: 'tm-time' }), el('div', { class: 'label', id: 'tm-state', text: T.running ? 'focusing' : 'ready' }))),
-    el('div', { class: 'seg', role: 'group', 'aria-label': 'Block length' }, [25, 50, 90].map(n => el('button', { 'aria-pressed': T.mode === n ? 'true' : 'false', onclick: () => { if (T.running) return toast('Stop the current block first.'); T.mode = n; T.remaining = n * 60; local.set('timer', T); rerender(); }, text: `${n} min` }))),
-    el('div', { class: 'form-row' }, el('button', { class: 'btn solid', id: 'tm-go', onclick: () => { if (T.running) { T.remaining = timerLeft(); T.running = false; T.endsAt = null; } else { T.running = true; T.endsAt = Date.now() + timerLeft() * 1000; } local.set('timer', T); rerender(); }, text: T.running ? 'Pause' : 'Start' }),
-      el('button', { class: 'btn ghost', onclick: () => { T.running = false; T.endsAt = null; T.remaining = T.mode * 60; local.set('timer', T); rerender(); }, text: 'Reset' })));
+  const v = el('section', { class: 'view focus-view' }), today = todayYmd();
   const F = S.db.focus || { days: {} }; const day = (F.days || {})[today] || { p: ['', '', ''], done: [false, false, false] };
-  const pr = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: 'Today’s three' }), el('span', { class: 'label', text: `${day.done.filter(Boolean).length}/3 done` })));
-  const rows = el('div', { class: 'prio' });
   const persist = () => { const f = S.db.focus || { days: {} }; const days = { ...(f.days || {}), [today]: day }; const keep = Object.keys(days).sort().slice(-30); save('focus', { days: Object.fromEntries(keep.map(k => [k, days[k]])) }); };
+  const sessions = (T.sessions || {})[today] || 0, goal = T.goal || 4, minsToday = focusMins(today);
+  const week = Array.from({ length: 7 }, (_, i) => addDays(today, i - 6)), wMins = week.map(focusMins), wTotal = wMins.reduce((a, b) => a + b, 0);
+  let streakD = 0; { let d = today; if (!(T.sessions || {})[d]) d = addDays(d, -1); while ((T.sessions || {})[d]) { streakD++; d = addDays(d, -1); } }
+  v.append(pageHead('Deep work', 'Focus', 'One task, one block, phone away. Plan your three priorities, run focus blocks, keep your habits.', el('button', { class: 'btn', type: 'button', onclick: openZen }, ico('zen'), 'Zen mode')));
+  const paused = !T.running && timerLeft() < tmTotal();
+  const state = T.running ? (T.brk ? 'On a break' : 'Focusing') : paused ? 'Paused' : T.brk ? 'Break ready' : 'Ready';
+  const tasks = day.p.map((t, i) => [t, day.done[i]]).filter(([t, d]) => t && !d).map(([t]) => t);
+  const taskSel = el('select', { class: 'tm-task', 'aria-label': 'What you are working on' }, el('option', { value: '', text: tasks.length ? 'Pick one of your priorities…' : 'Write your priorities below first' }), tasks.map(t => el('option', { value: t, text: t })));
+  taskSel.value = tasks.includes(T.task) ? T.task : ''; taskSel.addEventListener('change', () => { setTimer({ task: taskSel.value }); const f = $('.tm-for'); if (f) f.textContent = taskSel.value ? short(taskSel.value, 34) : 'No task chosen'; });
+  const stage = el('div', { class: 'card s-7 tm-stage' + (T.running ? ' running' : '') + (T.brk ? ' brk' : '') },
+    el('div', { class: 'tm-wrap' }, focusRing(), el('div', { class: 'tm-center' }, el('div', { class: 'label tm-state', text: state }), el('div', { class: 'tm-time num', id: 'tm-time', text: '--:--' }), el('div', { class: 'tm-for', text: T.brk ? 'Stand up, breathe, water.' : T.task ? short(T.task, 34) : 'No task chosen' }))),
+    el('div', { class: 'tm-ctrl' },
+      el('button', { class: 'tm-btn ghost', type: 'button', onclick: tmReset, 'aria-label': 'Reset', title: 'Reset (R)' }, ico('reset')),
+      el('button', { class: 'tm-btn main', type: 'button', onclick: tmToggle, 'aria-label': T.running ? 'Pause' : 'Start', title: 'Start or pause (space)' }, ico(T.running ? 'pause' : 'play')),
+      el('button', { class: 'tm-btn ghost', type: 'button', onclick: () => tmAdd(5), 'aria-label': 'Add 5 minutes', title: '+5 min' }, ico('plus'))),
+    el('div', { class: 'tm-modes' }, el('div', { class: 'seg' }, FOCUS_MODES.map(([n, name]) => el('button', { 'aria-pressed': !T.brk && T.mode === n ? 'true' : 'false', onclick: () => tmMode(n, false), text: name }))),
+      el('div', { class: 'seg' }, BREAK_MODES.map(([n, name]) => el('button', { 'aria-pressed': T.brk && T.mode === n ? 'true' : 'false', onclick: () => tmMode(n, true), text: name })))),
+    el('label', { class: 'field tm-task-f' }, el('span', { text: 'Working on' }), taskSel),
+    el('p', { class: 'tm-keys', text: 'Space to start or pause · R to reset · F for zen mode' }));
+  const mx = Math.max(25, ...wMins);
+  const stats = el('div', { class: 'card s-5 tm-stats' },
+    el('div', { class: 'card-h' }, el('h2', { text: 'Your focus' }), el('span', { class: 'chip ' + (streakD ? 'ok' : ''), text: streakD ? `${streakD}-day streak` : 'start a streak' })),
+    el('div', { class: 'tm-goal' }, el('div', { class: 'tm-goal-dots' }, Array.from({ length: Math.max(goal, sessions) }, (_, i) => el('i', { class: i < sessions ? 'on' : '', style: { '--d': i * 70 + 'ms' } }))), el('span', { text: `${sessions} of ${goal} blocks today` })),
+    el('div', { class: 'rev-mini' }, [['Today', `${minsToday} min`], ['This week', `${Math.floor(wTotal / 60)}h ${String(wTotal % 60).padStart(2, '0')}`], ['Best day', `${Math.max(0, ...wMins)} min`]].map(([l, x]) => el('div', {}, el('b', { class: 'num', text: x }), el('span', { text: l })))),
+    el('div', { class: 'tm-week' }, week.map((d, i) => el('div', { title: `${fmtDay(d, { weekday: 'long' })} · ${wMins[i]} min` }, el('i', { class: d === today ? 'today' : '', style: { '--h': Math.max(4, wMins[i] / mx * 100) + '%', '--d': i * 60 + 'ms' } }), el('span', { text: fmtDay(d, { weekday: 'narrow' }) })))),
+    el('div', { class: 'tm-goalset' }, el('span', { class: 'label', text: 'Daily goal' }), el('div', { class: 'seg' }, [2, 4, 6, 8].map(n => el('button', { 'aria-pressed': goal === n ? 'true' : 'false', onclick: () => { setTimer({ goal: n }); rerender(); }, text: `${n} blocks` })))));
+  v.append(el('div', { class: 'grid g-12' }, stage, stats));
+  const doneN = day.done.filter(Boolean).length;
+  const pr = el('div', { class: 'card s-7 prio-card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Today’s three' }), el('span', { class: 'label', text: `${doneN}/3 done` })),
+    el('div', { class: 'bar', style: { margin: '0 0 6px' } }, el('i', { style: { width: (doneN / 3 * 100) + '%', background: 'var(--brass)' } })));
   let deb;
   [0, 1, 2].forEach(i => {
     const cb = el('input', { type: 'checkbox', class: 'tick', id: 'pr-c' + i, 'aria-label': `Priority ${i + 1} done` }); cb.checked = !!day.done[i];
     const inp = el('input', { type: 'text', id: 'pr-' + i, value: day.p[i] || '', placeholder: ['The one thing that makes today a win', 'Second priority', 'Third priority'][i], 'aria-label': `Priority ${i + 1}` });
-    const row = el('div', { class: 'prio-row' + (cb.checked ? ' done' : '') }, el('span', { class: 'n', text: i + 1 }), cb, inp);
-    cb.addEventListener('change', () => { day.done[i] = cb.checked; row.classList.toggle('done', cb.checked); persist(); if (cb.checked && day.done.every(Boolean)) burstFrom(cb, 120); });
+    const row = el('div', { class: 'prio2' + (cb.checked ? ' done' : '') }, el('span', { class: 'p-n', text: i + 1 }), cb, inp,
+      el('button', { class: 'tm-btn sm ghost', type: 'button', title: 'Focus on this now', 'aria-label': `Focus on priority ${i + 1}`, onclick: () => { if (!day.p[i]) { toast('Write the priority first.'); inp.focus(); return; } setTimer({ task: day.p[i] }); if (T.brk && !T.running) tmMode(T.last || 25, false); if (!T.running) tmStart(); else rerender(); window.scrollTo({ top: 0, behavior: REDUCE() ? 'auto' : 'smooth' }); } }, ico('play')));
+    cb.addEventListener('change', () => { day.done[i] = cb.checked; row.classList.toggle('done', cb.checked); persist(); if (cb.checked && day.done.every(Boolean)) burstFrom(cb, 140); setTimeout(rerender, 450); });
     inp.addEventListener('input', () => { day.p[i] = inp.value; clearTimeout(deb); deb = setTimeout(persist, 700); });
     inp.addEventListener('blur', () => { clearTimeout(deb); persist(); });
-    rows.append(row);
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); const nx = $('#pr-' + (i + 1)); if (nx) nx.focus(); else inp.blur(); } });
+    pr.append(row);
   });
-  pr.append(rows, el('p', { class: 'muted', style: { fontSize: '13px', margin: '14px 0 0' }, text: 'Suggestion for today: ' + (S.brief.sat_today ? 'SAT session · ' : '') + ((S.brief.needs_attention || [])[0] ? S.brief.needs_attention[0].title : 'one deep-study block') }));
-  v.append(el('div', { class: 'grid g-12' }, timer, pr));
+  pr.append(el('p', { class: 'muted', style: { fontSize: '13px', margin: '14px 0 0' }, text: 'Idea for today: ' + (S.brief.sat_today ? 'SAT session · ' : '') + ((S.brief.needs_attention || [])[0] ? S.brief.needs_attention[0].title : 'one deep-study block') + '. Press the play button next to a priority to start a block on it.' }));
   const Hb = S.db.habits || { list: DEFAULT_HABITS.map(([id, name]) => ({ id, name })), log: {} };
   const list = Hb.list && Hb.list.length ? Hb.list : DEFAULT_HABITS.map(([id, name]) => ({ id, name }));
-  const log = Hb.log || {};
-  const todayDone = new Set(log[today] || []);
-  const last7 = Array.from({ length: 7 }, (_, i) => addDays(today, i - 6));
+  const log = Hb.log || {}, todayDone = new Set(log[today] || []), last7 = Array.from({ length: 7 }, (_, i) => addDays(today, i - 6));
   const streak = id => { let n = 0; for (let i = 0; i < 60; i++) { const d = addDays(today, -i); if ((log[d] || []).includes(id)) n++; else if (i > 0) break; } return n; };
-  const habCard = el('div', { class: 'card s-6' }, el('div', { class: 'card-h' }, el('h2', { text: 'Habits' }), el('span', { class: 'label', text: `${todayDone.size}/${list.length} today` })));
-  const hl = el('div', { class: 'habits' });
-  list.forEach(h => {
-    const cb = el('input', { type: 'checkbox', class: 'tick', id: 'hb-' + h.id, 'aria-label': h.name }); cb.checked = todayDone.has(h.id);
-    cb.addEventListener('change', () => { const cur = S.db.habits || { list, log: {} }; const set = new Set((cur.log || {})[today] || []); cb.checked ? set.add(h.id) : set.delete(h.id); if (cb.checked) burstFrom(cb, set.size >= list.length ? 140 : 18);
-      const nl = { ...(cur.log || {}), [today]: [...set] }; const keep = Object.keys(nl).sort().slice(-90); save('habits', { list: cur.list && cur.list.length ? cur.list : list, log: Object.fromEntries(keep.map(k => [k, nl[k]])) }); rerender(); });
-    const sk = streak(h.id);
-    hl.append(el('div', { class: 'habit' }, cb, el('label', { for: 'hb-' + h.id }, h.name, sk > 1 ? el('span', { class: 'label', style: { marginLeft: '8px', color: 'var(--brass)' }, text: `${sk}-day streak` }) : null),
-      el('div', { class: 'dots', title: 'Last 7 days' }, last7.map(d => el('i', { class: (log[d] || []).includes(h.id) ? 'on' : '' })))));
-  });
-  habCard.append(hl);
+  const hpct = list.length ? Math.round(todayDone.size / list.length * 100) : 0;
+  const habCard = el('div', { class: 'card s-5 hab-card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Habits' }), el('div', { class: 'hab-sum' }, miniRing(hpct, 40), el('span', { class: 'label', text: `${todayDone.size}/${list.length}` }))),
+    el('div', { class: 'habs' }, list.map((h, i) => { const on = todayDone.has(h.id), sk = streak(h.id);
+      return el('button', { class: 'hab' + (on ? ' on' : ''), type: 'button', 'aria-pressed': on ? 'true' : 'false', style: { '--d': i * 50 + 'ms' }, onclick: e => toggleHabit(h.id, list, e.currentTarget) },
+        el('span', { class: 'hab-chk', 'aria-hidden': 'true' }), el('b', { text: h.name }), el('span', { class: 'hab-meta', text: sk > 1 ? `${sk}-day streak` : on ? 'done today' : 'tap when done' }),
+        el('span', { class: 'dots' }, last7.map(d => el('i', { class: (log[d] || []).includes(h.id) ? 'on' : '' })))); })));
   const addH = el('form', { class: 'form-row', style: { marginTop: '12px' } }); const hi = el('input', { type: 'text', id: 'hb-new', placeholder: 'Add a habit', 'aria-label': 'New habit' });
   addH.append(el('label', { class: 'field', style: { flex: '1 1 160px' } }, hi), el('button', { class: 'btn sm', type: 'submit', text: 'Add' }));
   addH.addEventListener('submit', ev => { ev.preventDefault(); const name = hi.value.trim(); if (!name) return; const cur = S.db.habits || { list, log: {} }; save('habits', { list: [...(cur.list && cur.list.length ? cur.list : list), { id: uid(), name }], log: cur.log || {} }); rerender(); });
   habCard.append(addH);
-  const tips = el('div', { class: 'card s-6' }, el('div', { class: 'card-h' }, el('h2', { text: 'Playbook' })));
-  if (S.brief.tip) tips.append(el('div', { style: { marginBottom: '14px' } }, el('div', { class: 'label', style: { color: 'var(--brass)' }, text: 'Today' }), el('p', { class: 'tip-hero', style: { marginTop: '6px' }, text: S.brief.tip.title }), el('span', { class: 'muted', text: S.brief.tip.body })));
-  if ((S.brief.tips || []).length) tips.append(el('div', { style: { marginBottom: '16px' } }, el('div', { class: 'label', style: { color: 'var(--brass)' }, text: 'Fresh today' }), S.brief.tips.map(t => el('div', { class: 'tip' }, el('span', { class: 'chip', style: { marginBottom: '6px' }, text: t.category }), el('b', { text: t.title }), el('span', { text: t.body }), t.source ? el('small', { class: 'label', style: { display: 'block', marginTop: '4px' }, text: t.source }) : null))));
-  tips.append(el('div', { class: 'label', text: 'Library' }));
-  tips.append(el('div', { class: 'filters tips-tabs' }, Object.keys(TIPS).map(c => el('button', { 'aria-pressed': S.tipCat === c ? 'true' : 'false', onclick: () => { S.tipCat = c; rerender(); }, text: c }))));
-  tips.append(el('div', {}, TIPS[S.tipCat].map(([t, b]) => el('div', { class: 'tip' }, el('b', { text: t }), el('span', { text: b })))));
-  v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, habCard, tips));
+  v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, pr, habCard));
+  const cards = [];
+  if (S.brief.tip) cards.push(el('article', { class: 'pb-card feat' }, el('span', { class: 'chip brass', text: 'Today' }), el('b', { text: S.brief.tip.title }), el('p', { text: S.brief.tip.body })));
+  (S.brief.tips || []).forEach(t => cards.push(el('article', { class: 'pb-card' }, el('span', { class: 'chip', text: t.category || 'Fresh' }), el('b', { text: t.title }), el('p', { text: t.body }))));
+  TIPS[S.tipCat].forEach(([t, b]) => cards.push(el('article', { class: 'pb-card' }, el('span', { class: 'chip', text: S.tipCat }), el('b', { text: t }), el('p', { text: b }))));
+  const row = el('div', { class: 'pb-row' }, cards);
+  v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Playbook' }),
+    el('div', { class: 'filters' }, Object.keys(TIPS).map(c => el('button', { 'aria-pressed': S.tipCat === c ? 'true' : 'false', onclick: () => { S.tipCat = c; rerender(); }, text: c })))),
+    row, el('div', { class: 'pb-nav' }, el('button', { class: 'tm-btn sm ghost', type: 'button', 'aria-label': 'Previous', onclick: () => row.scrollBy({ left: -row.clientWidth * .8, behavior: 'smooth' }) }, el('span', { class: 'chev l' })),
+      el('button', { class: 'tm-btn sm ghost', type: 'button', 'aria-label': 'Next', onclick: () => row.scrollBy({ left: row.clientWidth * .8, behavior: 'smooth' }) }, el('span', { class: 'chev r' })))));
+  setTimeout(focusTick, 0);
   return v;
 }
-
 function vApps() {
   const v = el('section', { class: 'view' }), today = todayYmd();
   const A = S.db.apps || { items: [] }; const items = [...(A.items || [])].sort((a, b) => ((a.status === 'Closed') - (b.status === 'Closed')) || String(a.deadline || '9').localeCompare(String(b.deadline || '9')));
@@ -3126,13 +3290,8 @@ function tick() {
   }
   const rt = $('#rev-time'); if (rt && S.rev && !S.rev.done) rt.textContent = mmss(Math.round((Date.now() - S.rev.start) / 1000));
   const nl = $('#tt-now'); if (nl) nl.style.top = (z.h - +nl.dataset.min) * +nl.dataset.hr + 'px';
-  const tt = $('#tm-time');
-  if (T.running && timerLeft() === 0) {
-    T.running = false; T.endsAt = null; T.remaining = T.mode * 60; T.sessions = { ...(T.sessions || {}), [todayYmd()]: ((T.sessions || {})[todayYmd()] || 0) + 1 }; local.set('timer', T);
-    toast('Block complete. Take a 5-minute break.'); confetti(innerWidth / 2, innerHeight * .4, 110); if (S.view === 'focus') rerender();
-  }
-  if (tt) { const left = timerLeft(); tt.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
-    const ring = $('#tm-ring'); const CIRC = 2 * Math.PI * 96; ring.setAttribute('stroke-dashoffset', CIRC * (1 - left / (T.mode * 60))); }
+  if (T.running && timerLeft() === 0) focusDone();
+  focusTick();
 }
 
 document.addEventListener('keydown', e => {
@@ -3159,8 +3318,6 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.se
 document.addEventListener('visibilitychange', () => { if (!document.hidden && S.brief && S.brief.date < todayYmd() && zoned(new Date()).h >= 7.2 && !S.rev) location.reload(); });
 initStage();
 initSplash();
-syncSoundBtn();
-$('#sound-btn').addEventListener('click', toggleSound);
 $('#totop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: REDUCE() ? 'auto' : 'smooth' }));
 loadBrief();
 setInterval(tick, 1000);
