@@ -1163,6 +1163,91 @@ body { letter-spacing: -.005em; }
   .tm-keys { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .tm-stage::before, .tm-stage.running .tm-time, .tm-stage.running .tm-btn.main, .tm-stage.running .tm-dot-glow, #zen, #zen-time, .enter .tm-week i, .enter .hab, .enter .tm-goal-dots i.on { animation: none !important; } }
+
+.cine .greet em { background: none !important; color: #e7c88f; -webkit-text-fill-color: currentColor; animation: none; }
+.cine .greet em .wi { background: linear-gradient(90deg, #f7ead0, #d9b072 40%, #fff3dc 60%, #d9b072); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; animation: sheen 7s linear infinite; }
+.enter .cine .greet em .wi { animation: wordUp 1.15s cubic-bezier(.16,.84,.24,1) both, sheen 7s linear infinite; animation-delay: calc(var(--c) * 110ms + 450ms), 0s; }
+:root:not([data-theme="dark"]) .cine .greet em { color: #8a5a12; }
+:root:not([data-theme="dark"]) .cine .greet em .wi { background-image: linear-gradient(90deg, #8a5a12, #c08a2e 40%, #6e4a10 60%, #8a5a12); }
+@media (max-width: 760px) { .ws-panel, .ws-tape { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(4,5,6,.93); } }
+#glow { position: fixed; left: 0; top: 0; width: 600px; height: 600px; z-index: 1; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity .8s; background: radial-gradient(circle, color-mix(in srgb, var(--brass) 18%, transparent) 0%, transparent 62%); mix-blend-mode: screen; will-change: transform; }
+#glow.on { opacity: 1; }
+:root:not([data-theme="dark"]) #glow { mix-blend-mode: multiply; background: radial-gradient(circle, rgba(168,116,31,.1), transparent 62%); }
+main { z-index: 2; }
+.card { transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out), border-color .35s, translate .9s cubic-bezier(.16,.84,.24,1); }
+@media (hover: hover) { .card:hover { border-color: color-mix(in srgb, var(--brass) 32%, var(--line)); } }
+#fab { position: fixed; right: max(20px, env(safe-area-inset-right, 0px)); bottom: calc(80px + env(safe-area-inset-bottom, 0px)); z-index: 12; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; border: 0; background: var(--brass); color: #111; cursor: pointer; box-shadow: 0 16px 40px -12px color-mix(in srgb, var(--brass) 80%, transparent); transition: transform .45s cubic-bezier(.34,1.56,.64,1); animation: fabIn .8s cubic-bezier(.34,1.56,.64,1) 1.2s both; }
+#fab svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; fill: none; transition: transform .45s cubic-bezier(.34,1.56,.64,1); }
+#fab:hover { transform: scale(1.08); } #fab:hover svg { transform: rotate(90deg); }
+#fab:active { transform: scale(.92); }
+@keyframes fabIn { from { transform: scale(0) rotate(-90deg); opacity: 0; } }
+body.locked #fab { display: none; }
+@media (max-width: 760px) { #fab { bottom: calc(140px + env(safe-area-inset-bottom, 0px)); right: 14px; width: 48px; height: 48px; } }
+.modal.cap { place-items: start center; padding-top: 16vh; }
+.modal.out { animation: fadeOut .25s forwards; }
+.cap-card { width: min(620px, 100%); display: flex; flex-direction: column; gap: 12px; padding: 18px; }
+.cap-top { display: flex; justify-content: space-between; gap: 10px; }
+.cap-card input { font: 500 20px var(--display); letter-spacing: -.02em; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); }
+.cap-card input:focus { outline: none; border-color: var(--brass); box-shadow: 0 0 0 4px var(--brass-soft); }
+.cap-chips { display: flex; flex-wrap: wrap; gap: 6px; } .cap-chips .chip { cursor: pointer; }
+.inbox-add, .dl-add { display: flex; gap: 8px; }
+.inbox-add input, .dl-add input { flex: 1; min-width: 0; background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; color: var(--ink); font: 500 14px var(--body); transition: border-color .25s, box-shadow .25s; }
+.inbox-add input:focus, .dl-add input:focus { outline: none; border-color: var(--brass); box-shadow: 0 0 0 3px var(--brass-soft); }
+.dl-add { flex-wrap: wrap; } .dl-add input[type=text] { flex: 1 1 100%; } .dl-add input[type=date] { flex: 1 1 150px; }
+.inbox-list { list-style: none; margin: 10px 0 0; padding: 0; }
+.inbox-list li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto 22px; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); animation: slideIn .5s cubic-bezier(.16,.84,.24,1) both; transition: opacity .35s, transform .35s; }
+.inbox-list li:first-child { border-top: 0; }
+.inbox-list li.leaving { opacity: 0; transform: translateX(30px); }
+.inbox-list li.done .in-t { color: var(--muted); text-decoration: line-through; }
+.in-t { font-size: 14.5px; overflow-wrap: anywhere; }
+.in-age { font: 500 11px var(--body); color: var(--faint); }
+@keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } }
+.inbox-done { margin-top: 10px; }
+.inbox-done summary { cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--muted); list-style: none; }
+.inbox-done summary::-webkit-details-marker { display: none; }
+.dl-list { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; }
+.dl-list li { display: grid; grid-template-columns: 44px minmax(0, 1fr) 22px; gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid var(--line); }
+.dl-list li:first-child { border-top: 0; }
+.enter .dl-list li { animation: fadeUp .6s cubic-bezier(.16,.84,.24,1) both; animation-delay: var(--d); }
+.dl-list b { display: block; font-size: 14.5px; }
+.dl-list span { font-size: 12.5px; color: var(--muted); }
+.dl-list li.soon b { color: var(--warn); }
+.dl-ring { width: 44px; height: 44px; color: var(--ink); }
+.dl-ring circle.fg { transition: stroke-dashoffset 1.3s cubic-bezier(.16,.84,.24,1); }
+.dl-list li.soon .dl-ring { animation: soonPulse 1.8s ease-in-out infinite; }
+@keyframes soonPulse { 50% { transform: scale(1.08); filter: drop-shadow(0 0 8px var(--warn)); } }
+.gr-overall { display: flex; align-items: center; gap: 14px; padding: 10px 16px 10px 10px; border-radius: 20px; background: color-mix(in srgb, var(--panel) 70%, transparent); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid var(--line); }
+.gr-overall b { display: block; font: 600 1.5rem var(--display); letter-spacing: -.03em; }
+.gr-add summary { list-style: none; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.gr-add summary::-webkit-details-marker { display: none; }
+.gr-form { display: grid; grid-template-columns: 1.3fr .8fr .7fr .7fr 1fr 1.6fr auto; gap: 10px; align-items: end; margin-top: 16px; }
+.gr-form select { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; color: var(--ink); }
+.gr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; margin-top: 16px; }
+.gr-card { display: flex; flex-direction: column; gap: 12px; }
+.enter .gr-card { animation: fadeUp .7s cubic-bezier(.16,.84,.24,1) both; animation-delay: var(--d); }
+.gr-top { display: flex; justify-content: space-between; align-items: center; }
+.gr-top b { font: 600 17px var(--display); letter-spacing: -.02em; }
+.gr-mid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; }
+.gr-avg { font: 500 3rem/1 var(--display); letter-spacing: -.05em; }
+.gr-avg.good { color: var(--ok); } .gr-avg.bad { color: var(--warn); }
+.gr-trend { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.spark { width: 100%; height: 34px; overflow: visible; }
+.spark-l { fill: none; stroke: var(--brass); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 100; stroke-dashoffset: 0; }
+.enter .spark-l { animation: drawLine 1.4s cubic-bezier(.65,0,.35,1) both .3s; }
+@keyframes drawLine { from { stroke-dashoffset: 100; } }
+.spark-a { fill: color-mix(in srgb, var(--brass) 14%, transparent); }
+.spark-d { fill: var(--brass); }
+.gr-delta { font: 600 12px var(--body); color: var(--muted); } .gr-delta.up { color: var(--ok); } .gr-delta.down { color: var(--warn); }
+.gr-target { display: grid; grid-template-columns: auto 70px minmax(0, 1fr); gap: 10px; align-items: center; font-size: 13px; color: var(--muted); padding-top: 10px; border-top: 1px solid var(--line); }
+.gr-target input { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; color: var(--ink); width: 100%; }
+.gr-need { color: var(--ink); } .gr-need.bad { color: var(--warn); }
+.gr-toggle { align-self: flex-start; }
+.gr-list { list-style: none; margin: 0; padding: 0; }
+.gr-list li { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto 22px; gap: 10px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13.5px; animation: slideIn .4s both; }
+.gr-v { font-weight: 700; }
+@media (max-width: 1000px) { .gr-form { grid-template-columns: repeat(3, minmax(0, 1fr)); } .gr-lb { grid-column: span 2; } }
+@media (max-width: 760px) { .gr-form { grid-template-columns: 1fr 1fr; } .gr-lb { grid-column: span 2; } .gr-form .btn { grid-column: span 2; justify-content: center; } .dl-add { flex-wrap: wrap; } .dl-add input[type=date] { flex: 1 1 140px; } }
+@media (prefers-reduced-motion: reduce) { #fab, .inbox-list li, .enter .dl-list li, .dl-list li.soon .dl-ring, .enter .gr-card, .enter .spark-l, .gr-list li, .enter .cine .greet em .wi, .cine .greet em .wi { animation: none !important; } #glow { display: none; } }
 </style>
 
 <style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
@@ -1174,7 +1259,8 @@ body { letter-spacing: -.005em; }
   <div class="sp-sub">Hedi&nbsp;&nbsp;·&nbsp;&nbsp;Dubai</div>
   <div class="sp-bar"><i></i></div>
 </div>
-<div id="sprog" aria-hidden="true"></div><div id="sweep" aria-hidden="true"></div>
+<div id="sprog" aria-hidden="true"></div><div id="glow" aria-hidden="true"></div>
+<button id="fab" type="button" aria-label="Quick capture (N)" title="Quick capture (N)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><div id="sweep" aria-hidden="true"></div>
 <div id="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
 <div id="island" role="status" aria-live="polite"></div>
 <div id="stage" aria-hidden="true"></div>
@@ -1241,7 +1327,7 @@ const todayYmd = () => zoned(new Date()).ymd;
 let toastT;
 function toast(msg) { document.querySelectorAll('.toast').forEach(t => t.remove()); const t = el('div', { class: 'toast', role: 'status', text: noEmoji(msg) }); document.body.append(t); clearTimeout(toastT); toastT = setTimeout(() => t.remove(), 2200); }
 
-const S = { brief: null, db: { sat: null, timetable: null, habits: null, apps: null, focus: null, study: null, markets: null }, dbReady: false, view: 'today', newsFilter: 'all', tipCat: 'Study', openStrat: null, openWeek: null, ttEdit: null };
+const S = { brief: null, db: { sat: null, timetable: null, habits: null, apps: null, focus: null, study: null, markets: null, notes: null, deadlines: null, grades: null }, dbReady: false, view: 'today', newsFilter: 'all', tipCat: 'Study', openStrat: null, openWeek: null, ttEdit: null };
 
 const SYNC = { owner: 'hedibrigui5', repo: 'brief-data', path: 'state.json', sha: null, timer: null, busy: false, dirty: new Set() };
 const ghToken = () => local.get('gh_token', '');
@@ -1369,10 +1455,11 @@ const ICON = {
   ses: '<path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/>',
   python: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>',
   markets: '<path d="M6 3.5v17M12 3v18M18 5v15"/><rect x="4.5" y="8" width="3" height="7" rx=".6"/><rect x="10.5" y="6" width="3" height="5" rx=".6"/><rect x="16.5" y="10" width="3" height="6" rx=".6"/>',
+  grades: '<rect x="4.5" y="3.5" width="15" height="17" rx="2"/><path d="M8 8h8M8 12h4.5"/><path d="M13.5 16l1.8 1.8L19 14"/>',
   review: '<path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><path d="M9 12l2.2 2.2L15 10.5"/>'
 };
 const VIEWS = [
-  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['markets', 'Markets', '3'], ['sat', 'SAT', '4'], ['maths', 'Spé Maths', '5'], ['ses', 'Spé SES', '6'], ['python', 'Python', '7'], ['review', 'Révisions', '0'], ['focus', 'Focus', '8'], ['apps', 'Applications', '9']
+  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['markets', 'Markets', '3'], ['sat', 'SAT', '4'], ['maths', 'Spé Maths', '5'], ['ses', 'Spé SES', '6'], ['python', 'Python', '7'], ['review', 'Révisions', '0'], ['grades', 'Grades', 'g'], ['focus', 'Focus', '8'], ['apps', 'Applications', '9']
 ];
 
 const SAT = {
@@ -1506,11 +1593,12 @@ function rerender(scrollTop) {
   const y = window.scrollY;
   main.innerHTML = '';
   const head = el('div', { class: 'mob-head' }, el('span', { class: 'label', text: fmtDay(todayYmd(), { weekday: 'long', month: 'short', day: 'numeric' }) }), el('b', { class: 'mob-title', text: (VIEWS.find(x => x[0] === S.view) || ['', ''])[1] }), el('button', { class: 'btn sm ghost', type: 'button', onclick: () => openSearch(), text: 'Search' }), el('span', { class: 'label num', id: 'mob-clock' }));
-  main.append(head, ({ today: vToday, timetable: vTimetable, sat: vSat, maths: () => vStudy('maths'), ses: () => vStudy('ses'), python: () => vStudy('python'), review: vReview, news: vNews, markets: vMarkets, focus: vFocus, apps: vApps })[S.view]());
+  main.append(head, ({ today: vToday, timetable: vTimetable, sat: vSat, maths: () => vStudy('maths'), ses: () => vStudy('ses'), python: () => vStudy('python'), review: vReview, grades: vGrades, news: vNews, markets: vMarkets, focus: vFocus, apps: vApps })[S.view]());
   if (scrollTop) window.scrollTo(0, 0); else window.scrollTo(0, y);
   main.classList.toggle('has-cine', !!main.querySelector('.cine')); document.body.dataset.view = S.view; main.classList.toggle('scrolled', window.scrollY > 40);
   cinePlayState();
   if (scrollTop) enterAnim(main); else animateRings(main, true);
+  parallax();
   tick();
 }
 function pageHead(eyebrow, title, sub, right) {
@@ -1582,6 +1670,7 @@ function vToday() {
     el('a', { class: 'card stat', href: '#sat', style: { textDecoration: 'none' } }, el('div', { class: 'label', text: sday && sday[0] !== today ? `SAT · next on ${fmtDay(sday[0], { weekday: 'short' })}` : 'SAT today' }), el('div', { class: 'big', style: { fontSize: '1.5rem', lineHeight: '1.1' }, text: sday ? sday[1] : '—' }), el('div', { class: 'sub', text: sday ? (sday[2] ? `${sday[2]} min · day ${SAT.days.indexOf(sday) + 1} of ${SAT.days.length}` : 'No study today') : 'Open the SAT plan' })),
     el('a', { class: 'card stat', href: '#focus', style: { textDecoration: 'none' } }, el('div', { class: 'label', text: 'Habits today' }), el('div', { class: 'big num', text: `${habitsDone}/${habitsAll}` }), el('div', { class: 'sub', text: 'Tick them off in Focus' })),
     el('div', { class: 'card stat' }, el('div', { class: 'label', text: `Inbox · ${B.inbox ? B.inbox.window_days : 3} days` }), el('div', { class: 'big num', text: B.inbox ? String(B.inbox.threads) : '—' }), el('div', { class: 'sub', text: B.inbox ? `${B.inbox.from_people} from people, ${B.inbox.automated} automated` : '' }))));
+  v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, inboxCard(), deadlinesCard()));
   const attn = B.needs_attention || [], res = B.resolved || [];
   const left = el('div', { class: 'card s-8' },
     el('div', { class: 'card-h' }, el('h2', { text: 'Needs you' }), el('span', { class: 'label', id: 'attn-c', text: attnCount(B) })),
@@ -2378,6 +2467,7 @@ function searchIndex() {
   const items = [];
   const add = (kind, title, text, go, w) => { text = String(text ?? ''); items.push({ kind, title, text, go, w, nt: norm(title), nx: norm(text) }); };
   for (const [id, name] of VIEWS) add('Page', name, '', () => goView(id), 3);
+  ACTIONS().forEach(([t, d, f]) => add('Action', t, d, f, 4));
   if (STUDY) for (const subj of ['maths', 'ses', 'python']) { const D = STUDY[subj]; if (!D) continue;
     for (const c of D.chapters) {
       const open = tab => () => { S.studyCh[subj] = c.id; S.studyTab[subj] = tab; goView(subj); };
@@ -2508,6 +2598,8 @@ function enterAnim(main) {
     setTimeout(() => show(items.filter(x => !x.classList.contains('rv-in') && x.getBoundingClientRect().top < innerHeight)), 1200);
   }
   setTimeout(() => countUp(view), 120);
+  view.querySelectorAll('.page-head .label, .ws-h > span:first-child').forEach((n, i) => setTimeout(() => scramble(n), 120 + i * 60));
+  parallax();
 }
 function gradeAnim(g) {
   const r = S.rev; if (!r || r.done || r.busy) return;
@@ -2589,8 +2681,11 @@ function cineMedia() {
 }
 function cinePlayState() {
   const v = CINE.cur; if (!v) return;
+  const heavy = S.view === 'markets' && window.matchMedia && matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+  if (heavy) { [CINE.a, CINE.b].forEach(x => { if (x && x.getAttribute('src')) { try { x.pause(); } catch {} x.removeAttribute('src'); x.dataset.src = ''; try { x.load(); } catch {} } }); CINE.wrap.classList.remove('live'); return; }
   const want = CINE.vis && !document.hidden && document.contains(CINE.wrap);
-  if (want && v.paused) { const pr = v.play(); if (pr) pr.catch(() => {}); }
+  if (want && !v.getAttribute('src') && CINE.src) { CINE.src(v); try { v.currentTime = 0; } catch {} }
+  if (want && v.paused) { const pr = v.play(); if (pr) pr.then(() => CINE.wrap.classList.add('live')).catch(() => {}); }
   else if (!want && !v.paused) v.pause();
 }
 function startMist() {
@@ -2688,7 +2783,7 @@ function attachSwipe(card, r) {
 (function () {
   let raf = 0;
   const on = () => { raf = 0; const y = window.scrollY, m = $('#main'); if (m) m.classList.toggle('scrolled', y > 40);
-    document.documentElement.style.setProperty('--p', Math.min(1, Math.max(0, y / innerHeight)).toFixed(4)); const tt = $('#totop'); if (tt) tt.classList.toggle('show', y > innerHeight * 1.1); const max = document.documentElement.scrollHeight - innerHeight; document.documentElement.style.setProperty('--sp', max > 0 ? (y / max).toFixed(4) : 0); mqKick(y); };
+    document.documentElement.style.setProperty('--p', Math.min(1, Math.max(0, y / innerHeight)).toFixed(4)); const tt = $('#totop'); if (tt) tt.classList.toggle('show', y > innerHeight * 1.1); const max = document.documentElement.scrollHeight - innerHeight; document.documentElement.style.setProperty('--sp', max > 0 ? (y / max).toFixed(4) : 0); mqKick(y); parallax(); };
   window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(on); }, { passive: true });
   document.addEventListener('change', e => { if (e.target.matches && e.target.matches('input.tick')) haptic(e.target.checked ? 10 : 5); });
 })();
@@ -2716,7 +2811,9 @@ function tvWidget(kind, cfg, key) {
   if (TVW[key]) return TVW[key];
   const box = el('div', { class: 'tradingview-widget-container' }, el('div', { class: 'tradingview-widget-container__widget' }));
   const sc = document.createElement('script'); sc.type = 'text/javascript'; sc.async = true; sc.src = `https://s3.tradingview.com/external-embedding/embed-widget-${kind}.js`; sc.text = JSON.stringify(cfg);
-  box.append(sc); TVW[key] = box; return box;
+  TVW[key] = box;
+  if ('IntersectionObserver' in window) { const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); box.append(sc); } }, { rootMargin: '250px 0px' }); io.observe(box); } else box.append(sc);
+  return box;
 }
 function chartWidget(sym) { return tvWidget('advanced-chart', { autosize: true, symbol: MK_SYM[sym] || sym, interval: 'D', timezone: 'Asia/Dubai', theme: 'dark', style: '1', locale: 'en', backgroundColor: 'rgba(4, 5, 6, 0)', gridColor: 'rgba(255, 255, 255, 0.05)', allow_symbol_change: true, withdateranges: true, hide_side_toolbar: false, calendar: false, support_host: 'https://www.tradingview.com' }, 'chart:' + sym); }
 function mkWatch() { const M = S.db.markets || {}; return M.watch && M.watch.length ? M.watch : MK_DEFAULT; }
@@ -2812,7 +2909,7 @@ function updateMarkets(now) {
   const html = document.documentElement, dot = $('#cur-dot'), ring = $('#cur-ring'); if (!dot || !ring) return;
   html.classList.add('cur-on');
   const lab = ring.firstElementChild;
-  const MORPH = '.btn, .nav a, .nav-more, .filters button, .seg button, a.chip, .sheet-item, .theme-btn, .x-btn, .dots-rate button, .q-opt, .ws-sym, .ring-item, .sync, .lock-btn, .search-res button, .cine-cue, #totop, .sheet-list button, #island';
+  const MORPH = '.btn, .tm-btn, #fab, .nav a, .nav-more, .filters button, .seg button, a.chip, .sheet-item, .theme-btn, .x-btn, .dots-rate button, .q-opt, .ws-sym, .ring-item, .sync, .lock-btn, .search-res button, .cine-cue, #totop, .sheet-list button, #island';
   const LABEL = [['.rev-card', () => document.querySelector('.rev-card .ans') ? 'Swipe' : 'Tap'], ['.ch-card', 'Open'], ['article.story', 'Read'], ['.tv-host', '']];
   let mx = -200, my = -200, rx = -200, ry = -200, cw = 36, ch = 36, cr = 18, hot = null, hotR = 10, down = false;
   const setOut = v => html.classList.toggle('cur-out', v);
@@ -2875,12 +2972,12 @@ function chStats(subj) {
   all.pct = all.total ? Math.round(all.box / (5 * all.total) * 100) : 0;
   return { per, all };
 }
-function miniRing(pct, size = 44) {
+function miniRing(pct, size = 44, label) {
   const R = 16, C = 2 * Math.PI * R;
   return svg('svg', { viewBox: '0 0 40 40', width: size, height: size, class: 'mini-ring', 'aria-hidden': 'true' },
     svg('circle', { cx: 20, cy: 20, r: R, fill: 'none', stroke: 'var(--line)', 'stroke-width': 4 }),
     svg('circle', { class: 'fg', cx: 20, cy: 20, r: R, fill: 'none', stroke: 'var(--brass)', 'stroke-width': 4, 'stroke-linecap': 'round', transform: 'rotate(-90 20 20)', 'stroke-dasharray': C, 'stroke-dashoffset': C, 'data-off': C * (1 - pct / 100) }),
-    svg('text', { x: 20, y: 24, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 700, fill: 'currentColor' }, String(pct)));
+    svg('text', { x: 20, y: 24, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 700, fill: 'currentColor' }, label != null ? String(label) : String(pct)));
 }
 function coachSteps(subj) {
   const D = STUDY[subj], st = studyState(), { per } = chStats(subj), d = revDeck(subj), today = todayYmd(), steps = [];
@@ -3050,6 +3147,134 @@ function mqKick(y) {
   }); }, { passive: true });
   document.addEventListener('pointerleave', () => { if (cur) { cur.style.transform = ''; cur.classList.remove('tilting'); cur = null; } }, true);
 })();
+const SUBJECTS = ['Maths', 'SES', 'Philosophie', 'Anglais', 'Arabe', 'Histoire-géo', 'EMC', 'Espagnol', 'Physique-chimie', 'SVT', 'Sport', 'Grand oral'];
+function ACTIONS() {
+  return [
+    ['Quick capture', 'Write a note or task (N)', () => openCapture()],
+    ['Start a 25-minute focus block', 'Focus timer', () => { tmMode(25, false); tmStart(); goView('focus'); }],
+    ['Start a 50-minute focus block', 'Focus timer', () => { tmMode(50, false); tmStart(); goView('focus'); }],
+    ['Zen mode', 'Full-screen focus (F)', () => openZen()],
+    ['Review all flashcards', 'Maths and SES', () => startRev('srs', { subj: 'all' })],
+    ['Review SES flashcards', 'Spé SES', () => startRev('srs', { subj: 'ses' })],
+    ['Review Maths flashcards', 'Spé Maths', () => startRev('srs', { subj: 'maths' })],
+    ['Surprise quiz', '10 random questions', () => startRev('quiz', { subj: 'all' })],
+    ['Add a grade', 'Grades', () => { S.gradeOpen = true; goView('grades'); }],
+    ['Add a deadline', 'Today', () => { goView('today'); setTimeout(() => { const i = $('#dl-t'); if (i) { i.scrollIntoView({ block: 'center', behavior: 'smooth' }); i.focus(); } }, 500); }],
+    ['Toggle dark / light mode', 'Theme', () => $('#theme-btn').click()]
+  ];
+}
+function notesState() { return S.db.notes || { items: [] }; }
+function saveNotes(items) { save('notes', { items: items.slice(-200) }); }
+function addNote(t) { t = String(t || '').trim(); if (!t) return false; saveNotes([...notesState().items, { id: uid(), t, done: false, ts: Date.now() }]); return true; }
+function openCapture() {
+  document.querySelectorAll('.modal').forEach(m => m.remove());
+  const inp = el('input', { type: 'text', placeholder: 'Write it down before it slips away…', 'aria-label': 'Quick capture', autocomplete: 'off' });
+  const close = () => { m.classList.add('out'); setTimeout(() => m.remove(), 250); };
+  const f = el('form', { class: 'card cap-card' }, el('div', { class: 'cap-top' }, el('span', { class: 'label', text: 'Quick capture' }), el('span', { class: 'label', text: 'Enter to save · Esc to close' })), inp,
+    el('div', { class: 'cap-chips' }, ['Call', 'Buy', 'Ask Aziz', 'Email', 'Idea'].map(c => el('button', { type: 'button', class: 'chip', onclick: () => { inp.value = c + ': ' + inp.value; inp.focus(); }, text: c }))));
+  f.addEventListener('submit', e => { e.preventDefault(); if (addNote(inp.value)) { toast('Captured in your inbox'); haptic(8); inp.value = ''; close(); if (S.view === 'today') rerender(); } });
+  const m = el('div', { class: 'modal cap', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Quick capture' }, f);
+  m.addEventListener('click', e => { if (e.target === m) close(); });
+  inp.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  document.body.append(m); setTimeout(() => inp.focus(), 30);
+}
+function inboxCard() {
+  const items = notesState().items, open = items.filter(x => !x.done), done = items.filter(x => x.done);
+  const inp = el('input', { type: 'text', placeholder: 'Add to inbox and press Enter', 'aria-label': 'Add to inbox' });
+  const form = el('form', { class: 'inbox-add' }, inp, el('button', { class: 'btn sm', type: 'submit', text: 'Add' }));
+  form.addEventListener('submit', e => { e.preventDefault(); if (addNote(inp.value)) { rerender(); setTimeout(() => { const i = document.querySelector('.inbox-add input'); if (i) i.focus(); }, 30); } });
+  const row = x => { const cb = el('input', { type: 'checkbox', class: 'tick', 'aria-label': 'Done' }); cb.checked = x.done;
+    cb.addEventListener('change', () => { const li = cb.closest('li'); if (li) li.classList.add('leaving'); setTimeout(() => { saveNotes(notesState().items.map(n => n.id === x.id ? { ...n, done: cb.checked } : n)); rerender(); }, cb.checked ? 380 : 0); });
+    return el('li', { class: x.done ? 'done' : '' }, cb, el('span', { class: 'in-t', text: x.t }), el('span', { class: 'in-age', text: ago(x.ts) }),
+      el('button', { class: 'x-btn', type: 'button', 'aria-label': 'Delete', onclick: () => { saveNotes(notesState().items.filter(n => n.id !== x.id)); rerender(); } }, '×')); };
+  return el('div', { class: 'card s-7 inbox' }, el('div', { class: 'card-h' }, el('h2', { text: 'Inbox' }), el('span', { class: 'label', text: open.length ? `${open.length} open · press N anywhere` : 'press N anywhere to capture' })),
+    form, open.length ? el('ul', { class: 'inbox-list' }, open.slice().reverse().map(row)) : el('p', { class: 'empty', style: { marginTop: '10px' }, text: 'Empty inbox. Clear head.' }),
+    done.length ? el('details', { class: 'inbox-done' }, el('summary', {}, `${done.length} done`, el('button', { class: 'btn sm ghost', type: 'button', onclick: e => { e.preventDefault(); saveNotes(notesState().items.filter(n => !n.done)); rerender(); }, text: 'Clear' })), el('ul', { class: 'inbox-list' }, done.slice(-8).reverse().map(row))) : null);
+}
+function ago(ts) { const m = Math.round((Date.now() - ts) / 6e4); return m < 1 ? 'now' : m < 60 ? m + ' min' : m < 1440 ? Math.round(m / 60) + ' h' : Math.round(m / 1440) + ' d'; }
+function deadlinesState() { return S.db.deadlines || { items: [{ id: 'sat-reg', t: 'SAT registration deadline', d: '2026-11-20' }, { id: 'sat', t: 'SAT test day', d: '2026-12-05' }] }; }
+function deadlinesCard() {
+  const today = todayYmd(), all = deadlinesState().items.slice().sort((a, b) => a.d < b.d ? -1 : 1), up = all.filter(x => x.d >= today), past = all.filter(x => x.d < today);
+  const t = el('input', { type: 'text', id: 'dl-t', placeholder: 'Bac blanc SES, oral, dossier…', 'aria-label': 'Deadline title' }), d = el('input', { type: 'date', 'aria-label': 'Deadline date', min: today });
+  const form = el('form', { class: 'dl-add' }, t, d, el('button', { class: 'btn sm', type: 'submit', text: 'Add' }));
+  form.addEventListener('submit', e => { e.preventDefault(); if (!t.value.trim() || !d.value) { toast('Add a title and a date.'); return; } save('deadlines', { items: [...deadlinesState().items, { id: uid(), t: t.value.trim(), d: d.value }] }); rerender(); });
+  const R = 18, C = 2 * Math.PI * R;
+  return el('div', { class: 'card s-5 deadlines' }, el('div', { class: 'card-h' }, el('h2', { text: 'Deadlines' }), el('span', { class: 'label', text: up.length ? `next in ${daysBetween(today, up[0].d)} d` : 'none coming' })),
+    el('ul', { class: 'dl-list' }, up.map((x, i) => { const n = daysBetween(today, x.d), frac = Math.max(0, Math.min(1, 1 - n / 60));
+      return el('li', { class: n <= 3 ? 'soon' : '', style: { '--d': i * 70 + 'ms' } },
+        svg('svg', { viewBox: '0 0 44 44', class: 'dl-ring', 'aria-hidden': 'true' }, svg('circle', { cx: 22, cy: 22, r: R, fill: 'none', stroke: 'var(--line)', 'stroke-width': 3.5 }),
+          svg('circle', { class: 'fg', cx: 22, cy: 22, r: R, fill: 'none', stroke: n <= 3 ? 'var(--warn)' : 'var(--brass)', 'stroke-width': 3.5, 'stroke-linecap': 'round', transform: 'rotate(-90 22 22)', 'stroke-dasharray': C, 'stroke-dashoffset': C, 'data-off': C * (1 - frac) }),
+          svg('text', { x: 22, y: 26, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 700, fill: 'currentColor' }, n === 0 ? '!' : String(n))),
+        el('div', {}, el('b', { text: x.t }), el('span', { text: `${n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days'} · ${fmtDay(x.d, { weekday: 'short', day: 'numeric', month: 'short' })}` })),
+        el('button', { class: 'x-btn', type: 'button', 'aria-label': 'Remove', onclick: () => { save('deadlines', { items: deadlinesState().items.filter(y => y.id !== x.id) }); rerender(); } }, '×')); })),
+    !up.length ? el('p', { class: 'empty', text: 'No deadline coming. Add your next test below.' }) : null,
+    form, past.length ? el('p', { class: 'label', style: { marginTop: '10px' }, text: `${past.length} past` }) : null);
+}
+function gradesState() { return S.db.grades || { items: [], targets: {} }; }
+function gradeAvg(list) { const w = list.reduce((a, g) => a + (+g.c || 1), 0); return w ? list.reduce((a, g) => a + g.v / (g.of || 20) * 20 * (+g.c || 1), 0) / w : null; }
+const f2 = x => x == null ? '—' : (Math.round(x * 100) / 100).toFixed(2).replace(/\.?0+$/, '');
+function sparkline(vals, w = 120, h = 34) {
+  if (vals.length < 2) return svg('svg', { viewBox: `0 0 ${w} ${h}`, class: 'spark', 'aria-hidden': 'true' });
+  const lo = Math.min(...vals, 8), hi = Math.max(...vals, 16), X = i => i / (vals.length - 1) * (w - 6) + 3, Y = v => h - 3 - (v - lo) / (hi - lo || 1) * (h - 6);
+  const d = vals.map((v, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
+  return svg('svg', { viewBox: `0 0 ${w} ${h}`, class: 'spark', 'aria-hidden': 'true' }, svg('path', { class: 'spark-a', d: `${d} L${X(vals.length - 1)} ${h} L${X(0)} ${h} Z` }), svg('path', { class: 'spark-l', d, pathLength: 100 }), svg('circle', { cx: X(vals.length - 1), cy: Y(vals[vals.length - 1]), r: 3.2, class: 'spark-d' }));
+}
+function vGrades() {
+  const v = el('section', { class: 'view' }), G = gradesState(), items = (G.items || []).slice().sort((a, b) => a.d < b.d ? -1 : 1);
+  const bySubj = {}; items.forEach(g => (bySubj[g.s] = bySubj[g.s] || []).push(g));
+  const subjAvgs = Object.entries(bySubj).map(([k, l]) => [k, gradeAvg(l)]), overall = subjAvgs.length ? subjAvgs.reduce((a, [, x]) => a + x, 0) / subjAvgs.length : null;
+  v.append(pageHead('Bulletin · Terminale', 'Grades', 'Every test in one place: weighted averages per subject, your trend, and the grade you need next to hit your target.',
+    el('div', { class: 'gr-overall' }, miniRing(overall == null ? 0 : Math.round(overall / 20 * 100), 70, overall == null ? '—' : f2(Math.round(overall * 10) / 10)), el('div', {}, el('span', { class: 'label', text: 'Overall average' }), el('b', { class: 'num', text: overall == null ? '—' : f2(overall) + ' / 20' })))));
+  const sSel = el('select', { 'aria-label': 'Subject' }, SUBJECTS.map(x => el('option', { value: x, text: x }))); sSel.value = S.gradeSubj || 'SES';
+  const val = el('input', { type: 'number', min: 0, step: .25, placeholder: '14.5', 'aria-label': 'Grade', inputmode: 'decimal' }), of = el('input', { type: 'number', min: 1, value: 20, 'aria-label': 'Out of', inputmode: 'numeric' }),
+    co = el('input', { type: 'number', min: .5, step: .5, value: 1, 'aria-label': 'Coefficient', inputmode: 'decimal' }), dt = el('input', { type: 'date', value: todayYmd(), 'aria-label': 'Date' }), lb = el('input', { type: 'text', placeholder: 'Bac blanc, DS 3, oral…', 'aria-label': 'Label' });
+  const form = el('form', { class: 'gr-form' }, el('label', { class: 'field' }, el('span', { text: 'Subject' }), sSel), el('label', { class: 'field' }, el('span', { text: 'Grade' }), val), el('label', { class: 'field' }, el('span', { text: 'Out of' }), of),
+    el('label', { class: 'field' }, el('span', { text: 'Coef' }), co), el('label', { class: 'field' }, el('span', { text: 'Date' }), dt), el('label', { class: 'field gr-lb' }, el('span', { text: 'What was it' }), lb), el('button', { class: 'btn brass', type: 'submit', text: 'Add grade' }));
+  form.addEventListener('submit', e => { e.preventDefault(); const x = parseFloat(String(val.value).replace(',', '.')), o = +of.value || 20; if (!(x >= 0) || x > o) { toast(`Enter a grade between 0 and ${o}.`); val.focus(); return; }
+    S.gradeSubj = sSel.value; save('grades', { ...G, items: [...(G.items || []), { id: uid(), s: sSel.value, v: x, of: o, c: +co.value || 1, d: dt.value || todayYmd(), l: lb.value.trim() }] }); toast(`${sSel.value}: ${f2(x / o * 20)} / 20 added`); if (x / o >= .8) burstFrom(form.querySelector('.btn'), 90); rerender(); });
+  v.append(el('details', { class: 'card gr-add', open: S.gradeOpen || !items.length ? true : null }, el('summary', {}, el('h2', { text: 'Add a grade' }), el('span', { class: 'label', text: 'grade, out of, coefficient' })), form));
+  S.gradeOpen = false;
+  if (!items.length) { v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('p', { class: 'empty', text: 'No grade yet. Add your last tests: averages, trends and targets appear here.' }))); return v; }
+  const grid = el('div', { class: 'gr-grid' });
+  Object.entries(bySubj).sort((a, b) => b[1].length - a[1].length).forEach(([sub, l], i) => {
+    const avg = gradeAvg(l), prev = l.length > 1 ? gradeAvg(l.slice(0, -1)) : null, delta = prev == null ? null : avg - prev, vals = l.map(g => g.v / (g.of || 20) * 20);
+    const tgt = (G.targets || {})[sub], W = l.reduce((a, g) => a + (+g.c || 1), 0), sum = l.reduce((a, g) => a + g.v / (g.of || 20) * 20 * (+g.c || 1), 0), need = tgt ? (tgt * (W + 1) - sum) : null;
+    const open = S.gradeShow === sub;
+    const tIn = el('input', { type: 'number', min: 0, max: 20, step: .5, value: tgt || '', placeholder: '—', 'aria-label': `Target average in ${sub}`, inputmode: 'decimal' });
+    tIn.addEventListener('change', () => { const t2 = parseFloat(tIn.value); save('grades', { ...G, targets: { ...(G.targets || {}), [sub]: t2 >= 0 && t2 <= 20 ? t2 : undefined } }); rerender(); });
+    grid.append(el('div', { class: 'card gr-card' + (open ? ' open' : ''), style: { '--d': i * 60 + 'ms' } },
+      el('div', { class: 'gr-top' }, el('b', { text: sub }), el('span', { class: 'label', text: `${l.length} grade${l.length > 1 ? 's' : ''}` })),
+      el('div', { class: 'gr-mid' }, el('div', { class: 'gr-avg num' + (avg >= 14 ? ' good' : avg < 10 ? ' bad' : ''), text: f2(avg) }), el('div', { class: 'gr-trend' }, sparkline(vals), delta != null ? el('span', { class: 'gr-delta ' + (delta >= 0 ? 'up' : 'down'), text: `${delta >= 0 ? '+' : ''}${f2(delta)} since last` }) : el('span', { class: 'gr-delta', text: 'first grade' }))),
+      el('div', { class: 'gr-target' }, el('span', { text: 'Target' }), tIn, el('span', { class: 'gr-need' + (need != null && need > 20 ? ' bad' : ''), text: need == null ? 'set a target to see what you need' : need <= 0 ? 'already above target' : need > 20 ? `needs ${f2(need)} next: out of reach in one test` : `you need ${f2(need)} next (coef 1)` })),
+      el('button', { class: 'btn sm ghost gr-toggle', type: 'button', onclick: () => { S.gradeShow = open ? null : sub; rerender(); }, text: open ? 'Hide grades' : 'Show grades' }),
+      open ? el('ul', { class: 'gr-list' }, l.slice().reverse().map(g => el('li', {}, el('span', { class: 'num gr-v', text: `${f2(g.v)}/${g.of || 20}` }), el('span', { text: `${g.l || 'Grade'} · coef ${g.c || 1}` }), el('span', { class: 'label', text: fmtDay(g.d, { day: 'numeric', month: 'short' }) }),
+        el('button', { class: 'x-btn', type: 'button', 'aria-label': 'Delete grade', onclick: () => { save('grades', { ...G, items: G.items.filter(y => y.id !== g.id) }); rerender(); } }, '×')))) : null));
+  });
+  v.append(grid);
+  return v;
+}
+let PX_ON = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+function parallax() {
+  if (!PX_ON || REDUCE()) return;
+  const H = innerHeight;
+  document.querySelectorAll('.view > .grid > .card, .view > .card:not(.rev-card), .view > .stat-row > .card').forEach((c, i) => {
+    const r = c.getBoundingClientRect(); if (r.bottom < -200 || r.top > H + 200) return;
+    const off = (r.top + r.height / 2 - H / 2) * -.025; c.style.translate = `0 ${off.toFixed(1)}px`;
+  });
+}
+function initGlow() {
+  const g = $('#glow'); if (!g || !PX_ON) return;
+  let x = innerWidth / 2, y = innerHeight / 2, tx = x, ty = y, run = false;
+  const loop = () => { x += (tx - x) * .08; y += (ty - y) * .08; g.style.transform = `translate3d(${(x - 300).toFixed(1)}px, ${(y - 300).toFixed(1)}px, 0)`; if (Math.abs(tx - x) + Math.abs(ty - y) > .5) requestAnimationFrame(loop); else run = false; };
+  document.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse' || REDUCE()) return; tx = e.clientX; ty = e.clientY; g.classList.add('on'); if (!run) { run = true; requestAnimationFrame(loop); } }, { passive: true });
+}
+const SCR_CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+function scramble(node) {
+  if (!node || REDUCE() || node.dataset.scr) return; const final = node.textContent; if (!final || final.length > 60) return; node.dataset.scr = '1';
+  let f = 0; const N = 22;
+  const step = () => { f++; const k = Math.floor(final.length * f / N); node.textContent = final.slice(0, k) + final.slice(k).replace(/[^\s·]/g, () => SCR_CH[Math.floor(Math.random() * SCR_CH.length)]); if (f < N) requestAnimationFrame(step); else node.textContent = final; };
+  requestAnimationFrame(step);
+}
 function vNews() {
   const B = S.brief, v = el('section', { class: 'view' });
   const news = B.news || [];
@@ -3305,6 +3530,7 @@ document.addEventListener('keydown', e => {
     else if ('123'.includes(e.key)) gradeAnim(['ko', 'mid', 'ok'][+e.key - 1]);
     return;
   }
+  if ((e.key === 'n' || e.key === 'N') && S.brief && !$('#zen')) { e.preventDefault(); openCapture(); return; }
   const v = VIEWS.find(v => v[2] === e.key); if (v) location.hash = v[0];
 });
 window.addEventListener('hashchange', route);
@@ -3317,6 +3543,8 @@ $('#lock-btn').addEventListener('click', () => { local.set('pw', ''); location.r
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 document.addEventListener('visibilitychange', () => { if (!document.hidden && S.brief && S.brief.date < todayYmd() && zoned(new Date()).h >= 7.2 && !S.rev) location.reload(); });
 initStage();
+$('#fab').addEventListener('click', () => openCapture());
+initGlow();
 initSplash();
 $('#totop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: REDUCE() ? 'auto' : 'smooth' }));
 loadBrief();
