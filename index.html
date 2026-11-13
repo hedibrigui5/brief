@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2214%22 fill=%22%231b1f25%22 stroke=%22%23d4af72%22 stroke-width=%222%22/%3E%3Cpath d=%22M16 16 L22 9%22 stroke=%22%23d4af72%22 stroke-width=%222.5%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
 <title>Brief</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
 :root {
   --bg: #eceae6; --panel: #ffffff; --panel-2: #f4f3f0; --line: #dcd9d3; --ink: #15181c; --muted: #6b7079; --faint: #a3a7ad;
@@ -976,11 +976,90 @@ html.cur-text #cur-dot, html.cur-text #cur-ring, html.cur-out #cur-dot, html.cur
   .card-h:has(.filters) { flex-direction: column; align-items: flex-start; }
   .card-h .filters { justify-content: flex-start; }
 }
+
+:root { --display: "Libre Franklin", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; --body: "Libre Franklin", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; }
+body { letter-spacing: -.005em; }
+.page-head h1 { font-weight: 500; letter-spacing: -.04em; }
+.cine .greet { font-weight: 500; letter-spacing: -.06em; }
+.card h2 { font-weight: 600; letter-spacing: -.015em; }
+.label { font-family: var(--body); font-weight: 600; letter-spacing: .1em; }
+.chip { font-family: var(--body); font-weight: 600; letter-spacing: .06em; }
+@property --hole { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+#splash { position: fixed; inset: 0; z-index: 300; background: radial-gradient(60% 50% at 50% 45%, #10131a 0%, #030405 70%); color: #fff; display: grid; place-items: center; align-content: center; gap: 20px; cursor: pointer;
+  -webkit-mask: radial-gradient(circle at 50% 46%, transparent var(--hole), #000 calc(var(--hole) + .6%)); mask: radial-gradient(circle at 50% 46%, transparent var(--hole), #000 calc(var(--hole) + .6%)); animation: spFail .6s 20s forwards; }
+#splash.out { animation: spOut 1.25s cubic-bezier(.75,0,.15,1) forwards; pointer-events: none; }
+@keyframes spOut { 0% { --hole: 0%; opacity: 1; } 85% { opacity: 1; } 100% { --hole: 160%; opacity: 0; } }
+@keyframes spFail { to { opacity: 0; visibility: hidden; } }
+.sp-mark svg { width: 96px; height: 96px; overflow: visible; }
+.sp-ring { fill: none; stroke: #fff; stroke-width: 2.4; stroke-dasharray: 327; stroke-dashoffset: 327; transform: rotate(-90deg); transform-origin: 60px 60px; animation: spDraw 1.3s cubic-bezier(.65,0,.35,1) .15s forwards; }
+.sp-ticks path { stroke: rgba(255,255,255,.5); stroke-width: 2; stroke-linecap: round; opacity: 0; animation: spFade .5s ease .9s forwards; }
+.sp-hand { stroke: #d9b072; stroke-width: 3; stroke-linecap: round; transform-origin: 60px 60px; animation: spSweep 1.8s cubic-bezier(.65,0,.35,1) .3s both; filter: drop-shadow(0 0 6px rgba(217,176,114,.7)); }
+.sp-dot { fill: #d9b072; transform-origin: 60px 60px; animation: spPop .6s cubic-bezier(.34,1.56,.64,1) .3s both; }
+@keyframes spDraw { to { stroke-dashoffset: 0; } }
+@keyframes spSweep { from { transform: rotate(-220deg); opacity: 0; } 15% { opacity: 1; } to { transform: rotate(150deg); } }
+@keyframes spPop { from { transform: scale(0); } }
+@keyframes spFade { to { opacity: 1; } }
+.sp-word { display: flex; gap: .55em; font: 500 17px var(--display); letter-spacing: 0; overflow: hidden; padding: 2px 0; }
+.sp-word span { display: inline-block; transform: translateY(110%); opacity: 0; animation: spUp .9s cubic-bezier(.16,.84,.24,1) forwards; }
+.sp-word span:nth-child(1) { animation-delay: .75s; } .sp-word span:nth-child(2) { animation-delay: .82s; } .sp-word span:nth-child(3) { animation-delay: .89s; } .sp-word span:nth-child(4) { animation-delay: .96s; } .sp-word span:nth-child(5) { animation-delay: 1.03s; }
+@keyframes spUp { to { transform: none; opacity: 1; } }
+.sp-sub { font: 500 11px var(--body); letter-spacing: .32em; text-transform: uppercase; color: rgba(255,255,255,.5); opacity: 0; animation: spFade .8s ease 1.3s forwards; }
+.sp-bar { width: 150px; height: 1px; background: rgba(255,255,255,.1); overflow: hidden; transition: opacity .4s; opacity: 0; animation: spFade .4s ease 1.1s forwards; }
+.sp-bar i { display: block; width: 40%; height: 100%; background: linear-gradient(90deg, transparent, #fff, transparent); animation: spLoad 1.1s cubic-bezier(.65,0,.35,1) infinite; }
+@keyframes spLoad { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+.sp-enter { position: absolute; bottom: calc(14vh + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translate(-50%, 10px); opacity: 0; pointer-events: none; border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.06); color: #fff; padding: 12px 26px; border-radius: 999px; font: 600 11.5px var(--body); letter-spacing: .26em; text-transform: uppercase; transition: opacity .6s, transform .6s cubic-bezier(.16,.84,.24,1); }
+#splash.tap .sp-enter { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; animation: spBreath 2.4s ease-in-out infinite; }
+#splash.tap .sp-bar { opacity: 0 !important; }
+@keyframes spBreath { 50% { box-shadow: 0 0 0 10px rgba(255,255,255,0), 0 0 30px rgba(217,176,114,.25); border-color: rgba(217,176,114,.7); } }
+#splash.out .sp-mark { transform: scale(1.7); opacity: 0; transition: transform 1s cubic-bezier(.75,0,.15,1), opacity .7s; }
+#splash.out .sp-word, #splash.out .sp-sub, #splash.out .sp-enter { opacity: 0; transition: opacity .3s; }
+#sprog { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 40; transform-origin: 0 50%; transform: scaleX(var(--sp, 0)); background: linear-gradient(90deg, var(--brass), #f3d9a6); box-shadow: 0 0 10px var(--brass); pointer-events: none; }
+#sweep { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 41; pointer-events: none; opacity: 0; background: linear-gradient(90deg, transparent, var(--brass) 40%, #fff 50%, var(--brass) 60%, transparent); }
+#sweep.run { animation: sweepRun .7s cubic-bezier(.65,0,.35,1); }
+@keyframes sweepRun { 0% { opacity: 1; transform: translateX(-100%); } 100% { opacity: 1; transform: translateX(100%); } }
+.enter .page-head h1 { animation: h1In 1.15s cubic-bezier(.16,.84,.24,1) both .08s; }
+.enter .page-head .label { animation: fadeUp .8s cubic-bezier(.16,.84,.24,1) both; }
+.enter .page-head p { animation: fadeUp .9s cubic-bezier(.16,.84,.24,1) both .25s; }
+@keyframes h1In { from { clip-path: inset(0 0 100% 0); transform: translateY(45%); letter-spacing: -.02em; } to { clip-path: inset(-10% -5% -25% -5%); transform: none; } }
+.enter .card h2 { animation: fadeUp .8s cubic-bezier(.16,.84,.24,1) both .35s; }
+.ch-card.tilting, .stat.tilting, .ring-item.tilting, .ws-tile.tilting, .ch-nav-b.tilting, a.card.tilting { transition: transform .12s linear, box-shadow .3s; box-shadow: 0 24px 50px -24px rgba(0,0,0,.6); will-change: transform; }
+.btn.brass::after, .btn.solid::after { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent); transform: skewX(-20deg); pointer-events: none; }
+@media (hover: hover) { .btn.brass:hover::after, .btn.solid:hover::after { animation: shine .9s cubic-bezier(.65,0,.35,1); } }
+@keyframes shine { to { left: 130%; } }
+.btn.brass { box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--brass) 70%, transparent); }
+.mq { position: relative; width: calc(100vw - var(--railw)); margin: 0 0 22px calc(50% - (100vw - var(--railw)) / 2); overflow: hidden; padding: 22px 0; border-block: 1px solid rgba(255,255,255,.08); background: rgba(5,6,8,.3); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.mq-track { display: flex; width: max-content; animation: mq 70s linear infinite; will-change: transform; }
+.mq-i { display: inline-flex; align-items: center; gap: 40px; padding-right: 40px; font: 500 clamp(2.2rem, 5.6vw, 4.6rem)/1 var(--display); letter-spacing: -.045em; text-transform: uppercase; white-space: nowrap; color: #fff; }
+.mq-i.o { color: transparent; -webkit-text-stroke: 1.2px rgba(255,255,255,.6); }
+.mq-sep { width: 12px; height: 12px; border-radius: 50%; background: var(--brass); box-shadow: 0 0 16px var(--brass); flex: none; }
+@keyframes mq { to { transform: translateX(-50%); } }
+:root:not([data-theme="dark"]) .mq { background: rgba(255,255,255,.35); border-color: rgba(18,21,26,.08); }
+:root:not([data-theme="dark"]) .mq-i { color: #12151a; }
+:root:not([data-theme="dark"]) .mq-i.o { -webkit-text-stroke-color: rgba(18,21,26,.55); color: transparent; }
+.loading { background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent) 0 0 / 200% 100%; animation: shimmer 1.6s linear infinite; border-radius: 16px; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+.nav a { overflow: hidden; }
+.nav a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 1px; background: var(--brass); transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.16,.84,.24,1); }
+@media (hover: hover) { .nav a:hover::after { transform: scaleX(1); } }
+.nav a.on::after { display: none; }
+.step-n { transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
+.steps li:hover .step-n { transform: scale(1.15) rotate(-8deg); }
+.mini-ring circle.fg { transition: stroke-dashoffset 1.3s cubic-bezier(.16,.84,.24,1); }
+@media (max-width: 760px) { .mq { padding: 16px 0; margin-bottom: 16px; } .mq-i { gap: 26px; padding-right: 26px; } .nav a::after { display: none; } }
+@media (prefers-reduced-motion: reduce) { #splash { display: none; } .mq-track, #sweep.run, .enter .page-head h1, .enter .page-head .label, .enter .page-head p, .enter .card h2, .loading { animation: none !important; } }
 </style>
 
 <style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
 </head>
 <body>
+<div id="splash" role="presentation">
+  <div class="sp-mark"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="sp-ring" cx="60" cy="60" r="52"/><g class="sp-ticks"><path d="M60 14v8M106 60h-8M60 106v-8M14 60h8"/></g><line class="sp-hand" x1="60" y1="60" x2="60" y2="20"/><circle class="sp-dot" cx="60" cy="60" r="4"/></svg></div>
+  <div class="sp-word" aria-label="Brief"><span>B</span><span>R</span><span>I</span><span>E</span><span>F</span></div>
+  <div class="sp-sub">Hedi&nbsp;&nbsp;·&nbsp;&nbsp;Dubai</div>
+  <div class="sp-bar"><i></i></div>
+  <button class="sp-enter" type="button">Touch to enter</button>
+</div>
+<div id="sprog" aria-hidden="true"></div><div id="sweep" aria-hidden="true"></div>
 <div id="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
 <div id="island" role="status" aria-live="polite"></div>
 <div id="stage" aria-hidden="true"></div>
@@ -992,6 +1071,7 @@ html.cur-text #cur-dot, html.cur-text #cur-ring, html.cur-out #cur-dot, html.cur
   <div class="rail-foot">
     <button class="theme-btn" id="search-btn" type="button">Search &nbsp;/</button>
     <button class="theme-btn" id="theme-btn" type="button">Dark mode</button>
+    <button class="theme-btn" id="sound-btn" type="button">Sound: on</button>
     <div class="label">Dubai</div>
     <div class="clock num" id="clock">--:--</div>
     <button class="sync" id="sync" type="button" title="Sync settings"><i></i><span>Connecting</span></button>
@@ -1141,10 +1221,11 @@ async function decryptBrief(b64, pass) {
 async function loadBrief() {
   let enc;
   try { const r = await fetch('brief.enc?t=' + Date.now(), { cache: 'no-store' }); if (!r.ok) throw 0; enc = await r.text(); }
-  catch { $('#main').innerHTML = ''; $('#main').append(el('div', { class: 'loading', text: 'Today’s brief hasn’t been written yet. It appears after the 7:00 run.' })); return; }
+  catch { $('#main').innerHTML = ''; $('#main').append(el('div', { class: 'loading', text: 'Today’s brief hasn’t been written yet. It appears after the 7:00 run.' })); splashReady(); return; }
   const saved = local.get('pw', '');
-  if (saved) { try { S.brief = await decryptBrief(enc, saved); TZ = S.brief.timezone || TZ; document.body.classList.remove('locked'); route(); initDb(); return; } catch { local.set('pw', ''); } }
+  if (saved) { try { S.brief = await decryptBrief(enc, saved); TZ = S.brief.timezone || TZ; document.body.classList.remove('locked'); route(); initDb(); splashReady(); return; } catch { local.set('pw', ''); } }
   lockScreen(enc);
+  splashReady();
 }
 function lockScreen(enc) {
   document.body.classList.add('locked');
@@ -1156,7 +1237,7 @@ function lockScreen(enc) {
     el('button', { class: 'btn brass', type: 'submit', text: 'Unlock' }));
   f.addEventListener('submit', async ev => {
     ev.preventDefault(); err.textContent = 'Unlocking…';
-    try { S.brief = await decryptBrief(enc, inp.value); local.set('pw', inp.value); TZ = S.brief.timezone || TZ; lock.classList.add('out'); setTimeout(() => lock.remove(), 520); document.body.classList.remove('locked'); route(); initDb(); }
+    try { S.brief = await decryptBrief(enc, inp.value); local.set('pw', inp.value); TZ = S.brief.timezone || TZ; lock.classList.add('out'); setTimeout(() => lock.remove(), 520); document.body.classList.remove('locked'); playLaunch(); replayCine(); route(); initDb(); }
     catch { err.textContent = 'Wrong password. Try again.'; inp.select(); }
   });
   const lock = el('div', { class: 'lock' }, f);
@@ -1295,6 +1376,7 @@ function route() {
   const hh = h === 'news' ? 'markets' : h;
   const nv = VIEWS.some(v => v[0] === hh) ? hh : 'today';
   const m = $('#main');
+  if (S.brief && nv !== S.view && !REDUCE()) { const sw = $('#sweep'); if (sw) { sw.classList.remove('run'); void sw.offsetWidth; sw.classList.add('run'); } }
   const go = () => { if (S.view !== nv) SCROLLMEM[S.view] = window.scrollY; const back = S.view !== nv ? SCROLLMEM[nv] : 0; S.view = nv; rerender(true); if (back) requestAnimationFrame(() => window.scrollTo(0, back)); };
   if (S.brief && nv !== S.view && !REDUCE() && m && m.querySelector('.view')) {
     m.classList.add('leaving'); clearTimeout(route.t);
@@ -1314,7 +1396,7 @@ function rerender(scrollTop) {
   if (scrollTop) window.scrollTo(0, 0); else window.scrollTo(0, y);
   main.classList.toggle('has-cine', !!main.querySelector('.cine')); document.body.dataset.view = S.view; main.classList.toggle('scrolled', window.scrollY > 40);
   cinePlayState();
-  if (scrollTop) enterAnim(main);
+  if (scrollTop) enterAnim(main); else animateRings(main, true);
   tick();
 }
 function pageHead(eyebrow, title, sub, right) {
@@ -1375,6 +1457,7 @@ function vToday() {
     el('a', { class: 'chip', href: '#markets', text: nyseChip() }),
     open ? el('span', { class: 'chip warn', text: `${open} thing${open === 1 ? '' : 's'} need${open === 1 ? 's' : ''} you` }) : el('span', { class: 'chip', text: 'All clear' }));
   v.append(cineHero(B, chipsEl, fmtDay(B.date, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) + (stale ? ' · waiting for the 7:00 refresh' : '')));
+  v.append(marquee(B, satDays));
   v.append(el('div', { class: 'card acts-card' }, el('div', { class: 'acts' }, (B.acts || []).map(a => el('div', { class: 'act' }, el('b', { text: a.range }), el('p', { text: a.text }))))));
   v.append(el('div', { class: 'grid g-12 day-row' }, el('div', { class: 'card s-5 dial-card' }, dial(B)), dayRings()));
   const habitsDone = ((S.db.habits && S.db.habits.log && S.db.habits.log[today]) || []).length;
@@ -2279,7 +2362,7 @@ function dayRings() {
   return el('div', { class: 'card s-7 rings-card' }, el('div', { class: 'card-h' }, el('h2', { text: 'Your day so far' }), el('span', { class: 'label', text: 'tap a ring to work on it' })),
     el('div', { class: 'rings' }, items.map(([to, name, a, b, sub, col]) => el('a', { class: 'ring-item' + (b && a >= b ? ' full' : ''), href: '#' + to }, ringSvg(b ? a / b : 0, col), el('div', {}, el('b', { text: name }), el('span', { text: sub }))))));
 }
-function animateRings(root) { root.querySelectorAll('circle.fg[data-off]').forEach(c => { const off = c.getAttribute('data-off'); if (REDUCE()) c.setAttribute('stroke-dashoffset', off); else requestAnimationFrame(() => requestAnimationFrame(() => c.setAttribute('stroke-dashoffset', off))); }); }
+function animateRings(root, instant) { root.querySelectorAll('circle.fg[data-off]').forEach(c => { const off = c.getAttribute('data-off'); if (REDUCE() || instant) c.setAttribute('stroke-dashoffset', off); else requestAnimationFrame(() => requestAnimationFrame(() => c.setAttribute('stroke-dashoffset', off))); }); }
 function countUp(root) {
   if (REDUCE()) return;
   root.querySelectorAll('.big.num, .count-big').forEach(n => {
@@ -2457,6 +2540,7 @@ function openMore() {
     return el('button', { class: 'sheet-item' + (S.view === id ? ' on' : ''), type: 'button', onclick: () => go(id) }, ic, el('span', { text: name })); });
   const dark = document.documentElement.dataset.theme === 'dark';
   const acts = [['Search', () => { close(); setTimeout(openSearch, 250); }], [dark ? 'Light mode' : 'Dark mode', () => { close(); setTimeout(() => $('#theme-btn').click(), 260); }],
+    [soundOn() ? 'Launch sound: on' : 'Launch sound: off', () => { close(); toggleSound(); }],
     ['Sync settings', () => { close(); setTimeout(syncDialog, 250); }], ['Lock this device', () => { local.set('pw', ''); location.reload(); }, 'danger']];
   const sh = el('div', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'More' }, el('div', { class: 'sheet-grip' }), el('div', { class: 'sheet-grid' }, items),
     el('div', { class: 'sheet-list' }, acts.map(([t, f, c]) => el('button', { type: 'button', class: c || '', onclick: f, text: t }))));
@@ -2491,7 +2575,7 @@ function attachSwipe(card, r) {
 (function () {
   let raf = 0;
   const on = () => { raf = 0; const y = window.scrollY, m = $('#main'); if (m) m.classList.toggle('scrolled', y > 40);
-    document.documentElement.style.setProperty('--p', Math.min(1, Math.max(0, y / innerHeight)).toFixed(4)); const tt = $('#totop'); if (tt) tt.classList.toggle('show', y > innerHeight * 1.1); };
+    document.documentElement.style.setProperty('--p', Math.min(1, Math.max(0, y / innerHeight)).toFixed(4)); const tt = $('#totop'); if (tt) tt.classList.toggle('show', y > innerHeight * 1.1); const max = document.documentElement.scrollHeight - innerHeight; document.documentElement.style.setProperty('--sp', max > 0 ? (y / max).toFixed(4) : 0); mqKick(y); };
   window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(on); }, { passive: true });
   document.addEventListener('change', e => { if (e.target.matches && e.target.matches('input.tick')) haptic(e.target.checked ? 10 : 5); });
 })();
@@ -2682,7 +2766,7 @@ function miniRing(pct, size = 44) {
   const R = 16, C = 2 * Math.PI * R;
   return svg('svg', { viewBox: '0 0 40 40', width: size, height: size, class: 'mini-ring', 'aria-hidden': 'true' },
     svg('circle', { cx: 20, cy: 20, r: R, fill: 'none', stroke: 'var(--line)', 'stroke-width': 4 }),
-    svg('circle', { cx: 20, cy: 20, r: R, fill: 'none', stroke: 'var(--brass)', 'stroke-width': 4, 'stroke-linecap': 'round', transform: 'rotate(-90 20 20)', 'stroke-dasharray': C, 'stroke-dashoffset': C * (1 - pct / 100) }),
+    svg('circle', { class: 'fg', cx: 20, cy: 20, r: R, fill: 'none', stroke: 'var(--brass)', 'stroke-width': 4, 'stroke-linecap': 'round', transform: 'rotate(-90 20 20)', 'stroke-dasharray': C, 'stroke-dashoffset': C, 'data-off': C * (1 - pct / 100) }),
     svg('text', { x: 20, y: 24, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 700, fill: 'currentColor' }, String(pct)));
 }
 function coachSteps(subj) {
@@ -2805,6 +2889,90 @@ function satCoach() {
     el('button', { class: 'btn', onclick: () => { S.satTab = 'mistakes'; rerender(true); }, text: errs.length ? 'Open log' : 'Mistake log' })));
   return el('div', { class: 'card coach', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Your next moves' }), el('span', { class: 'label', text: 'built from your plan, ratings and mistakes' })), el('ol', { class: 'steps' }, steps));
 }
+const soundOn = () => local.get('sound', true);
+const SND = { ctx: null };
+function audioCtx() { if (!SND.ctx) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; try { SND.ctx = new AC(); } catch { return null; } } return SND.ctx; }
+function playLaunch() {
+  if (!soundOn()) return; const ctx = audioCtx(); if (!ctx) return;
+  if (ctx.state !== 'running') ctx.resume().catch(() => {});
+  try {
+    const t = ctx.currentTime + .04, master = ctx.createGain(), comp = ctx.createDynamicsCompressor();
+    master.gain.value = .42; master.connect(comp); comp.connect(ctx.destination);
+    const nb = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate), nd = nb.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+    const air = ctx.createBufferSource(); air.buffer = nb; const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = .9;
+    bp.frequency.setValueAtTime(300, t); bp.frequency.exponentialRampToValueAtTime(3800, t + .9); bp.frequency.exponentialRampToValueAtTime(900, t + 1.7);
+    const ag = ctx.createGain(); ag.gain.setValueAtTime(.0001, t); ag.gain.exponentialRampToValueAtTime(.22, t + .55); ag.gain.exponentialRampToValueAtTime(.0001, t + 1.8);
+    air.connect(bp); bp.connect(ag); ag.connect(master); air.start(t); air.stop(t + 1.9);
+    const shaper = ctx.createWaveShaper(), curve = new Float32Array(1024); for (let i = 0; i < 1024; i++) { const x = i / 512 - 1; curve[i] = Math.tanh(3.2 * x); } shaper.curve = curve;
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 5;
+    lp.frequency.setValueAtTime(260, t); lp.frequency.exponentialRampToValueAtTime(2200, t + .7); lp.frequency.exponentialRampToValueAtTime(1400, t + 1.0); lp.frequency.exponentialRampToValueAtTime(3000, t + 1.25); lp.frequency.exponentialRampToValueAtTime(300, t + 1.9);
+    const eg = ctx.createGain(); eg.gain.setValueAtTime(.0001, t); eg.gain.exponentialRampToValueAtTime(.34, t + .12); eg.gain.setValueAtTime(.34, t + 1.15); eg.gain.exponentialRampToValueAtTime(.0001, t + 1.95);
+    shaper.connect(lp); lp.connect(eg); eg.connect(master);
+    [[0, 'sawtooth'], [9, 'sawtooth'], [-1200, 'square']].forEach(([det, type]) => { const o = ctx.createOscillator(); o.type = type; o.detune.value = det;
+      o.frequency.setValueAtTime(48, t); o.frequency.exponentialRampToValueAtTime(170, t + .62); o.frequency.exponentialRampToValueAtTime(118, t + .82); o.frequency.exponentialRampToValueAtTime(235, t + 1.2); o.frequency.exponentialRampToValueAtTime(64, t + 1.95);
+      const og = ctx.createGain(); og.gain.value = type === 'square' ? .35 : .5; o.connect(og); og.connect(shaper); o.start(t); o.stop(t + 2); });
+    [[523.25, 0], [783.99, .04], [1046.5, .08], [1567.98, .12]].forEach(([f, d]) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.value = f;
+      const s0 = t + 1.05 + d; g.gain.setValueAtTime(.0001, s0); g.gain.exponentialRampToValueAtTime(.09, s0 + .03); g.gain.exponentialRampToValueAtTime(.0001, s0 + 1.6); o.connect(g); g.connect(master); o.start(s0); o.stop(s0 + 1.7); });
+  } catch {}
+}
+function toggleSound() { local.set('sound', !soundOn()); syncSoundBtn(); if (soundOn()) { const c = audioCtx(); if (c) c.resume().then(playLaunch).catch(() => {}); } toast(soundOn() ? 'Launch sound on' : 'Launch sound off'); }
+function syncSoundBtn() { const b = $('#sound-btn'); if (b) b.textContent = soundOn() ? 'Sound: on' : 'Sound: off'; }
+const SPLASH = { el: null, t0: performance.now(), ready: false, gone: false, needTap: false, skip: false };
+function replayCine() { if (!CINE.wrap || REDUCE()) return; CINE.wrap.classList.remove('intro'); void CINE.wrap.offsetWidth; CINE.wrap.classList.add('intro'); setTimeout(() => CINE.wrap && CINE.wrap.classList.remove('intro'), 3200); }
+function splashReady() { SPLASH.ready = true; maybeEnter(); }
+function maybeEnter() {
+  const sp = SPLASH.el; if (!sp || SPLASH.gone || !SPLASH.ready) return;
+  const wait = SPLASH.skip ? 0 : Math.max(0, 2500 - (performance.now() - SPLASH.t0));
+  clearTimeout(SPLASH.tm);
+  SPLASH.tm = setTimeout(() => {
+    if (document.body.classList.contains('locked')) return leaveSplash(false);
+    if (!soundOn() || SPLASH.skip) return leaveSplash(SPLASH.skip);
+    const c = audioCtx();
+    if (c && c.state === 'running') return leaveSplash(true);
+    SPLASH.needTap = true; sp.classList.add('tap'); const b = sp.querySelector('.sp-enter'); if (b) b.focus({ preventScroll: true });
+  }, wait);
+}
+function leaveSplash(sound) {
+  const sp = SPLASH.el; if (!sp || SPLASH.gone) return; SPLASH.gone = true;
+  if (sound) playLaunch();
+  sp.classList.add('out'); replayCine();
+  const m = $('#main'); if (m && m.querySelector('.view')) enterAnim(m);
+  setTimeout(() => sp.remove(), 1400);
+}
+function initSplash() {
+  const sp = $('#splash'); if (!sp) return; SPLASH.el = sp;
+  if (REDUCE()) { sp.remove(); SPLASH.gone = true; return; }
+  const go = () => { const c = soundOn() ? audioCtx() : null; if (c && c.state !== 'running') c.resume().catch(() => {}); if (SPLASH.ready) { SPLASH.skip = true; if (SPLASH.needTap) leaveSplash(true); else maybeEnter(); } else SPLASH.skip = true; };
+  sp.addEventListener('pointerdown', go);
+  document.addEventListener('keydown', function k(e) { if (SPLASH.gone) { document.removeEventListener('keydown', k); return; } if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+  setTimeout(() => { if (!SPLASH.gone && !SPLASH.ready) { SPLASH.ready = true; leaveSplash(false); } }, 12000);
+}
+function marquee(B, satDays) {
+  const n = STUDY ? (() => { const d = revDeck('all'); return d.due.length + d.newToday.length; })() : 0;
+  const items = [satDays >= 0 ? `SAT in ${satDays} days` : 'SAT done', 'Target 1500', n ? `${n} cards today` : 'Cards clear', nyseChip(), B.weather && B.weather.high != null ? `Dubai ${B.weather.high}°` : 'Dubai', 'Discipline', 'Focus'];
+  const row = () => items.map((t, i) => el('span', { class: 'mq-i' + (i % 2 ? ' o' : '') }, t, el('i', { class: 'mq-sep' })));
+  return el('div', { class: 'mq', 'aria-hidden': 'true' }, el('div', { class: 'mq-track' }, row(), row()));
+}
+let mqLast = 0, mqRate = 1, mqRaf = 0;
+function mqKick(y) {
+  const v = Math.abs(y - mqLast); mqLast = y; if (REDUCE()) return;
+  const tr = document.querySelector('.mq-track'); const an = tr && tr.getAnimations ? tr.getAnimations()[0] : null; if (!an) return;
+  mqRate = Math.min(9, Math.max(mqRate, 1 + v / 5)); an.playbackRate = mqRate;
+  if (!mqRaf) { const dec = () => { mqRate += (1 - mqRate) * .06; an.playbackRate = mqRate; if (mqRate > 1.02) mqRaf = requestAnimationFrame(dec); else { an.playbackRate = 1; mqRate = 1; mqRaf = 0; } }; mqRaf = requestAnimationFrame(dec); }
+}
+(function () {
+  if (!(window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+  const TILT = '.ch-card, .stat, .ring-item, .ws-tile, .ch-nav-b, a.card';
+  let cur = null, raf = 0, ev = null;
+  document.addEventListener('pointermove', e => { ev = e; if (raf) return; raf = requestAnimationFrame(() => { raf = 0; if (REDUCE()) return;
+    const t = ev.target && ev.target.closest ? ev.target.closest(TILT) : null;
+    if (cur && cur !== t) { cur.style.transform = ''; cur.classList.remove('tilting'); }
+    cur = t; if (!t) return;
+    const r = t.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width - .5, y = (ev.clientY - r.top) / r.height - .5;
+    t.classList.add('tilting'); t.style.transform = `perspective(900px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg) translateY(-3px)`;
+  }); }, { passive: true });
+  document.addEventListener('pointerleave', () => { if (cur) { cur.style.transform = ''; cur.classList.remove('tilting'); cur = null; } }, true);
+})();
 function vNews() {
   const B = S.brief, v = el('section', { class: 'view' });
   const news = B.news || [];
@@ -2990,6 +3158,9 @@ $('#lock-btn').addEventListener('click', () => { local.set('pw', ''); location.r
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 document.addEventListener('visibilitychange', () => { if (!document.hidden && S.brief && S.brief.date < todayYmd() && zoned(new Date()).h >= 7.2 && !S.rev) location.reload(); });
 initStage();
+initSplash();
+syncSoundBtn();
+$('#sound-btn').addEventListener('click', toggleSound);
 $('#totop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: REDUCE() ? 'auto' : 'smooth' }));
 loadBrief();
 setInterval(tick, 1000);
