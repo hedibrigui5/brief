@@ -1302,6 +1302,61 @@ body.locked #fab { display: none; }
   .enter .stg > *, .glint, .cine::after, .tick:checked::after, .enter .bar > i, .clock.flip, .search-res.anim button, .toast::after, .ws-led .col, .enter .card-h h2::after, .enter .page-head > :last-child, .ring-item.full svg, .chip.warn, .enter .count-big, .enter .gr-avg, .enter .tm-time, .mq-sep { animation: none !important; }
   main > .view { transform: none !important; }
 }
+
+#curtain { position: fixed; inset: 0; z-index: 45; pointer-events: none; opacity: 0; background: linear-gradient(100deg, transparent 0%, color-mix(in srgb, var(--brass) 16%, transparent) 40%, color-mix(in srgb, var(--brass) 28%, transparent) 50%, color-mix(in srgb, var(--brass) 16%, transparent) 60%, transparent 100%); transform: translateX(-100%) skewX(-12deg); }
+#curtain.run { animation: curtainRun .75s cubic-bezier(.65,0,.35,1); }
+@keyframes curtainRun { 0% { opacity: 1; transform: translateX(-110%) skewX(-12deg); } 100% { opacity: 1; transform: translateX(110%) skewX(-12deg); } }
+#dust { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.tap-ring { position: fixed; z-index: 9998; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; border: 1.5px solid var(--brass); pointer-events: none; animation: tapRing .65s cubic-bezier(.16,.84,.24,1) forwards; }
+@keyframes tapRing { from { transform: scale(.4); opacity: .9; } to { transform: scale(4.2); opacity: 0; } }
+#totop { overflow: visible; }
+#totop .tt-ring { position: absolute; inset: -3px; width: calc(100% + 6px); height: calc(100% + 6px); transform: rotate(-90deg); }
+#totop .tt-ring circle { fill: none; stroke: var(--brass); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 132; stroke-dashoffset: calc(132 * (1 - var(--sp, 0))); transition: stroke-dashoffset .2s linear; }
+.page-head h1 { background-size: 200% 100%; animation: h1Drift 9s ease-in-out infinite alternate; }
+@keyframes h1Drift { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+.enter .page-head h1 { animation: h1In 1.15s cubic-bezier(.16,.84,.24,1) both .08s, h1Drift 9s ease-in-out 1.3s infinite alternate; }
+.cine .home-chips > * { animation: bob 6s ease-in-out infinite; }
+.cine .home-chips > :nth-child(2n) { animation-delay: -2s; } .cine .home-chips > :nth-child(3n) { animation-delay: -4s; }
+@keyframes bob { 50% { transform: translateY(-4px); } }
+.enter .cine .home-chips > * { animation: stgIn .75s cubic-bezier(.16,.84,.24,1) both, bob 6s ease-in-out 1.8s infinite; animation-delay: calc(var(--i2, 0) * 70ms + 1.2s), calc(var(--i2, 0) * -1.3s); }
+.now-line { animation: nowPulse 2.2s ease-in-out infinite; }
+@keyframes nowPulse { 50% { box-shadow: 0 0 14px var(--brass); } }
+.slot { transition: transform .35s cubic-bezier(.16,.84,.24,1), box-shadow .35s; }
+@media (hover: hover) { .slot:hover { transform: scale(1.03); box-shadow: 0 14px 30px -14px rgba(0,0,0,.6); z-index: 3; } }
+.q-opt.right { animation: rightPop .55s cubic-bezier(.34,1.56,.64,1); }
+.q-opt.wrong { animation: shake .45s cubic-bezier(.36,.07,.19,.97); }
+@keyframes rightPop { 40% { transform: scale(1.03); box-shadow: 0 0 0 6px color-mix(in srgb, var(--ok) 25%, transparent); } }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.rev-card.out-ko { animation: outL .26s ease-in forwards, shake .26s; }
+.tm-stage.running .tm-btn.main::before, .tm-stage.running .tm-btn.main::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--brass); animation: wave 2.6s cubic-bezier(.16,.84,.24,1) infinite; pointer-events: none; }
+.tm-stage.running .tm-btn.main::after { animation-delay: 1.3s; }
+.tm-btn.main { overflow: visible; }
+@keyframes wave { from { transform: scale(1); opacity: .7; } to { transform: scale(2.1); opacity: 0; } }
+.ch-body.tab-in-r { animation: tabR .55s cubic-bezier(.16,.84,.24,1); }
+.ch-body.tab-in-l { animation: tabL .55s cubic-bezier(.16,.84,.24,1); }
+@keyframes tabR { from { opacity: 0; transform: translateX(26px); filter: blur(4px); } }
+@keyframes tabL { from { opacity: 0; transform: translateX(-26px); filter: blur(4px); } }
+.ws-panel:has(#ws-ny)::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); mix-blend-mode: overlay; animation: scan 8s linear infinite; }
+@keyframes scan { to { background-position: 0 120px; } }
+.ws-ex li.open .ws-dot { animation: wsPulse 1.6s infinite; }
+.item-t, .ws-wire a, .wr-link, .horizon a { background-image: linear-gradient(currentColor, currentColor); background-size: 0 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .45s cubic-bezier(.16,.84,.24,1); text-decoration: none; }
+@media (hover: hover) { .item-t:hover, .ws-wire a:hover, .wr-link:hover, .horizon a:hover { background-size: 100% 1px; text-decoration: none; } }
+.nav a:active svg, .nav-more:active svg { transform: scale(.82); }
+:focus-visible { transition: outline-offset .25s; outline-offset: 4px; }
+.lock-title { animation: lockTitle 1.2s cubic-bezier(.16,.84,.24,1) both .2s; }
+@keyframes lockTitle { from { opacity: 0; letter-spacing: .02em; filter: blur(8px); transform: translateY(16px); } }
+.lock-card input { transition: border-color .3s, box-shadow .3s; }
+.lock-card input:focus { outline: none; border-color: #d9b072; box-shadow: 0 0 0 4px rgba(217,176,114,.2); }
+.stat .big, .count-big, .gr-avg { transition: color .4s; }
+@media (hover: hover) { .stat:hover .big { color: var(--brass); } }
+.steps li .btn { transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
+@media (hover: hover) { .steps li:hover .btn { transform: translateX(-4px); } }
+.dl-ring, .mini-ring { transition: transform .5s cubic-bezier(.34,1.56,.64,1); }
+@media (hover: hover) { .dl-list li:hover .dl-ring, .ch-card:hover .mini-ring { transform: rotate(-12deg) scale(1.08); } }
+@media (prefers-reduced-motion: reduce) {
+  #curtain, #dust, .tap-ring { display: none; }
+  .page-head h1, .enter .page-head h1, .cine .home-chips > *, .now-line, .q-opt.right, .q-opt.wrong, .tm-stage.running .tm-btn.main::before, .tm-stage.running .tm-btn.main::after, .ch-body.tab-in-r, .ch-body.tab-in-l, .ws-panel::after, .ws-ex li.open .ws-dot, .lock-title { animation: none !important; }
+}
 </style>
 
 <style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
@@ -1319,7 +1374,8 @@ body.locked #fab { display: none; }
 <div id="island" role="status" aria-live="polite"></div>
 <div id="stage" aria-hidden="true"></div>
 <div id="cur-ring" aria-hidden="true"><span></span></div><div id="cur-dot" aria-hidden="true"></div>
-<button id="totop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></svg></button>
+<button id="totop" type="button" aria-label="Back to top"><svg class="tt-ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></svg></button>
+<div id="curtain" aria-hidden="true"></div><canvas id="dust" aria-hidden="true"></canvas>
 <nav class="rail" aria-label="Sections">
   <div class="brand"><div class="brand-mark" id="brand-mark"></div><div><b>Brief</b><small id="brand-date">—</small></div></div>
   <div class="nav" id="nav"></div>
@@ -1632,7 +1688,7 @@ function route() {
   const hh = h === 'news' ? 'markets' : h;
   const nv = VIEWS.some(v => v[0] === hh) ? hh : 'today';
   const m = $('#main');
-  if (S.brief && nv !== S.view && !REDUCE()) { const sw = $('#sweep'); if (sw) { sw.classList.remove('run'); void sw.offsetWidth; sw.classList.add('run'); } }
+  if (S.brief && nv !== S.view && !REDUCE()) { const cu = $('#curtain'); if (cu) { cu.classList.remove('run'); void cu.offsetWidth; cu.classList.add('run'); } const sw = $('#sweep'); if (sw) { sw.classList.remove('run'); void sw.offsetWidth; sw.classList.add('run'); } }
   const go = () => { if (S.view !== nv) SCROLLMEM[S.view] = window.scrollY; const back = S.view !== nv ? SCROLLMEM[nv] : 0; S.view = nv; rerender(true); if (back) requestAnimationFrame(() => window.scrollTo(0, back)); };
   if (S.brief && nv !== S.view && !REDUCE() && m && m.querySelector('.view')) {
     m.classList.add('leaving'); clearTimeout(route.t);
@@ -2624,12 +2680,12 @@ function dayRings() {
 function animateRings(root, instant) { root.querySelectorAll('circle.fg[data-off]').forEach(c => { const off = c.getAttribute('data-off'); if (REDUCE() || instant) c.setAttribute('stroke-dashoffset', off); else requestAnimationFrame(() => requestAnimationFrame(() => c.setAttribute('stroke-dashoffset', off))); }); }
 function countUp(root) {
   if (REDUCE()) return;
-  root.querySelectorAll('.big.num, .count-big').forEach(n => {
-    const m = /^(\d{1,4})(\/\d+)?$/.exec(n.textContent.trim()); if (!m) return;
-    const end = +m[1], rest = m[2] || ''; if (!end) return;
+  root.querySelectorAll('.big.num, .count-big, .gr-avg, .rev-mini b.num').forEach(n => {
+    const m = /^(\d{1,4})(?:\.(\d{1,2}))?(\/\d+)?$/.exec(n.textContent.trim()); if (!m) return;
+    const dec = m[2] ? m[2].length : 0, end = parseFloat(m[1] + (m[2] ? '.' + m[2] : '')), rest = m[3] || ''; if (!end) return;
     const t0 = performance.now(), dur = 900 + Math.min(600, end * 8);
-    const step = t => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); n.textContent = Math.round(end * e) + rest; if (p < 1) requestAnimationFrame(step); };
-    n.textContent = '0' + rest; requestAnimationFrame(step);
+    const step = t => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); n.textContent = (end * e).toFixed(dec) + rest; if (p < 1) requestAnimationFrame(step); };
+    n.textContent = (0).toFixed(dec) + rest; requestAnimationFrame(step);
   });
 }
 let rvIO = null;
@@ -3108,7 +3164,9 @@ function chapterNav(subj, D, c) {
 function switchTab(subj, id) {
   const ids = (S.curTabs && S.curTabs.ids) || [];
   if (!ids.includes(id)) return;
+  const prevI = ids.indexOf(S.studyTab[subj] || ids[0]), dir = ids.indexOf(id) >= prevI ? 'r' : 'l';
   S.studyTab[subj] = id; rerender();
+  const bd = document.querySelector('.ch-body'); if (bd && !REDUCE()) { bd.classList.add('tab-in-' + dir); setTimeout(() => bd.classList.remove('tab-in-' + dir), 700); }
   const t = document.querySelector('.ch-tabs-wrap'); if (t && t.getBoundingClientRect().top < 0) t.scrollIntoView({ block: 'start', behavior: REDUCE() ? 'auto' : 'smooth' });
 }
 function stepTab(dir) {
@@ -3331,7 +3389,7 @@ function scramble(node) {
   const step = () => { f++; const k = Math.floor(final.length * f / N); node.textContent = final.slice(0, k) + final.slice(k).replace(/[^\s·]/g, () => SCR_CH[Math.floor(Math.random() * SCR_CH.length)]); if (f < N) requestAnimationFrame(step); else node.textContent = final; };
   requestAnimationFrame(step);
 }
-const STG = '.items, .class-list, .kit, .recap, .tips-list, .methods, .ws-ex, .ws-tiles, .wr-list, .steps, .pb-row, .brk, .horizon, .q-opts, .home-chips, .acts, .rev-mini, .tm-week, .sheet-grid, .fc, .heat';
+const STG = '.weeks, .tt-col, .apps, .gr-list, .tm-modes, .tm-ctrl, .cap-chips, .ws-wire-bar, .ws-syms, .ch-strip, .filters, .items, .class-list, .kit, .recap, .tips-list, .methods, .ws-ex, .ws-tiles, .wr-list, .steps, .pb-row, .brk, .horizon, .q-opts, .home-chips, .acts, .rev-mini, .tm-week, .sheet-grid, .fc, .heat';
 function staggerLists(view) { view.querySelectorAll(STG).forEach(c => { c.classList.add('stg'); [...c.children].forEach((x, i) => x.style.setProperty('--i2', Math.min(i, 16))); }); }
 function glintCards(view) {
   if (REDUCE()) return;
@@ -3353,6 +3411,35 @@ function skewKick(y) {
   if (!PX_ON || REDUCE()) return; const v = y - skLast; skLast = y;
   skCur = Math.max(-.7, Math.min(.7, skCur + v * .02));
   if (!skRaf) { const dec = () => { skCur *= .88; document.documentElement.style.setProperty('--skew', skCur.toFixed(3) + 'deg'); if (Math.abs(skCur) > .01) skRaf = requestAnimationFrame(dec); else { document.documentElement.style.setProperty('--skew', '0deg'); skRaf = 0; } }; skRaf = requestAnimationFrame(dec); }
+}
+function initDust() {
+  const cv = $('#dust'); if (!cv || REDUCE()) return;
+  const ctx = cv.getContext('2d'), mob = matchMedia('(pointer: coarse)').matches, N = mob ? 18 : 42, P = [];
+  let w = 0, h = 0, dpr = 1;
+  const fit = () => { dpr = Math.min(1.5, window.devicePixelRatio || 1); w = innerWidth; h = innerHeight; cv.width = w * dpr; cv.height = h * dpr; };
+  fit(); window.addEventListener('resize', fit);
+  for (let i = 0; i < N; i++) P.push({ x: Math.random() * w, y: Math.random() * h, r: .6 + Math.random() * 1.8, vy: -(.08 + Math.random() * .25), vx: (Math.random() - .5) * .12, a: .15 + Math.random() * .45, ph: Math.random() * 6.28 });
+  const col = () => document.documentElement.dataset.theme === 'dark' ? '217,176,114' : '168,116,31';
+  const frame = t => {
+    requestAnimationFrame(frame);
+    if (document.hidden) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    const c = col(), mx = (CINE.px || 0) * 14;
+    for (const q of P) {
+      q.y += q.vy; q.x += q.vx + Math.sin(t / 2400 + q.ph) * .08;
+      if (q.y < -10) { q.y = h + 10; q.x = Math.random() * w; } if (q.x < -10) q.x = w + 10; if (q.x > w + 10) q.x = -10;
+      const tw = .55 + .45 * Math.sin(t / 900 + q.ph);
+      ctx.fillStyle = `rgba(${c},${(q.a * tw).toFixed(3)})`; ctx.beginPath(); ctx.arc(q.x + mx * q.r * .3, q.y, q.r, 0, 6.2832); ctx.fill();
+    }
+  };
+  requestAnimationFrame(frame);
+}
+function initTapRings() {
+  if (REDUCE()) return;
+  document.addEventListener('pointerdown', e => {
+    if (e.button > 0 || (e.target.closest && e.target.closest('input, textarea, select, iframe'))) return;
+    const r = el('i', { class: 'tap-ring', style: { left: e.clientX + 'px', top: e.clientY + 'px' } }); document.body.append(r); setTimeout(() => r.remove(), 700);
+  }, { passive: true });
 }
 function vNews() {
   const B = S.brief, v = el('section', { class: 'view' });
@@ -3624,6 +3711,8 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && S.
 initStage();
 $('#fab').addEventListener('click', () => openCapture());
 initGlow();
+initDust();
+initTapRings();
 initSplash();
 $('#totop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: REDUCE() ? 'auto' : 'smooth' }));
 loadBrief();
