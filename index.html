@@ -716,6 +716,120 @@ main.has-cine { padding-top: 0; }
   .cine-bg.intro .cine-zoom, .enter .greet .wi, .cine .greet em, .cine-cue i, .enter .cine .label, .enter .cine .home-sub, .enter .cine .pticker, .enter .cine .home-chips, #island .isl-dot, .sheet, .sheet-wrap { animation: none !important; }
   .cine-media, .cine-inner { transform: none !important; }
 }
+
+:root { --p: 0; --mx2: 0; --my2: 0; }
+:root[data-theme="dark"] { --bg: #050607; --panel: #0e1013; --panel-2: rgba(255,255,255,.055); --line: rgba(255,255,255,.1); --ink: #f2f2f0; --muted: #a7adb5; --faint: #6b7178; }
+#ambient { display: none; }
+#stage { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: #050607; }
+#stage .cine-bg { position: absolute; inset: 0; }
+#stage .cine-media { transform: translate3d(calc(var(--mx2) * -16px), calc(var(--my2) * -10px - var(--p) * 3%), 0) scale(calc(1.04 + var(--p) * .1)); }
+#stage .cine-mist { opacity: calc(1 - var(--p) * .55); }
+.stage-shade { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(3,5,6,.55) 0%, rgba(3,5,6,.1) 28%, rgba(3,5,6,.3) 70%, rgba(3,5,6,.78) 100%); }
+.stage-shade::after { content: ""; position: absolute; inset: 0; background: #030506; opacity: calc(.08 + var(--p) * .5); transition: opacity .5s; }
+body:not([data-view="today"]) .stage-shade::after { opacity: .6; }
+body:not([data-view="today"]) #stage .cine-mist { opacity: .3; }
+.cine { --p: inherit; --mx2: inherit; --my2: inherit; height: 100vh; height: 100svh; min-height: 560px; margin-bottom: 0; overflow: visible; }
+.cine-inner { justify-content: flex-end; padding-bottom: 16vh; transform: translateY(calc(var(--p) * -14vh)); opacity: calc(1 - var(--p) * 1.25); }
+.cine .greet { font-weight: 600; letter-spacing: -.055em; }
+.cine-cue { bottom: 4.5vh; }
+.has-cine .view > :not(.cine) { position: relative; z-index: 2; }
+:root[data-theme="dark"] .card { background-color: rgba(10,12,15,.56); border-color: rgba(255,255,255,.09); -webkit-backdrop-filter: blur(28px) saturate(1.5); backdrop-filter: blur(28px) saturate(1.5); box-shadow: 0 24px 60px -36px rgba(0,0,0,.9); }
+:root[data-theme="dark"] .rail { background: rgba(7,8,10,.5); box-shadow: 1px 0 0 rgba(255,255,255,.07); }
+:root:not([data-theme="dark"]) .card { background-color: rgba(255,255,255,.8); }
+.page-head h1 { background: linear-gradient(100deg, #fff 0%, #fff 58%, #e9cc94 100%); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 600; letter-spacing: -.04em; }
+.page-head p, .page-head .label, .view > .label, .rev-top .label { color: rgba(255,255,255,.72); }
+.view > .btn.ghost, .rev-top .btn.ghost { color: #fff; border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.06); }
+.view > .filters button:not([aria-pressed="true"]), .page-head .filters button:not([aria-pressed="true"]) { color: rgba(255,255,255,.8); border-color: rgba(255,255,255,.22); }
+.loading { color: rgba(255,255,255,.75); }
+.mob-head, .mob-head .label { color: #fff; }
+.mob-head .btn { color: #fff; border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.1); }
+@media (max-width: 760px) { main.scrolled .mob-head { background: rgba(7,8,10,.55); box-shadow: 0 1px 0 rgba(255,255,255,.08); } :root[data-theme="dark"] .rail { background: rgba(7,8,10,.62); } }
+.lock::before { background: linear-gradient(180deg, rgba(0,0,0,.3), rgba(0,0,0,.66)); }
+
+#totop { position: fixed; right: max(20px, env(safe-area-inset-right, 0px)); bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 12; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.18); background: rgba(10,12,15,.6); color: #fff; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); cursor: pointer; opacity: 0; transform: translateY(14px) scale(.9); pointer-events: none; transition: opacity .3s, transform .45s cubic-bezier(.34,1.56,.64,1); }
+#totop.show { opacity: 1; transform: none; pointer-events: auto; }
+#totop svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 760px) { #totop { bottom: calc(86px + env(safe-area-inset-bottom, 0px)); right: 14px; width: 42px; height: 42px; } }
+
+#cur-dot, #cur-ring { position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none; opacity: 0; will-change: transform; }
+#cur-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; mix-blend-mode: difference; transition: opacity .2s; }
+#cur-ring { box-sizing: border-box; width: 36px; height: 36px; border-radius: 18px; border: 1.5px solid rgba(255,255,255,.9); mix-blend-mode: difference; display: grid; place-items: center; transition: opacity .2s, background-color .25s, border-color .25s; }
+#cur-ring span { font: 700 10px var(--body); letter-spacing: .1em; text-transform: uppercase; color: #111; opacity: 0; transition: opacity .2s; white-space: nowrap; }
+html.cur-on.cur-seen #cur-dot, html.cur-on.cur-seen #cur-ring { opacity: 1; }
+html.cur-on, html.cur-on * { cursor: none !important; }
+html.cur-on input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button]), html.cur-on textarea, html.cur-on select, html.cur-on [contenteditable="true"] { cursor: text !important; }
+html.cur-morph #cur-ring { mix-blend-mode: normal; border-color: color-mix(in srgb, var(--ink) 22%, transparent); background-color: color-mix(in srgb, var(--ink) 9%, transparent); }
+html.cur-morph #cur-dot { opacity: 0 !important; }
+html.cur-label #cur-ring { mix-blend-mode: normal; border-color: transparent; background-color: #f3d9a6; }
+html.cur-label #cur-ring span { opacity: 1; }
+html.cur-label #cur-dot { opacity: 0 !important; }
+html.cur-text #cur-dot, html.cur-text #cur-ring, html.cur-out #cur-dot, html.cur-out #cur-ring { opacity: 0 !important; }
+
+.ws .page-head h1 { background: linear-gradient(100deg, #fff 0%, #fff 50%, #ffb000 100%); -webkit-background-clip: text; background-clip: text; }
+.ws-panel { position: relative; background: rgba(4,5,6,.8); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; overflow: hidden; color: #e9ecef; -webkit-backdrop-filter: blur(26px) saturate(1.3); backdrop-filter: blur(26px) saturate(1.3); box-shadow: 0 30px 70px -40px rgba(0,0,0,.9); min-width: 0; }
+.ws-h { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 16px; font: 600 10.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #ffb000; border-bottom: 1px solid rgba(255,255,255,.07); background: linear-gradient(90deg, rgba(255,176,0,.09), transparent 45%); }
+.ws-h > span:last-child:not(:first-child) { color: rgba(255,255,255,.42); letter-spacing: .06em; text-align: right; }
+.ws-tape { margin: -4px 0 18px; border-radius: 14px; overflow: hidden; background: #131722; border: 1px solid rgba(255,255,255,.08); min-height: 46px; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+.ws-lamp { display: inline-flex; align-items: center; gap: 8px; color: #fff; letter-spacing: .1em; }
+.ws-lamp i { width: 9px; height: 9px; border-radius: 50%; background: #ff5252; box-shadow: 0 0 10px rgba(255,82,82,.8); }
+.ws-lamp.open i { background: #00e676; box-shadow: 0 0 0 0 rgba(0,230,118,.7); animation: wsPulse 1.6s infinite; }
+.ws-lamp.pre i, .ws-lamp.post i { background: #ffc400; box-shadow: 0 0 10px rgba(255,196,0,.8); }
+@keyframes wsPulse { 70% { box-shadow: 0 0 0 9px rgba(0,230,118,0); } 100% { box-shadow: 0 0 0 0 rgba(0,230,118,0); } }
+.ws-clocks { display: grid; grid-template-columns: 1.1fr 1.2fr .9fr; gap: 18px; padding: 22px 18px 8px; }
+.ws-k { font: 600 10.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 8px; }
+.ws-led { font: 500 clamp(1.9rem, 3.6vw, 3rem)/1 var(--mono); letter-spacing: .01em; color: #eafff3; text-shadow: 0 0 22px rgba(0,230,118,.35); font-variant-numeric: tabular-nums; }
+.ws-led.amber { color: #ffd166; text-shadow: 0 0 22px rgba(255,176,0,.4); }
+.ws-led.dim { color: rgba(255,255,255,.8); text-shadow: none; font-size: clamp(1.4rem, 2.4vw, 2rem); }
+.ws-sub { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 8px; }
+.ws-sess { padding: 18px 18px 26px; }
+.ws-sess-bar { position: relative; display: flex; height: 8px; border-radius: 4px; background: rgba(255,255,255,.06); }
+.ws-sess-bar .seg { display: block; height: 100%; }
+.ws-sess-bar .pre { background: rgba(255,196,0,.32); border-radius: 4px 0 0 4px; }
+.ws-sess-bar .reg { background: linear-gradient(90deg, #00b248, #00e676); }
+.ws-sess-bar .post { background: rgba(255,196,0,.32); border-radius: 0 4px 4px 0; }
+.ws-sess-bar em { position: absolute; top: -6px; width: 2px; height: 20px; border-radius: 1px; background: #fff; box-shadow: 0 0 12px #fff; left: var(--x, 0%); transition: left 1s linear; }
+.ws-sess-bar.off { opacity: .35; } .ws-sess-bar.off em { display: none; }
+.ws-sess-l { position: relative; height: 14px; margin-top: 9px; font: 500 10.5px var(--mono); color: rgba(255,255,255,.45); }
+.ws-sess-l span { position: absolute; transform: translateX(-50%); }
+.ws-sess-l span:first-child { transform: none; } .ws-sess-l span:last-child { transform: translateX(-100%); }
+.ws-ex { list-style: none; margin: 0; padding: 0; }
+.ws-ex li { display: grid; grid-template-columns: 10px 78px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 12.5px 16px; border-top: 1px solid rgba(255,255,255,.06); font-size: 13.5px; }
+.ws-ex li:first-child { border-top: 0; }
+.ws-ex b { font: 600 12.5px var(--mono); letter-spacing: .04em; }
+.ws-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,82,82,.85); }
+.ws-ex li.open .ws-dot { background: #00e676; box-shadow: 0 0 10px #00e676; }
+.ws-city { color: rgba(255,255,255,.55); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ws-t { font: 500 12.5px var(--mono); color: rgba(255,255,255,.8); }
+.ws-ex li.open .ws-t { color: #69f0ae; }
+.ws-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1px; background: rgba(255,255,255,.06); }
+.ws-tile { padding: 16px 16px 18px; background: #07090a; }
+.ws-tile.up { background: color-mix(in srgb, #00c853 calc(var(--a) * 34%), #07090a); }
+.ws-tile.down { background: color-mix(in srgb, #ff3b30 calc(var(--a) * 34%), #07090a); }
+.ws-chg { font: 600 1.55rem/1 var(--mono); letter-spacing: -.02em; }
+.ws-tile.up .ws-chg { color: #69f0ae; } .ws-tile.down .ws-chg { color: #ff8a80; }
+.ws-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,.06); }
+.ws-syms { display: flex; flex-wrap: wrap; gap: 6px; }
+.ws-sym { display: inline-flex; align-items: center; gap: 8px; font: 600 12px var(--mono); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: #e9ecef; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.ws-sym:hover { border-color: rgba(255,176,0,.6); }
+.ws-sym.on { background: #ffb000; color: #000; border-color: #ffb000; }
+.ws-sym .x { opacity: .45; font-weight: 400; padding: 0 2px; }
+.ws-sym .x:hover { opacity: 1; }
+.ws-add { display: flex; gap: 6px; }
+.ws-add input { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 8px; padding: 6px 10px; color: #fff; font: 600 12px var(--mono); width: 120px; text-transform: uppercase; }
+.ws-add .btn { color: #000; background: #ffb000; border-color: #ffb000; }
+.tv-host { height: 560px; }
+.tv-host.tall { height: 520px; } .tv-host.mid { height: 460px; }
+.tv-host .tradingview-widget-container, .tv-host .tradingview-widget-container__widget { height: 100%; width: 100%; }
+.tradingview-widget-copyright { display: none; }
+.ws-wire { list-style: none; margin: 0; padding: 0; }
+.ws-wire li { padding: 14px 16px; border-top: 1px solid rgba(255,255,255,.06); display: grid; gap: 4px; }
+.ws-wire li:first-child { border-top: 0; }
+.ws-wire a, .ws-wire b { color: #fff; font-weight: 600; text-decoration: none; font-size: 15px; }
+.ws-wire a:hover { color: #ffd166; }
+.ws-wire p { margin: 0; color: rgba(255,255,255,.62); font-size: 13.5px; }
+@media (max-width: 1000px) { .ws-clocks { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .ws-clocks { grid-template-columns: 1fr; gap: 14px; } .tv-host { height: 440px; } .tv-host.tall { height: 460px; } .ws-add input { width: 100px; } }
+@media (prefers-reduced-motion: reduce) { .ws-lamp.open i { animation: none; } #cur-dot, #cur-ring { display: none; } html.cur-on, html.cur-on * { cursor: auto !important; } }
 </style>
 
 <style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
@@ -723,6 +837,9 @@ main.has-cine { padding-top: 0; }
 <body>
 <div id="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
 <div id="island" role="status" aria-live="polite"></div>
+<div id="stage" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"><span></span></div><div id="cur-dot" aria-hidden="true"></div>
+<button id="totop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></svg></button>
 <nav class="rail" aria-label="Sections">
   <div class="brand"><div class="brand-mark" id="brand-mark"></div><div><b>Brief</b><small id="brand-date">—</small></div></div>
   <div class="nav" id="nav"></div>
@@ -784,7 +901,7 @@ const todayYmd = () => zoned(new Date()).ymd;
 let toastT;
 function toast(msg) { document.querySelectorAll('.toast').forEach(t => t.remove()); const t = el('div', { class: 'toast', role: 'status', text: noEmoji(msg) }); document.body.append(t); clearTimeout(toastT); toastT = setTimeout(() => t.remove(), 2200); }
 
-const S = { brief: null, db: { sat: null, timetable: null, habits: null, apps: null, focus: null, study: null }, dbReady: false, view: 'today', newsFilter: 'all', tipCat: 'Study', openStrat: null, openWeek: null, ttEdit: null };
+const S = { brief: null, db: { sat: null, timetable: null, habits: null, apps: null, focus: null, study: null, markets: null }, dbReady: false, view: 'today', newsFilter: 'all', tipCat: 'Study', openStrat: null, openWeek: null, ttEdit: null };
 
 const SYNC = { owner: 'hedibrigui5', repo: 'brief-data', path: 'state.json', sha: null, timer: null, busy: false, dirty: new Set() };
 const ghToken = () => local.get('gh_token', '');
@@ -910,10 +1027,11 @@ const ICON = {
   maths: '<path d="M4 6h7M7.5 2.5v7M14 6h6M4 17.5l5-5M4 12.5l5 5M14 15h6M14 19h6"/>',
   ses: '<path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/>',
   python: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>',
+  markets: '<path d="M6 3.5v17M12 3v18M18 5v15"/><rect x="4.5" y="8" width="3" height="7" rx=".6"/><rect x="10.5" y="6" width="3" height="5" rx=".6"/><rect x="16.5" y="10" width="3" height="6" rx=".6"/>',
   review: '<path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><path d="M9 12l2.2 2.2L15 10.5"/>'
 };
 const VIEWS = [
-  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['news', 'News', '3'], ['sat', 'SAT', '4'], ['maths', 'Spé Maths', '5'], ['ses', 'Spé SES', '6'], ['python', 'Python', '7'], ['review', 'Révisions', '0'], ['focus', 'Focus', '8'], ['apps', 'Applications', '9']
+  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['news', 'News', '3'], ['markets', 'Markets', 'm'], ['sat', 'SAT', '4'], ['maths', 'Spé Maths', '5'], ['ses', 'Spé SES', '6'], ['python', 'Python', '7'], ['review', 'Révisions', '0'], ['focus', 'Focus', '8'], ['apps', 'Applications', '9']
 ];
 
 const SAT = {
@@ -1030,12 +1148,13 @@ function route() {
   const h = (location.hash || '').slice(1);
   const nv = VIEWS.some(v => v[0] === h) ? h : 'today';
   const m = $('#main');
+  const go = () => { if (S.view !== nv) SCROLLMEM[S.view] = window.scrollY; const back = S.view !== nv ? SCROLLMEM[nv] : 0; S.view = nv; rerender(true); if (back) requestAnimationFrame(() => window.scrollTo(0, back)); };
   if (S.brief && nv !== S.view && !REDUCE() && m && m.querySelector('.view')) {
     m.classList.add('leaving'); clearTimeout(route.t);
-    route.t = setTimeout(() => { m.classList.remove('leaving'); S.view = nv; rerender(true); }, 170);
+    route.t = setTimeout(() => { m.classList.remove('leaving'); go(); }, 170);
     return;
   }
-  S.view = nv; rerender(true);
+  go();
 }
 function rerender(scrollTop) {
   buildNav();
@@ -1044,9 +1163,9 @@ function rerender(scrollTop) {
   const y = window.scrollY;
   main.innerHTML = '';
   const head = el('div', { class: 'mob-head' }, el('span', { class: 'label', text: fmtDay(todayYmd(), { weekday: 'long', month: 'short', day: 'numeric' }) }), el('b', { class: 'mob-title', text: (VIEWS.find(x => x[0] === S.view) || ['', ''])[1] }), el('button', { class: 'btn sm ghost', type: 'button', onclick: () => openSearch(), text: 'Search' }), el('span', { class: 'label num', id: 'mob-clock' }));
-  main.append(head, ({ today: vToday, timetable: vTimetable, sat: vSat, maths: () => vStudy('maths'), ses: () => vStudy('ses'), python: () => vStudy('python'), review: vReview, news: vNews, focus: vFocus, apps: vApps })[S.view]());
+  main.append(head, ({ today: vToday, timetable: vTimetable, sat: vSat, maths: () => vStudy('maths'), ses: () => vStudy('ses'), python: () => vStudy('python'), review: vReview, news: vNews, markets: vMarkets, focus: vFocus, apps: vApps })[S.view]());
   if (scrollTop) window.scrollTo(0, 0); else window.scrollTo(0, y);
-  main.classList.toggle('has-cine', !!main.querySelector('.cine')); main.classList.toggle('scrolled', window.scrollY > 40);
+  main.classList.toggle('has-cine', !!main.querySelector('.cine')); document.body.dataset.view = S.view; main.classList.toggle('scrolled', window.scrollY > 40);
   cinePlayState();
   if (scrollTop) enterAnim(main);
   tick();
@@ -1106,6 +1225,7 @@ function vToday() {
     W ? el('span', { class: 'chip', text: `${W.summary ? W.summary + ' · ' : ''}${W.high != null ? W.high + '° / ' + W.low + '°' : ''}` }) : null,
     B.sun ? el('span', { class: 'chip', text: `Sun ${B.sun.rise} – ${B.sun.set}` }) : null,
     satDays >= 0 ? el('a', { class: 'chip', href: '#sat', text: `SAT in ${satDays} days` }) : null,
+    el('a', { class: 'chip', href: '#markets', text: nyseChip() }),
     open ? el('span', { class: 'chip warn', text: `${open} thing${open === 1 ? '' : 's'} need${open === 1 ? 's' : ''} you` }) : el('span', { class: 'chip', text: 'All clear' }));
   v.append(cineHero(B, chipsEl, fmtDay(B.date, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) + (stale ? ' · waiting for the 7:00 refresh' : '')));
   v.append(el('div', { class: 'card acts-card' }, el('div', { class: 'acts' }, (B.acts || []).map(a => el('div', { class: 'act' }, el('b', { text: a.range }), el('p', { text: a.text }))))));
@@ -2047,7 +2167,7 @@ function burstFrom(node, n) { const r = node.getBoundingClientRect(); confetti(r
   let raf = 0, px = 0, py = 0, tgt = null, ev = null;
   document.addEventListener('pointermove', e => { ev = e; if (raf) return; raf = requestAnimationFrame(() => { raf = 0;
     px = ev.clientX / innerWidth - .5; py = ev.clientY / innerHeight - .5;
-    CINE.px = px; const ch = $('#cine'); if (ch && !REDUCE() && matchMedia('(hover: hover)').matches) { ch.style.setProperty('--mx2', px.toFixed(3)); ch.style.setProperty('--my2', py.toFixed(3)); }
+    CINE.px = px; if (!REDUCE() && matchMedia('(hover: hover)').matches) { const de = document.documentElement.style; de.setProperty('--mx2', px.toFixed(3)); de.setProperty('--my2', py.toFixed(3)); }
     const a = $('#ambient'); if (a && !REDUCE()) { a.style.setProperty('--px', px.toFixed(3)); a.style.setProperty('--py', py.toFixed(3)); }
     const c = ev.target.closest && ev.target.closest('.card, .ch-card, .flash');
     if (c) { const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (ev.clientX - r.left) + 'px'); c.style.setProperty('--my', (ev.clientY - r.top) + 'px'); }
@@ -2132,19 +2252,18 @@ function words(t, start) { const ws = t.split(' '), out = []; ws.forEach((w, i) 
 function cineHero(B, chipsEl, dateLine) {
   const name = B.name || 'Hedi', gw = greeting() + ',';
   return el('section', { class: 'cine', id: 'cine' },
-    cineMedia(),
-    el('div', { class: 'cine-shade' }),
     el('div', { class: 'cine-inner' },
       el('div', { class: 'label', text: dateLine }),
       el('h1', { class: 'greet', 'aria-label': `${greeting()}, ${name}.` }, el('span', { id: 'greet-word', 'aria-hidden': 'true' }, words(gw, 0)), el('br'), el('em', { 'aria-hidden': 'true' }, words(name + '.', gw.split(' ').length))),
       el('p', { class: 'home-sub', text: personalLine(B) }), personalTicker(B), chipsEl),
-    el('button', { class: 'cine-cue', type: 'button', 'aria-label': 'Scroll to your day', onclick: () => window.scrollTo({ top: $('#cine').offsetHeight - 110, behavior: 'smooth' }) }, el('span', { text: 'Scroll' }), el('i')));
+    el('button', { class: 'cine-cue', type: 'button', 'aria-label': 'Scroll to your day', onclick: () => window.scrollTo({ top: innerHeight * .9, behavior: 'smooth' }) }, el('span', { text: 'Scroll' }), el('i')));
 }
 function updateIsland(now) {
   const isl = $('#island'); if (!isl) return;
   let txt = '', kind = '', frac = null, to = null;
   if (S.brief && T.running) { const left = timerLeft(); txt = `Focus · ${mmss(left)}`; kind = 'focus'; frac = 1 - left / (T.mode * 60); to = 'focus'; }
-  else if (S.brief) { const nx = (S.brief.events || []).map(e => ({ t: e.title, S: new Date(e.start) })).filter(e => e.S > now && e.S - now < 20 * 6e4).sort((a, b) => a.S - b.S)[0]; if (nx) { txt = `${nx.t} · in ${until(nx.S - now)}`; kind = 'event'; to = 'timetable'; } }
+  else if (S.brief) { const nx = (S.brief.events || []).map(e => ({ t: e.title, S: new Date(e.start) })).filter(e => e.S > now && e.S - now < 20 * 6e4).sort((a, b) => a.S - b.S)[0]; if (nx) { txt = `${nx.t} · in ${until(nx.S - now)}`; kind = 'event'; to = 'timetable'; }
+    else { const ns = nyseState(now); if (ns.next < 15 * 6e4) { txt = `${ns.nextLabel} in ${until(ns.next)}`; kind = 'event'; to = 'markets'; } } }
   const show = !!txt && !(kind === 'focus' && S.view === 'focus') && !document.body.classList.contains('locked');
   isl.classList.toggle('show', show);
   if (!show) return;
@@ -2196,9 +2315,142 @@ function attachSwipe(card, r) {
 (function () {
   let raf = 0;
   const on = () => { raf = 0; const y = window.scrollY, m = $('#main'); if (m) m.classList.toggle('scrolled', y > 40);
-    const c = $('#cine'); if (c) c.style.setProperty('--p', Math.min(1, Math.max(0, y / c.offsetHeight)).toFixed(4)); };
+    document.documentElement.style.setProperty('--p', Math.min(1, Math.max(0, y / innerHeight)).toFixed(4)); const tt = $('#totop'); if (tt) tt.classList.toggle('show', y > innerHeight * 1.1); };
   window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(on); }, { passive: true });
   document.addEventListener('change', e => { if (e.target.matches && e.target.matches('input.tick')) haptic(e.target.checked ? 10 : 5); });
+})();
+const SCROLLMEM = {};
+function initStage() { const st = $('#stage'); if (!st || st.firstChild) return; st.append(cineMedia(), el('div', { class: 'stage-shade' })); cinePlayState(); }
+const MK_DEFAULT = ['SPY', 'QQQ', 'AAPL', 'NVDA', 'MSFT', 'TSLA', 'BTCUSD', 'XAUUSD', 'EURUSD'];
+const MK_SYM = { SPY: 'AMEX:SPY', QQQ: 'NASDAQ:QQQ', DIA: 'AMEX:DIA', AAPL: 'NASDAQ:AAPL', NVDA: 'NASDAQ:NVDA', MSFT: 'NASDAQ:MSFT', TSLA: 'NASDAQ:TSLA', AMZN: 'NASDAQ:AMZN', GOOGL: 'NASDAQ:GOOGL', META: 'NASDAQ:META', BTCUSD: 'BITSTAMP:BTCUSD', ETHUSD: 'BITSTAMP:ETHUSD', XAUUSD: 'OANDA:XAUUSD', EURUSD: 'FX:EURUSD', USOIL: 'TVC:USOIL' };
+const NYSE_HOL = ['2026-01-01', '2026-01-19', '2026-02-16', '2026-04-03', '2026-05-25', '2026-06-19', '2026-07-03', '2026-09-07', '2026-11-26', '2026-12-25', '2027-01-01', '2027-01-18', '2027-02-15', '2027-03-26', '2027-05-31', '2027-06-18', '2027-07-05', '2027-09-06', '2027-11-25', '2027-12-24'];
+const NYSE_HALF = ['2026-11-27', '2026-12-24', '2027-11-26'];
+const EXCH = [['NYSE', 'New York', 'America/New_York', [[9.5, 16]]], ['LSE', 'London', 'Europe/London', [[8, 16.5]]], ['Euronext', 'Paris', 'Europe/Paris', [[9, 17.5]]], ['DFM', 'Dubai', 'Asia/Dubai', [[10, 15]]], ['TSE', 'Tokyo', 'Asia/Tokyo', [[9, 11.5], [12.5, 15.5]]], ['HKEX', 'Hong Kong', 'Asia/Hong_Kong', [[9.5, 12], [13, 16]]]];
+function nyseTrading(ymd) { const w = (new Date(ymd + 'T12:00:00Z').getUTCDay() + 6) % 7; return w < 5 && !NYSE_HOL.includes(ymd); }
+function nyseState(now) {
+  const z = zoned(now, 'America/New_York'), h = z.h, d = z.ymd, isT = nyseTrading(d), close = NYSE_HALF.includes(d) ? 13 : 16;
+  let phase = 'closed', label = 'Closed', next = null, nextLabel = 'Opening bell';
+  if (isT && h >= 9.5 && h < close) { phase = 'open'; label = 'Market open'; next = (close - h) * 36e5; nextLabel = 'Closing bell'; }
+  else if (isT && h >= 4 && h < 9.5) { phase = 'pre'; label = 'Pre-market'; }
+  else if (isT && h >= close && h < 20) { phase = 'post'; label = 'After hours'; }
+  if (next == null) { let k = 0; if (!(isT && h < 9.5)) { do { k++; } while (!nyseTrading(addDays(d, k)) && k < 10); } next = (k * 24 + 9.5 - h) * 36e5; }
+  return { z, phase, label, next, nextLabel, close, isT };
+}
+function nyseChip() { const s = nyseState(new Date()); return s.phase === 'open' ? 'Wall Street open' : s.phase === 'pre' ? 'Wall Street pre-market' : s.phase === 'post' ? 'Wall Street after hours' : 'Wall Street closed'; }
+const TVW = {};
+function tvWidget(kind, cfg, key) {
+  key = key || kind;
+  if (TVW[key]) return TVW[key];
+  const box = el('div', { class: 'tradingview-widget-container' }, el('div', { class: 'tradingview-widget-container__widget' }));
+  const sc = document.createElement('script'); sc.type = 'text/javascript'; sc.async = true; sc.src = `https://s3.tradingview.com/external-embedding/embed-widget-${kind}.js`; sc.text = JSON.stringify(cfg);
+  box.append(sc); TVW[key] = box; return box;
+}
+function chartWidget(sym) { return tvWidget('advanced-chart', { autosize: true, symbol: MK_SYM[sym] || sym, interval: 'D', timezone: 'Asia/Dubai', theme: 'dark', style: '1', locale: 'en', backgroundColor: 'rgba(4, 5, 6, 0)', gridColor: 'rgba(255, 255, 255, 0.05)', allow_symbol_change: true, withdateranges: true, hide_side_toolbar: false, calendar: false, support_host: 'https://www.tradingview.com' }, 'chart:' + sym); }
+function mkWatch() { const M = S.db.markets || {}; return M.watch && M.watch.length ? M.watch : MK_DEFAULT; }
+function saveWatch(list) { save('markets', { ...(S.db.markets || {}), watch: list }); Object.keys(TVW).filter(k => k.startsWith('tape')).forEach(k => delete TVW[k]); rerender(); }
+function vMarkets() {
+  const B = S.brief, v = el('section', { class: 'view ws' }), watch = mkWatch();
+  v.append(pageHead('Wall Street desk', 'Markets', 'Live quotes, the New York session, the S&P 500 map and the macro calendar. Quotes from TradingView; some exchanges delay them by 15 minutes.'));
+  const tape = [{ proName: 'FOREXCOM:SPXUSD', title: 'S&P 500' }, { proName: 'FOREXCOM:NSXUSD', title: 'Nasdaq 100' }, { proName: 'FOREXCOM:DJI', title: 'Dow 30' }, ...watch.map(t => ({ proName: MK_SYM[t] || t, title: t }))];
+  v.append(el('div', { class: 'ws-tape' }, tvWidget('ticker-tape', { symbols: tape, showSymbolLogo: true, isTransparent: false, displayMode: 'regular', colorTheme: 'dark', locale: 'en' }, 'tape:' + watch.join(','))));
+  const st = nyseState(new Date()), pos = h => ((h - 4) / 16 * 100).toFixed(2) + '%';
+  const board = el('div', { class: 'ws-panel s-8' },
+    el('div', { class: 'ws-h' }, el('span', { text: 'NYSE · Nasdaq session' }), el('span', { id: 'ws-lamp', class: 'ws-lamp ' + st.phase }, el('i'), el('b', { id: 'ws-phase', text: st.label }))),
+    el('div', { class: 'ws-clocks' },
+      el('div', {}, el('div', { class: 'ws-k', text: 'New York' }), el('div', { class: 'ws-led', id: 'ws-ny', text: '--:--:--' }), el('div', { class: 'ws-sub', id: 'ws-day' })),
+      el('div', {}, el('div', { class: 'ws-k', id: 'ws-next-l', text: st.nextLabel + ' in' }), el('div', { class: 'ws-led amber', id: 'ws-next', text: '--' }), el('div', { class: 'ws-sub', id: 'ws-bell' })),
+      el('div', {}, el('div', { class: 'ws-k', text: 'Dubai' }), el('div', { class: 'ws-led dim', id: 'ws-dxb', text: '--:--' }), el('div', { class: 'ws-sub', text: 'your time' }))),
+    el('div', { class: 'ws-sess' },
+      el('div', { class: 'ws-sess-bar' + (st.isT ? '' : ' off'), id: 'ws-sess' }, el('i', { class: 'seg pre', style: { width: pos(9.5) } }), el('i', { class: 'seg reg', style: { width: ((st.close - 9.5) / 16 * 100).toFixed(2) + '%' } }), el('i', { class: 'seg post', style: { flex: '1' } }), el('em', { id: 'ws-now' })),
+      el('div', { class: 'ws-sess-l' }, [[4, '04:00 pre'], [9.5, '09:30 bell'], [st.close, (st.close === 13 ? '13:00' : '16:00') + ' close'], [20, '20:00']].map(([hh, t]) => el('span', { style: { left: pos(hh) }, text: t })))));
+  const world = el('div', { class: 'ws-panel s-4' }, el('div', { class: 'ws-h' }, el('span', { text: 'World exchanges' }), el('span', { text: 'local time' })),
+    el('ul', { class: 'ws-ex', id: 'ws-ex' }, EXCH.map(([c, city]) => el('li', { 'data-c': c }, el('i', { class: 'ws-dot' }), el('b', { text: c }), el('span', { class: 'ws-city', text: city }), el('span', { class: 'ws-t num' })))));
+  v.append(el('div', { class: 'grid g-12' }, board, world));
+  const m = B.markets;
+  if (m && (m.items || []).length) v.append(el('div', { class: 'ws-panel', style: { marginTop: '18px' } }, el('div', { class: 'ws-h' }, el('span', { text: 'Morning tape' + (m.as_of ? ' · ' + m.as_of : '') }), el('span', { text: m.source || 'from your 7:00 brief' })),
+    el('div', { class: 'ws-tiles' }, m.items.map(i => { const c = +i.change_pct || 0; return el('div', { class: 'ws-tile ' + (c > 0 ? 'up' : c < 0 ? 'down' : ''), style: { '--a': Math.min(1, Math.abs(c) / 2.5).toFixed(2) } }, el('div', { class: 'ws-k', text: i.name }), el('div', { class: 'ws-chg num', text: `${c > 0 ? '+' : ''}${i.change_pct}%` }), i.value ? el('div', { class: 'ws-sub num', text: i.value }) : null); }))));
+  const sym = watch.includes(S.mkSym) ? S.mkSym : watch[0];
+  const host = el('div', { class: 'tv-host', id: 'tv-chart' }, chartWidget(sym));
+  const chips = el('div', { class: 'ws-syms' }, watch.map(t => el('button', { class: 'ws-sym' + (t === sym ? ' on' : ''), type: 'button', onclick: e => { S.mkSym = t; host.replaceChildren(chartWidget(t)); chips.querySelectorAll('.ws-sym').forEach(b => b.classList.toggle('on', b === e.currentTarget)); } },
+    t, el('span', { class: 'x', role: 'button', tabindex: '0', 'aria-label': 'Remove ' + t, onclick: e => { e.stopPropagation(); if (watch.length > 1) saveWatch(watch.filter(x => x !== t)); } }, '×'))));
+  const inp = el('input', { type: 'text', placeholder: 'Add ticker', 'aria-label': 'Add a ticker', autocomplete: 'off', spellcheck: 'false' });
+  const add = el('form', { class: 'ws-add', onsubmit: e => { e.preventDefault(); const t = inp.value.trim().toUpperCase().replace(/[^A-Z0-9:._!-]/g, ''); if (t && !watch.includes(t)) { S.mkSym = t; saveWatch([...watch, t]); } inp.value = ''; } }, inp, el('button', { class: 'btn sm', type: 'submit', text: 'Add' }));
+  v.append(el('div', { class: 'ws-panel', style: { marginTop: '18px' } }, el('div', { class: 'ws-h' }, el('span', { text: 'Chart' }), el('span', { text: 'your watchlist · any symbol works (NVDA, BTCUSD, EURUSD, USOIL)' })), el('div', { class: 'ws-bar' }, chips, add), host));
+  v.append(el('div', { class: 'grid g-12', style: { marginTop: '18px' } },
+    el('div', { class: 'ws-panel s-7' }, el('div', { class: 'ws-h' }, el('span', { text: 'S&P 500 map' }), el('span', { text: 'size = market cap · colour = today' })),
+      el('div', { class: 'tv-host tall' }, tvWidget('stock-heatmap', { exchanges: [], dataSource: 'SPX500', grouping: 'sector', blockSize: 'market_cap_basic', blockColor: 'change', locale: 'en', symbolUrl: '', colorTheme: 'dark', hasTopBar: false, isDataSetEnabled: false, isZoomEnabled: true, hasSymbolTooltip: true, isMonoSize: false, width: '100%', height: '100%' }))),
+    el('div', { class: 'ws-panel s-5' }, el('div', { class: 'ws-h' }, el('span', { text: 'Top movers · US' }), el('span', { text: 'gainers, losers, most active' })),
+      el('div', { class: 'tv-host tall' }, tvWidget('hotlists', { colorTheme: 'dark', dateRange: '1D', exchange: 'US', showChart: true, locale: 'en', largeChartUrl: '', isTransparent: true, showSymbolLogo: true, showFloatingTooltip: false, width: '100%', height: '100%', plotLineColorGrowing: 'rgba(0, 230, 118, 1)', plotLineColorFalling: 'rgba(255, 82, 82, 1)', gridLineColor: 'rgba(255, 255, 255, 0)', scaleFontColor: 'rgba(255, 255, 255, 0.6)', belowLineFillColorGrowing: 'rgba(0, 230, 118, 0.12)', belowLineFillColorFalling: 'rgba(255, 82, 82, 0.12)', symbolActiveColor: 'rgba(255, 176, 0, 0.12)' })))));
+  v.append(el('div', { class: 'ws-panel', style: { marginTop: '18px' } }, el('div', { class: 'ws-h' }, el('span', { text: 'Macro calendar' }), el('span', { text: 'US · euro area · UAE · high and medium impact' })),
+    el('div', { class: 'tv-host mid' }, tvWidget('events', { colorTheme: 'dark', isTransparent: true, width: '100%', height: '100%', locale: 'en', importanceFilter: '0,1', countryFilter: 'us,eu,ae' }))));
+  const fin = (B.news || []).filter(n => n.category === 'finance');
+  if (fin.length) v.append(el('div', { class: 'ws-panel', style: { marginTop: '18px' } }, el('div', { class: 'ws-h' }, el('span', { text: 'Wire · finance' }), el('span', { text: 'from your 7:00 brief' })),
+    el('ul', { class: 'ws-wire' }, fin.map(n => el('li', {}, el('span', { class: 'ws-k', style: { margin: 0 }, text: n.source || '' }), n.url ? el('a', { href: n.url, text: n.headline }) : el('b', { text: n.headline }), n.why ? el('p', { text: n.why }) : null)))));
+  setTimeout(() => updateMarkets(new Date()), 0);
+  return v;
+}
+function updateMarkets(now) {
+  const ny = $('#ws-ny'); if (!ny) return;
+  const st = nyseState(now), z = st.z, pad = n => String(n).padStart(2, '0'), sec = pad(now.getSeconds());
+  ny.textContent = `${pad(z.hh)}:${pad(z.mm)}:${sec}`;
+  const dz = zoned(now, 'Asia/Dubai'); $('#ws-dxb').textContent = `${pad(dz.hh)}:${pad(dz.mm)}`;
+  $('#ws-day').textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'long', month: 'short', day: 'numeric' }).format(now) + (st.isT ? '' : ' · no trading');
+  const s = Math.max(0, Math.round(st.next / 1000)), hh = Math.floor(s / 3600), mm = Math.floor(s % 3600 / 60), ss = s % 60;
+  $('#ws-next').textContent = hh >= 24 ? `${Math.floor(hh / 24)}d ${hh % 24}h ${pad(mm)}m` : `${pad(hh)}:${pad(mm)}:${pad(ss)}`;
+  $('#ws-next-l').textContent = st.nextLabel + ' in';
+  $('#ws-bell').textContent = `${st.nextLabel} at ${fmtTime(new Date(now.getTime() + st.next), 'Asia/Dubai')} Dubai`;
+  const lamp = $('#ws-lamp'); lamp.className = 'ws-lamp ' + st.phase; $('#ws-phase').textContent = st.label;
+  const bar = $('#ws-sess'); bar.classList.toggle('off', !st.isT); bar.style.setProperty('--x', (Math.min(1, Math.max(0, (z.h - 4) / 16)) * 100).toFixed(2) + '%');
+  for (const li of document.querySelectorAll('#ws-ex li')) {
+    const x = EXCH.find(e => e[0] === li.dataset.c), zl = zoned(now, x[2]);
+    const open = x[0] === 'NYSE' ? st.phase === 'open' : zl.wd < 5 && x[3].some(([a, b]) => zl.h >= a && zl.h < b);
+    li.classList.toggle('open', open); li.querySelector('.ws-t').textContent = `${pad(zl.hh)}:${pad(zl.mm)} · ${open ? 'open' : 'closed'}`;
+  }
+}
+(function () {
+  if (!(window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+  const html = document.documentElement, dot = $('#cur-dot'), ring = $('#cur-ring'); if (!dot || !ring) return;
+  html.classList.add('cur-on');
+  const lab = ring.firstElementChild;
+  const MORPH = '.btn, .nav a, .nav-more, .filters button, .seg button, a.chip, .sheet-item, .theme-btn, .x-btn, .dots-rate button, .q-opt, .ws-sym, .ring-item, .sync, .lock-btn, .search-res button, .cine-cue, #totop, .sheet-list button, #island';
+  const LABEL = [['.rev-card', () => document.querySelector('.rev-card .ans') ? 'Swipe' : 'Tap'], ['.ch-card', 'Open'], ['article.story', 'Read'], ['.tv-host', '']];
+  let mx = -200, my = -200, rx = -200, ry = -200, cw = 36, ch = 36, cr = 18, hot = null, hotR = 10, down = false;
+  const setOut = v => html.classList.toggle('cur-out', v);
+  document.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    mx = e.clientX; my = e.clientY;
+    if (!html.classList.contains('cur-seen')) { html.classList.add('cur-seen'); rx = mx; ry = my; }
+    setOut(false);
+    const t = e.target; if (!t || !t.closest) return;
+    const txt = t.closest('input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button]), textarea, select, [contenteditable="true"]');
+    html.classList.toggle('cur-text', !!txt);
+    const h = txt ? null : t.closest(MORPH);
+    if (h !== hot) { if (hot) hot.style.translate = ''; hot = h; html.classList.toggle('cur-morph', !!hot); if (hot) hotR = parseFloat(getComputedStyle(hot).borderTopLeftRadius) || 10; }
+    let label = '';
+    if (!hot && !txt) for (const [sel, l] of LABEL) if (t.closest(sel)) { label = typeof l === 'function' ? l() : l; break; }
+    if (lab.textContent !== label) lab.textContent = label;
+    html.classList.toggle('cur-label', !!label);
+    if (hot && !REDUCE()) { const r = hot.getBoundingClientRect(); hot.style.translate = `${((mx - r.left - r.width / 2) / r.width * 5).toFixed(1)}px ${((my - r.top - r.height / 2) / r.height * 4).toFixed(1)}px`; }
+  }, { passive: true });
+  document.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') down = true; }, { passive: true });
+  document.addEventListener('pointerup', () => { down = false; }, { passive: true });
+  document.addEventListener('pointerover', e => { if (e.target && e.target.tagName === 'IFRAME') setOut(true); }, { passive: true });
+  document.addEventListener('mouseout', e => { if (!e.relatedTarget) setOut(true); });
+  window.addEventListener('blur', () => setOut(true));
+  const loop = () => {
+    requestAnimationFrame(loop);
+    let w = 36, hh = 36, r = 18, cx = mx, cy = my;
+    if (hot && hot.isConnected) { const b = hot.getBoundingClientRect(), pad = 6; w = b.width + pad * 2; hh = b.height + pad * 2; r = Math.min(hotR + pad, hh / 2); cx = b.left + b.width / 2 + (mx - b.left - b.width / 2) * .1; cy = b.top + b.height / 2 + (my - b.top - b.height / 2) * .1; }
+    else if (hot) { hot = null; html.classList.remove('cur-morph'); }
+    else if (html.classList.contains('cur-label')) { w = hh = 72; r = 36; }
+    if (down) { w *= .88; hh *= .88; r *= .88; }
+    const k = REDUCE() ? 1 : hot ? .3 : .24, ks = REDUCE() ? 1 : .22;
+    rx += (cx - rx) * k; ry += (cy - ry) * k; cw += (w - cw) * ks; ch += (hh - ch) * ks; cr += (r - cr) * ks;
+    ring.style.width = cw.toFixed(1) + 'px'; ring.style.height = ch.toFixed(1) + 'px'; ring.style.borderRadius = cr.toFixed(1) + 'px';
+    ring.style.transform = `translate3d(${(rx - cw / 2).toFixed(1)}px, ${(ry - ch / 2).toFixed(1)}px, 0)`;
+    dot.style.transform = `translate3d(${mx - 3}px, ${my - 3}px, 0)`;
+  };
+  requestAnimationFrame(loop);
 })();
 function vNews() {
   const B = S.brief, v = el('section', { class: 'view' });
@@ -2326,7 +2578,7 @@ function tick() {
   const bm = $('#brand-mark'); if (bm) bm.style.setProperty('--hand', (z.h / 24) * 360 + 180 + 'deg');
   const bd = $('#brand-date'); if (bd) bd.textContent = fmtDay(z.ymd, { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
   const gw = $('#greet-word'); if (gw && gw.textContent !== greeting() + ',') gw.textContent = greeting() + ',';
-  ambientFor(z.h); updateIsland(now);
+  ambientFor(z.h); updateIsland(now); if (S.view === 'markets') updateMarkets(now);
   const tk = $('#pticker'); if (tk) { const sp = tk.children, n = sp.length, idx = Math.floor(Date.now() / 4200) % n; if (+tk.dataset.i !== idx) { tk.dataset.i = idx; [...sp].forEach((x, j) => { x.className = j === idx ? 'on' : (x.className === 'on' ? 'off' : ''); }); } }
   const B = S.brief; if (!B) return;
   const isToday = z.ymd === B.date;
@@ -2376,13 +2628,15 @@ document.addEventListener('keydown', e => {
 });
 window.addEventListener('hashchange', route);
 (function () { const apply = t => { document.documentElement.dataset.theme = t; $('#theme-btn').textContent = t === 'dark' ? 'Light mode' : 'Dark mode'; };
-  apply(local.get('theme', 'light')); $('#theme-btn').addEventListener('click', ev => { const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; local.set('theme', t);
+  apply(local.get('theme', 'dark')); $('#theme-btn').addEventListener('click', ev => { const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; local.set('theme', t);
     if (document.startViewTransition && !REDUCE()) { const r = ev.currentTarget.getBoundingClientRect(); document.documentElement.style.setProperty('--vx', (r.width ? r.left + r.width / 2 : innerWidth / 2) + 'px'); document.documentElement.style.setProperty('--vy', (r.width ? r.top + r.height / 2 : innerHeight - 60) + 'px'); document.startViewTransition(() => apply(t)); } else apply(t); }); })();
 $('#sync').addEventListener('click', syncDialog);
 $('#search-btn').addEventListener('click', () => openSearch());
 $('#lock-btn').addEventListener('click', () => { local.set('pw', ''); location.reload(); });
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 document.addEventListener('visibilitychange', () => { if (!document.hidden && S.brief && S.brief.date < todayYmd() && zoned(new Date()).h >= 7.2 && !S.rev) location.reload(); });
+initStage();
+$('#totop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: REDUCE() ? 'auto' : 'smooth' }));
 loadBrief();
 setInterval(tick, 1000);
 tick();
