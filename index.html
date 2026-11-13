@@ -600,7 +600,7 @@ main { transition: opacity .2s; }
 main.leaving > * { opacity: 0; transform: translateY(-10px) scale(.995); filter: blur(4px); transition: opacity .16s ease-in, transform .16s ease-in, filter .16s ease-in; }
 
 .cine { position: relative; height: clamp(560px, 92vh, 940px); width: calc(100vw - var(--railw)); margin-left: calc(50% - (100vw - var(--railw)) / 2); margin-bottom: -96px; color: #fff; overflow: hidden; isolation: isolate; --p: 0; --mx2: 0; --my2: 0; }
-.cine-bg { position: absolute; inset: 0; z-index: 0; background: #0b0d0c url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBARXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAIKADAAQAAAABAAAAEgAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgAEgAgAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMABAQEBAQEBgQEBgkGBgYJDAkJCQkMDwwMDAwMDxIPDw8PDw8SEhISEhISEhUVFRUVFRkZGRkZHBwcHBwcHBwcHP/bAEMBBAUFBwcHDAcHDB0UEBQdHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHf/dAAQAAv/aAAwDAQACEQMRAD8A8N0L4ieItAtXttA1i70+GVtxjjkZV3Dvwa7Hwr8WPGWmaxbvba3dSNLMiyJNI0qOMgHKyZHTvwa8JtFjuiIydnHauv0i1ZdUtfIHmCNw3PqOn1rJJ9APf/jj4guPGfwytX1jE10r/aEbAXy3JAwoHs2D9a+CiOcGvr7x19rPguOzlYIzRs6qWA/1flnGDXyjJBnMjHGefrVtpCR//9D5G0vtXTWM0yXilJGU+xIrmtL7V0Nn/wAfi0RM5GF4wnmufEUQuZGlCRIF3ktgZJwM9K4u+J3v+Fdh4p/5GNP+uaf1rjr777/hXNP+IjSOx//Z") center / cover; }
+.cine-bg { position: absolute; inset: 0; z-index: 0; background: #0b0d0c url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBARXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAIKADAAQAAAABAAAAEgAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgAEgAgAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMABAQEBAQEBgQEBgkGBgYJDAkJCQkMDwwMDAwMDxIPDw8PDw8SEhISEhISEhUVFRUVFRkZGRkZHBwcHBwcHBwcHP/bAEMBBAUFBwcHDAcHDB0UEBQdHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHf/dAAQAAv/aAAwDAQACEQMRAD8A+YvB9hp+rTm0nXEygsO+4DsvTLe341f1VdJ0eTD6ZI+4lf3rlVBHsB1rz6Gd7WUNGSOcggkEH6ivQ9P8crJCLLxDbrfQHjzCB5gH171lK979DRWtYSOXRLhfNW2j2gZYROynp0wQf5VQlk0QsXSO5t0f5SfkbK45GPlODXS/8IhoGuwNeeHrwJJ12dMexB6fpXFaloeu6awinjMyr93Ayfy6/lmnFp9Qd+x//9D4pb7tCdPwNDfcoTp+BoA2tEmlivYGidkJkUZUkcH6V9CSKstiRKA+Ez83PNfO+kf8flv/ANdF/nX0V/y4n/rnXPPc3hsf/9k=") center / cover; }
 .cine-media { position: absolute; inset: -5%; will-change: transform; transform: translate3d(calc(var(--mx2) * -16px), calc(var(--p) * 24% + var(--my2) * -10px), 0) scale(calc(1.02 + var(--p) * .16)); transform-origin: 50% 40%; }
 .cine-zoom { position: absolute; inset: 0; }
 .cine-bg.intro .cine-zoom { animation: cineIn 3s cubic-bezier(.16,.84,.24,1) both; }
@@ -686,7 +686,7 @@ main.has-cine { padding-top: 0; }
 @media (max-width: 760px) {
   :root { --railw: 0px; }
   .cine { height: 86svh; min-height: 560px; margin-bottom: -70px; }
-  .cine-zoom img, .cine-zoom video { object-position: 57% 50%; }
+  .cine-zoom img, .cine-zoom video { object-position: 36% 50%; }
   .cine-shade { background: linear-gradient(180deg, rgba(4,7,9,.45) 0%, rgba(4,7,9,0) 22%, rgba(4,7,9,.15) 45%, rgba(4,7,9,.7) 78%, var(--bg) 100%); }
   .cine-inner { justify-content: flex-end; padding: 0 20px 112px; }
   .cine .greet { font-size: clamp(3rem, 15vw, 4.6rem); }
@@ -847,6 +847,12 @@ html.cur-text #cur-dot, html.cur-text #cur-ring, html.cur-out #cur-dot, html.cur
 .ws-src { display: flex; gap: 14px; font: 500 11.5px var(--mono); color: rgba(255,255,255,.45); }
 .ws-src a { color: rgba(255,255,255,.65); }
 .ws-empty { padding: 18px 16px; margin: 0; color: rgba(255,255,255,.6); font-size: 14px; }
+.stage-shade::before { content: ""; position: absolute; inset: -50%; z-index: 1; opacity: .07; mix-blend-mode: overlay; pointer-events: none; animation: grain 1s steps(6) infinite;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+@keyframes grain { 0% { transform: translate(0, 0); } 20% { transform: translate(-3%, 2%); } 40% { transform: translate(2%, -3%); } 60% { transform: translate(-2%, -1%); } 80% { transform: translate(3%, 3%); } 100% { transform: translate(0, 0); } }
+.stage-shade { background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgba(0,0,0,.55) 100%), linear-gradient(180deg, rgba(3,5,6,.45) 0%, rgba(3,5,6,.05) 30%, rgba(3,5,6,.25) 70%, rgba(3,5,6,.8) 100%); }
+#stage .cine-zoom video, #stage .cine-zoom img { filter: contrast(1.08) saturate(1.12); }
+@media (prefers-reduced-motion: reduce) { .stage-shade::before { animation: none; } }
 </style>
 
 <style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
@@ -2229,7 +2235,6 @@ function cineMedia() {
   }
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { CINE.vis = es[es.length - 1].isIntersecting; cinePlayState(); }).observe(CINE.wrap);
   document.addEventListener('visibilitychange', cinePlayState);
-  startMist();
   return CINE.wrap;
 }
 function cinePlayState() {
