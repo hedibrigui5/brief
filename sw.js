@@ -1,4 +1,3 @@
-/* Brief app: network first (always the latest brief), cached copy when offline. */
 const CACHE = 'brief-v1';
 const CORE = ['./', 'index.html', 'study.json', 'sat.json', 'brief.enc', 'defaults.enc', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => Promise.allSettled(CORE.map(u => c.add(u)))).then(() => self.skipWaiting())); });

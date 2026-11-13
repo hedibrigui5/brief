@@ -17,8 +17,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
-/* Layout: an instrument panel. Fixed left rail of sections (bottom tab bar on phones), one view at a time on the right.
-   Graphite surfaces, one brass accent used for "live" things (now, countdowns, active section). */
 :root {
   --bg: #eceae6; --panel: #ffffff; --panel-2: #f4f3f0; --line: #dcd9d3; --ink: #15181c; --muted: #6b7079; --faint: #a3a7ad;
   --brass: #8c6a2f; --brass-soft: rgba(140,106,47,.12); --ok: #3f7d5f; --warn: #b4572f; --blue: #3c5d8f;
@@ -41,7 +39,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .label { font: 500 11px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .num { font-variant-numeric: tabular-nums; }
 
-/* ---------- shell ---------- */
 .rail { position: fixed; inset: 0 auto 0 0; width: var(--rail); border-right: 1px solid var(--line); background: var(--panel);
   display: flex; flex-direction: column; padding: calc(24px + env(safe-area-inset-top, 0px)) 14px 20px max(14px, env(safe-area-inset-left, 0px)); box-sizing: border-box; z-index: 5; }
 .brand { display: flex; align-items: center; gap: 10px; padding: 0 8px 22px; }
@@ -97,7 +94,6 @@ main { margin-left: var(--rail); min-height: 100%; box-sizing: border-box; paddi
 .form-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
 .form-row .field { flex: 1 1 110px; }
 
-/* ---------- today ---------- */
 .hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 16px; }
 .headline-card { padding: 28px; display: flex; flex-direction: column; gap: 18px; }
 .headline { font: 600 clamp(1.7rem, 3.4vw, 2.6rem)/1.05 var(--display); font-stretch: 80%; margin: 0; text-wrap: balance; }
@@ -136,7 +132,6 @@ main { margin-left: var(--rail); min-height: 100%; box-sizing: border-box; paddi
 .date-tile b { display: block; font: 700 1.2rem/1 var(--display); font-stretch: 75%; color: var(--ink); }
 .horizon a { text-decoration: none; } .horizon a:hover { text-decoration: underline; }
 
-/* ---------- timetable ---------- */
 .tt-wrap { overflow-x: auto; }
 .tt { display: grid; grid-template-columns: 54px repeat(var(--days), minmax(118px, 1fr)); min-width: 640px; position: relative; }
 .tt-head { position: sticky; top: 0; font: 600 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 8px 8px 10px; color: var(--muted); border-bottom: 1px solid var(--line); }
@@ -156,7 +151,6 @@ main { margin-left: var(--rail); min-height: 100%; box-sizing: border-box; paddi
 .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--line); background: var(--panel-2); }
 .legend i.cal { background: var(--brass-soft); border-color: var(--brass); }
 
-/* ---------- SAT ---------- */
 .count-card { display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
 .count-big { font: 800 clamp(3.4rem, 7vw, 5.2rem)/.85 var(--display); font-stretch: 62%; color: var(--brass); }
 .bar { height: 8px; border-radius: 99px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; position: relative; }
@@ -190,7 +184,6 @@ main { margin-left: var(--rail); min-height: 100%; box-sizing: border-box; paddi
 .x-btn:hover { color: var(--warn); }
 .today-drill { border-left: 3px solid var(--brass); padding: 4px 0 4px 14px; margin: 0; font-size: 15px; }
 
-/* ---------- news ---------- */
 .filters { display: flex; flex-wrap: wrap; gap: 8px; }
 .filters button { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .filters button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
@@ -208,7 +201,6 @@ main { margin-left: var(--rail); min-height: 100%; box-sizing: border-box; paddi
 .why b { font: 600 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--brass); margin-right: 6px; }
 .story .meta { display: flex; justify-content: space-between; gap: 8px; font: 500 11px var(--mono); color: var(--muted); margin-top: auto; padding-top: 4px; }
 
-/* ---------- focus ---------- */
 .timer { display: grid; place-items: center; gap: 14px; }
 .timer svg { width: 220px; height: 220px; max-width: 100%; }
 .timer-time { font: 700 3rem/1 var(--display); font-stretch: 70%; }
@@ -233,7 +225,6 @@ main { margin-left: var(--rail); min-height: 100%; box-sizing: border-box; paddi
 .tip span { color: var(--muted); font-size: 14px; }
 .tip-hero { font: 600 1.35rem/1.2 var(--display); font-stretch: 85%; margin: 0 0 6px; }
 
-/* ---------- apps ---------- */
 .apps { display: flex; flex-direction: column; }
 .app-row { display: grid; grid-template-columns: minmax(0, 1.4fr) 140px minmax(0, 1.6fr) 110px 28px; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
 .app-row:first-child { border-top: 0; }
@@ -270,7 +261,6 @@ main { margin-left: var(--rail); min-height: 100%; box-sizing: border-box; paddi
   .headline-card, .card { padding: 16px; }
   .score-line { grid-template-columns: 70px minmax(0, 1fr) 80px; }
 }
-/* ---------- home hero ---------- */
 .home-hero { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: 34px 34px 30px;
   background: radial-gradient(120% 140% at 0% 0%, var(--brass-soft), transparent 55%), var(--panel); }
 .greet { font: 800 clamp(3rem, 7.4vw, 6rem)/.88 var(--display); font-stretch: 68%; letter-spacing: -.012em; margin: 14px 0 18px; }
@@ -282,7 +272,6 @@ main { margin-left: var(--rail); min-height: 100%; box-sizing: border-box; paddi
 .acts-card { margin-top: 16px; padding-top: 4px; padding-bottom: 14px; }
 .acts-card .acts { border-top: 0; }
 .tip-card { background: linear-gradient(160deg, var(--brass-soft), transparent 70%), var(--panel); }
-/* ---------- SAT detail ---------- */
 .score-note { display: flex; justify-content: space-between; margin: 2px 0 0 104px; font: 500 10.5px var(--mono); color: var(--muted); letter-spacing: .04em; }
 .reg { display: flex; flex-direction: column; gap: 8px; }
 .mini-check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); cursor: pointer; }
@@ -353,7 +342,6 @@ body.locked .rail, body.locked main { visibility: hidden; }
 .class-list .t { font: 600 12px var(--mono); color: var(--muted); }
 
 
-/* ---------- SAT library ---------- */
 .sat-tabs { margin: -8px 0 20px; }
 .ch-card.weak { border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
 .dots-rate { display: inline-flex; gap: 4px; }
@@ -374,7 +362,6 @@ input[type=search] { background: var(--panel-2); border: 1px solid var(--line); 
 .lap-labels { display: flex; gap: 4px; margin-top: 4px; }
 .lap-labels span { flex: 1; text-align: center; font: 500 9.5px var(--mono); color: var(--muted); }
 @media (max-width: 560px) { .pace-grid { grid-template-columns: 1fr 1fr; } }
-/* ---------- study ---------- */
 code { font: 500 .88em var(--mono); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
 pre.code, code { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
 pre.code { margin: 0; padding: 14px 16px; background: #12161b; color: #e6e3dc; border-radius: 9px; overflow-x: auto; font: 13px/1.6 var(--mono); }
@@ -414,7 +401,6 @@ pre.code code { background: none; border: 0; padding: 0; font: inherit; color: i
 .auto-card { background: linear-gradient(160deg, var(--brass-soft), transparent 65%), var(--panel); }
 @media (prefers-reduced-motion: reduce) { .view { animation: none; } }
 
-/* ================= refresh: light, calm, grouped ================= */
 :root { --bg: #f4f5f7; --panel: #ffffff; --panel-2: #f7f8fa; --line: #e5e8ee; --ink: #1c2433; --muted: #5d6878; --faint: #9aa3b1;
   --brass: #a8741f; --brass-soft: rgba(168,116,31,.09); --ok: #2c7a51; --warn: #c0502f; --blue: #3a5fc0; --shadow: 0 1px 2px rgba(16,24,40,.04), 0 2px 8px rgba(16,24,40,.05); color-scheme: light; }
 :root[data-theme="dark"] { --bg: #171b21; --panel: #20252d; --panel-2: #262c35; --line: #323943; --ink: #eceae6; --muted: #a2a9b3; --faint: #6c7480;
@@ -438,7 +424,6 @@ main { padding-left: max(16px, 48px); padding-right: max(16px, env(safe-area-ins
 .filters button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--panel); }
 .sat-tabs, .tabs { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 5px; display: inline-flex; flex-wrap: wrap; gap: 4px; box-shadow: var(--shadow); }
 .sat-tabs button, .tabs button { border: 0; border-radius: 8px; }
-/* sidebar */
 .rail { background: var(--panel); box-shadow: 1px 0 0 var(--line); border-right: 0; }
 .nav { gap: 1px; }
 .nav-group { font: 600 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding: 16px 12px 6px; }
@@ -449,7 +434,6 @@ main { padding-left: max(16px, 48px); padding-right: max(16px, env(safe-area-ins
 .nav kbd { border: 0; background: var(--panel-2); }
 .theme-btn { background: none; border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; font: 600 11.5px var(--body); color: var(--muted); cursor: pointer; align-self: flex-start; }
 .theme-btn:hover { color: var(--ink); }
-/* home */
 .home-hero { background: linear-gradient(135deg, var(--brass-soft), transparent 60%), var(--panel); }
 .greet { font-stretch: 80%; font-weight: 750; color: var(--ink); font-size: clamp(2.5rem, 5vw, 4.2rem); line-height: .95; }
 .home-sub { color: var(--muted); }
@@ -459,7 +443,6 @@ main { padding-left: max(16px, 48px); padding-right: max(16px, env(safe-area-ins
 .item { border-color: var(--line); }
 @media (max-width: 760px) { .nav-group { display: none; } .rail { box-shadow: 0 -1px 0 var(--line); } main { padding-block: 18px 96px; } }
 
-/* ---- révisions, search, feuille blanche ---- */
 .rev-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .rev-top .label { margin-left: auto; }
 .rev-card { max-width: 780px; margin: 16px auto 0; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
@@ -512,7 +495,6 @@ main { padding-left: max(16px, 48px); padding-right: max(16px, env(safe-area-ins
 
 <script>
 (() => {
-/* ================= utilities ================= */
 const $ = s => document.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
   const n = document.createElement(tag);
@@ -520,7 +502,7 @@ const el = (tag, attrs = {}, ...kids) => {
     if (v == null || v === false) continue;
     if (k === 'class') n.className = v;
     else if (k === 'text') n.textContent = v;
-    else if (k === 'html') n.innerHTML = v; // only used with static strings written in this file
+    else if (k === 'html') n.innerHTML = v;
     else if (k === 'href') { if (/^https:\/\//.test(v)) { n.href = v; n.target = '_blank'; n.rel = 'noopener'; } else if (v.startsWith('#')) n.href = v; }
     else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
     else if (k === 'style' && typeof v === 'object') { for (const [sk, sv] of Object.entries(v)) { if (sk.startsWith('--')) n.style.setProperty(sk, sv); else n.style[sk] = sv; } }
@@ -556,10 +538,8 @@ const todayYmd = () => zoned(new Date()).ymd;
 let toastT;
 function toast(msg) { document.querySelectorAll('.toast').forEach(t => t.remove()); const t = el('div', { class: 'toast', role: 'status', text: msg }); document.body.append(t); clearTimeout(toastT); toastT = setTimeout(() => t.remove(), 2200); }
 
-/* ================= state ================= */
 const S = { brief: null, db: { sat: null, timetable: null, habits: null, apps: null, focus: null, study: null }, dbReady: false, view: 'today', newsFilter: 'all', tipCat: 'Study', openStrat: null, openWeek: null, ttEdit: null };
 
-/* ---------- persistence: private GitHub repo sync, with a local copy ---------- */
 const SYNC = { owner: 'hedibrigui5', repo: 'brief-data', path: 'state.json', sha: null, timer: null, busy: false, dirty: new Set() };
 const ghToken = () => local.get('gh_token', '');
 function b64ToUtf8(b64) { const bin = atob(b64.replace(/\n/g, '')); const bytes = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i); return new TextDecoder().decode(bytes); }
@@ -639,7 +619,6 @@ function syncDialog() {
   document.body.append(m); setTimeout(() => inp.focus(), 0);
 }
 
-/* ---------- encrypted brief: AES-256-CBC, key+iv from PBKDF2-SHA256 (openssl enc -pbkdf2 -iter 200000) ---------- */
 async function decryptBrief(b64, pass) {
   const raw = Uint8Array.from(atob(b64.replace(/\s+/g, '')), c => c.charCodeAt(0));
   if (new TextDecoder().decode(raw.slice(0, 8)) !== 'Salted__') throw new Error('format');
@@ -675,7 +654,6 @@ function lockScreen(enc) {
   document.body.append(lock); setTimeout(() => inp.focus(), 0);
 }
 
-/* ================= static content ================= */
 const ICON = {
   today: '<circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/>',
   timetable: '<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4M9 14h2M13 14h2M9 17h2"/>',
@@ -783,7 +761,6 @@ const DEFAULT_HABITS = [
 ];
 const APP_STATUSES = ['Not started', 'In progress', 'Submitted', 'Interview', 'Offer', 'Closed'];
 
-/* ================= shell ================= */
 const NAV_GROUPS = { today: 'Daily', sat: 'Study', focus: 'Tools' };
 function buildNav() {
   const nav = $('#nav'); nav.innerHTML = '';
@@ -818,7 +795,6 @@ function pageHead(eyebrow, title, sub, right) {
   return el('header', { class: 'page-head' }, el('div', {}, el('div', { class: 'label', text: eyebrow }), el('h1', { text: title }), sub ? el('p', { text: sub }) : null), right || null);
 }
 
-/* ================= TODAY ================= */
 const C = 160, R = 118;
 const ang = h => (h / 24) * Math.PI * 2 + Math.PI;
 const pt = (h, r = R) => [C + r * Math.sin(ang(h)), C - r * Math.cos(ang(h))];
@@ -916,10 +892,8 @@ function vToday() {
   return v;
 }
 
-/* ================= TIMETABLE ================= */
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const TT_DEFAULT_WEEKS = { start: '2026-08-31', holidays: [7, 16, 17, 18, 28, 32] };
-/* Pronote numbers every week of the school year from Aug 31; holiday weeks are skipped when A/B alternates. Odd school weeks are A. */
 function weekInfo(ymd, cfg) {
   cfg = cfg || TT_DEFAULT_WEEKS;
   const n = Math.floor(daysBetween(cfg.start, ymd) / 7) + 1;
@@ -986,7 +960,6 @@ function vTimetable() {
   v.append(el('div', { class: 'card' }, el('div', { class: 'tt-wrap' }, grid),
     el('div', { class: 'legend', style: { marginTop: '14px' } }, el('span', {}, el('i'), 'School class'), el('span', {}, el('i', { class: 'cal' }), 'Google Calendar'), el('span', { text: 'A / B tag = only that week' }), el('span', { text: `${shown.length} classes this week` }))));
   if (!slots.length) v.append(el('div', { class: 'card', style: { marginTop: '16px' } }, el('h2', { text: 'Add your LFI timetable' }), el('p', { class: 'muted', text: 'Use "+ Add class". Classes repeat every week (or only Week A or B).' })));
-  // per-day summary for the shown week
   const hoursBy = [0, 1, 2, 3, 4].map(d => shown.filter(s => s.day === d).reduce((n, s) => n + hm(s.end) - hm(s.start), 0));
   const ends = [0, 1, 2, 3, 4].map(d => shown.filter(s => s.day === d).reduce((m, s) => Math.max(m, hm(s.end)), 0));
   if (shown.length) v.append(el('div', { class: 'stat-row', style: { marginTop: '16px', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' } }, [0, 1, 2, 3, 4].map(d =>
@@ -1020,7 +993,6 @@ function ttForm() {
   return f;
 }
 
-/* ================= SAT ================= */
 function satState() { return S.db.sat || { test_date: SAT.test_date, target: 1500, tests: [], done: {} }; }
 function weekKey(ymd) { const d = new Date(ymd + 'T12:00:00Z'); const wd = (d.getUTCDay() + 6) % 7; return addDays(ymd, -wd); }
 function vSatPlan() {
@@ -1041,7 +1013,6 @@ function vSatPlan() {
   v.append(pageHead(`Digital SAT · ${fmtDay(testDate, { weekday: 'long', month: 'long', day: 'numeric' })}`, `SAT · ${target} of 1600`, 'Built on your plan with Aziz: the content is there, so the work is endurance. Every number below is on the real scale: 200–800 per section, 400–1600 total.',
     el('label', { class: 'field', style: { minWidth: '170px' } }, el('span', { text: 'Your goal' }), tgtSel)));
 
-  // ---- row 1: countdown + score gap
   const regDone = !!done['reg'] || !!done['k-ticket'];
   const regDays = daysBetween(today, SAT.register_by), lateDays = daysBetween(today, SAT.late_by);
   const ptCount = tests.filter(t => t.type === 'Bluebook practice' && t.date >= '2026-11-12').length;
@@ -1064,7 +1035,6 @@ function vSatPlan() {
   row1.append(sc);
   v.append(row1);
 
-  // ---- question of the day + lesson (refreshed daily by the 7:00 run)
   const SD = S.brief.sat_daily;
   if (SD || S.brief.sat_today) {
     const qd = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: 'Question of the day' }), SD && SD.question ? el('span', { class: 'chip ' + (SD.question.section === 'Math' ? 'blue' : 'brass'), text: `${SD.question.section} · ${SD.question.domain}` }) : null));
@@ -1087,7 +1057,6 @@ function vSatPlan() {
     v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, qd, lesson));
   }
 
-  // ---- day-by-day plan
   const plan = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: `Day-by-day plan · ${SAT.days.length} days` }), el('span', { class: 'label', text: `${SAT.days.filter(x => done['d' + x[0]]).length}/${SAT.days.length} done · ${Math.round(SAT.days.reduce((n, x) => n + x[2], 0) / 60)} h total` })));
   const groups = {}; for (const day of SAT.days) (groups[weekKey(day[0])] = groups[weekKey(day[0])] || []).push(day);
   const weeks = el('div', { class: 'weeks' });
@@ -1113,7 +1082,6 @@ function vSatPlan() {
   });
   plan.append(weeks);
 
-  // ---- format + domains
   const fmt = el('div', { class: 's-5 grid', style: { alignContent: 'start' } });
   fmt.append(el('div', { class: 'card' }, el('div', { class: 'card-h' }, el('h2', { text: 'The test, exactly' })),
     el('div', { class: 'fmt' }, SAT.format.map(([a, b, c]) => el('div', { class: 'fmt-row' }, el('b', { text: a }), el('span', { class: 'num', text: b }), el('small', { text: c })))),
@@ -1126,7 +1094,6 @@ function vSatPlan() {
   fmt.append(dom);
   v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, plan, fmt));
 
-  // ---- rules + kit
   const strat = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: 'Your rules (from Aziz)' }), el('span', { class: 'label', text: 'tap to open' })));
   const sg = el('div', { class: 'strats' });
   SAT.strategies.forEach(([t, body], i) => { const o = S.openStrat === i;
@@ -1137,7 +1104,6 @@ function vSatPlan() {
   kit.append(el('p', { class: 'muted', style: { fontSize: '12.5px', margin: '12px 0 0' }, text: 'Check the exact arrival time and rules on your admission ticket; they can differ by test centre.' }));
   v.append(el('div', { class: 'grid g-12', style: { marginTop: '16px', alignItems: 'start' } }, strat, kit));
 
-  // ---- log + chart
   const logCard = el('div', { class: 'card', style: { marginTop: '16px' } }, el('div', { class: 'card-h' }, el('h2', { text: 'Score log' }), el('span', { class: 'label', text: `${tests.length} entries · scale 400–1600` })));
   logCard.append(chart(tests, target));
   const f = el('form', { class: 'form-row', style: { marginTop: '16px' } });
@@ -1157,7 +1123,6 @@ function vSatPlan() {
   return v;
 }
 
-/* ================= SAT skills library, mistake log, pacing timer ================= */
 let SATLIB = null;
 fetch('sat.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { SATLIB = j; if (S.view === 'sat') rerender(); }).catch(() => {});
 S.satTab = 'plan'; S.satSkill = null; S.skillQuery = '';
@@ -1350,7 +1315,6 @@ function chart(tests, target) {
   return s;
 }
 
-/* ================= SPÉ MATHS / SES ================= */
 let STUDY = null;
 fetch('study.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { STUDY = j; if (['maths', 'ses', 'python', 'review', 'today'].includes(S.view) && !(document.activeElement && document.activeElement.matches('input, textarea'))) rerender(); }).catch(() => {});
 const STATUS = [['', 'Pas commencé'], ['cours', 'En cours'], ['fait', 'Vu en classe'], ['revu', 'Révisé']];
@@ -1500,7 +1464,6 @@ function vChapter(subj, D, c) {
   return v;
 }
 
-/* ================= RÉVISIONS : répétition espacée + interro ================= */
 const SRS_DAYS = [1, 3, 7, 16, 35], NEW_PER_DAY = 10;
 const SUBJ_NAME = { maths: 'Maths', ses: 'SES', python: 'Python' };
 S.rev = null; S.revSubj = 'all'; S.blank = null;
@@ -1531,7 +1494,6 @@ function revDeck(subj) {
   }
   const dueAt = k => (m[k.key] || [0, ''])[1];
   due.sort((a, b) => (dueAt(a) < dueAt(b) ? -1 : dueAt(a) > dueAt(b) ? 1 : 0));
-  /* new cards: current chapters first, then one card per chapter in turn so subjects are mixed */
   const groups = new Map(); for (const k of fresh) { const g = k.subj + ':' + k.c.id; if (!groups.has(g)) groups.set(g, []); groups.get(g).push(k); }
   const lanes = [...groups.values()].sort((a, b) => (a[0].cur ? 0 : 1) - (b[0].cur ? 0 : 1));
   fresh.length = 0; for (let i = 0; lanes.some(l => i < l.length); i++) for (const l of lanes) if (i < l.length) fresh.push(l[i]);
@@ -1657,7 +1619,6 @@ function vRevSession(v) {
   return v;
 }
 
-/* ================= SEARCH ================= */
 const norm = t => String(t ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 let SEARCH_IDX = null;
 function searchIndex() {
@@ -1720,7 +1681,6 @@ function openSearch() {
   document.body.append(m); draw(); setTimeout(() => inp.focus(), 0);
 }
 
-/* ================= NEWS ================= */
 function vNews() {
   const B = S.brief, v = el('section', { class: 'view' });
   const news = B.news || [];
@@ -1743,13 +1703,11 @@ function vNews() {
   return v;
 }
 
-/* ================= FOCUS ================= */
 const T = local.get('timer', { mode: 25, endsAt: null, remaining: 25 * 60, running: false, sessions: {} });
 function timerLeft() { return T.running && T.endsAt ? Math.max(0, Math.round((T.endsAt - Date.now()) / 1000)) : T.remaining; }
 function vFocus() {
   const v = el('section', { class: 'view' }), today = todayYmd();
   v.append(pageHead('Deep work', 'Focus', 'Plan three priorities, protect your focus blocks, and keep the daily habits that make the rest easier.'));
-  // timer
   const R2 = 96, CIRC = 2 * Math.PI * R2;
   const ring = svg('svg', { viewBox: '0 0 220 220', 'aria-hidden': 'true' },
     svg('circle', { cx: 110, cy: 110, r: R2, fill: 'none', stroke: 'var(--line)', 'stroke-width': 8 }),
@@ -1761,7 +1719,6 @@ function vFocus() {
     el('div', { class: 'seg', role: 'group', 'aria-label': 'Block length' }, [25, 50, 90].map(n => el('button', { 'aria-pressed': T.mode === n ? 'true' : 'false', onclick: () => { if (T.running) return toast('Stop the current block first.'); T.mode = n; T.remaining = n * 60; local.set('timer', T); rerender(); }, text: `${n} min` }))),
     el('div', { class: 'form-row' }, el('button', { class: 'btn solid', id: 'tm-go', onclick: () => { if (T.running) { T.remaining = timerLeft(); T.running = false; T.endsAt = null; } else { T.running = true; T.endsAt = Date.now() + timerLeft() * 1000; } local.set('timer', T); rerender(); }, text: T.running ? 'Pause' : 'Start' }),
       el('button', { class: 'btn ghost', onclick: () => { T.running = false; T.endsAt = null; T.remaining = T.mode * 60; local.set('timer', T); rerender(); }, text: 'Reset' })));
-  // priorities
   const F = S.db.focus || { days: {} }; const day = (F.days || {})[today] || { p: ['', '', ''], done: [false, false, false] };
   const pr = el('div', { class: 'card s-7' }, el('div', { class: 'card-h' }, el('h2', { text: 'Today’s three' }), el('span', { class: 'label', text: `${day.done.filter(Boolean).length}/3 done` })));
   const rows = el('div', { class: 'prio' });
@@ -1778,7 +1735,6 @@ function vFocus() {
   });
   pr.append(rows, el('p', { class: 'muted', style: { fontSize: '13px', margin: '14px 0 0' }, text: 'Suggestion for today: ' + (S.brief.sat_today ? 'SAT session · ' : '') + ((S.brief.needs_attention || [])[0] ? S.brief.needs_attention[0].title : 'one deep-study block') }));
   v.append(el('div', { class: 'grid g-12' }, timer, pr));
-  // habits
   const Hb = S.db.habits || { list: DEFAULT_HABITS.map(([id, name]) => ({ id, name })), log: {} };
   const list = Hb.list && Hb.list.length ? Hb.list : DEFAULT_HABITS.map(([id, name]) => ({ id, name }));
   const log = Hb.log || {};
@@ -1800,7 +1756,6 @@ function vFocus() {
   addH.append(el('label', { class: 'field', style: { flex: '1 1 160px' } }, hi), el('button', { class: 'btn sm', type: 'submit', text: 'Add' }));
   addH.addEventListener('submit', ev => { ev.preventDefault(); const name = hi.value.trim(); if (!name) return; const cur = S.db.habits || { list, log: {} }; save('habits', { list: [...(cur.list && cur.list.length ? cur.list : list), { id: uid(), name }], log: cur.log || {} }); rerender(); });
   habCard.append(addH);
-  // tips
   const tips = el('div', { class: 'card s-6' }, el('div', { class: 'card-h' }, el('h2', { text: 'Playbook' })));
   if (S.brief.tip) tips.append(el('div', { style: { marginBottom: '14px' } }, el('div', { class: 'label', style: { color: 'var(--brass)' }, text: 'Today' }), el('p', { class: 'tip-hero', style: { marginTop: '6px' }, text: S.brief.tip.title }), el('span', { class: 'muted', text: S.brief.tip.body })));
   if ((S.brief.tips || []).length) tips.append(el('div', { style: { marginBottom: '16px' } }, el('div', { class: 'label', style: { color: 'var(--brass)' }, text: 'Fresh today' }), S.brief.tips.map(t => el('div', { class: 'tip' }, el('span', { class: 'chip', style: { marginBottom: '6px' }, text: t.category }), el('b', { text: t.title }), el('span', { text: t.body }), t.source ? el('small', { class: 'label', style: { display: 'block', marginTop: '4px' }, text: t.source }) : null))));
@@ -1811,7 +1766,6 @@ function vFocus() {
   return v;
 }
 
-/* ================= APPLICATIONS ================= */
 function vApps() {
   const v = el('section', { class: 'view' }), today = todayYmd();
   const A = S.db.apps || { items: [] }; const items = [...(A.items || [])].sort((a, b) => ((a.status === 'Closed') - (b.status === 'Closed')) || String(a.deadline || '9').localeCompare(String(b.deadline || '9')));
@@ -1846,7 +1800,6 @@ function vApps() {
 }
 const chipFor = s => ({ 'Offer': 'ok', 'Submitted': 'blue', 'Interview': 'brass', 'In progress': 'brass', 'Closed': '' })[s] || '';
 
-/* ================= live tick ================= */
 function tick() {
   const now = new Date(), z = zoned(now);
   const c = $('#clock'); if (c) c.textContent = hmStr(z.hh + z.mm / 60);
@@ -1879,7 +1832,6 @@ function tick() {
   }
   const rt = $('#rev-time'); if (rt && S.rev && !S.rev.done) rt.textContent = mmss(Math.round((Date.now() - S.rev.start) / 1000));
   const nl = $('#tt-now'); if (nl) nl.style.top = (z.h - +nl.dataset.min) * +nl.dataset.hr + 'px';
-  // timer
   const tt = $('#tm-time');
   if (T.running && timerLeft() === 0) {
     T.running = false; T.endsAt = null; T.remaining = T.mode * 60; T.sessions = { ...(T.sessions || {}), [todayYmd()]: ((T.sessions || {})[todayYmd()] || 0) + 1 }; local.set('timer', T);
@@ -1889,7 +1841,6 @@ function tick() {
     const ring = $('#tm-ring'); const CIRC = 2 * Math.PI * 96; ring.setAttribute('stroke-dashoffset', CIRC * (1 - left / (T.mode * 60))); }
 }
 
-/* ================= boot ================= */
 document.addEventListener('keydown', e => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openSearch(); return; }
   if (e.metaKey || e.ctrlKey || e.altKey || e.target.matches('input, textarea, select')) return;
