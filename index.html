@@ -830,6 +830,23 @@ html.cur-text #cur-dot, html.cur-text #cur-ring, html.cur-out #cur-dot, html.cur
 @media (max-width: 1000px) { .ws-clocks { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 760px) { .ws-clocks { grid-template-columns: 1fr; gap: 14px; } .tv-host { height: 440px; } .tv-host.tall { height: 460px; } .ws-add input { width: 100px; } }
 @media (prefers-reduced-motion: reduce) { .ws-lamp.open i { animation: none; } #cur-dot, #cur-ring { display: none; } html.cur-on, html.cur-on * { cursor: auto !important; } }
+
+.ws-wire-bar { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,.06); }
+.ws-story { padding: 18px 16px 20px; border-top: 1px solid rgba(255,255,255,.06); display: grid; gap: 8px; }
+.ws-story:first-child { border-top: 0; }
+.ws-story[hidden] { display: none; }
+.ws-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.ws-cat { font: 600 10.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; color: #ffb000; background: rgba(255,176,0,.1); border: 1px solid rgba(255,176,0,.28); }
+.ws-cat.finance { color: #69f0ae; background: rgba(0,230,118,.08); border-color: rgba(0,230,118,.28); }
+.ws-story h3 { margin: 0; font: 600 clamp(1.05rem, 1.6vw, 1.25rem)/1.3 var(--display); letter-spacing: -.02em; }
+.ws-story h3 a { color: #fff; text-decoration: none; }
+.ws-story h3 a:hover { color: #ffd166; }
+.ws-story > p { margin: 0; color: rgba(255,255,255,.7); font-size: 14.5px; line-height: 1.55; max-width: 80ch; }
+.ws-why { border-left: 2px solid #ffb000; padding: 8px 12px; background: rgba(255,176,0,.06); border-radius: 0 8px 8px 0; font-size: 14px; color: rgba(255,255,255,.85); max-width: 80ch; }
+.ws-why b { display: block; font: 600 10.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #ffb000; margin-bottom: 3px; }
+.ws-src { display: flex; gap: 14px; font: 500 11.5px var(--mono); color: rgba(255,255,255,.45); }
+.ws-src a { color: rgba(255,255,255,.65); }
+.ws-empty { padding: 18px 16px; margin: 0; color: rgba(255,255,255,.6); font-size: 14px; }
 </style>
 
 <style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
@@ -1031,7 +1048,7 @@ const ICON = {
   review: '<path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><path d="M9 12l2.2 2.2L15 10.5"/>'
 };
 const VIEWS = [
-  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['news', 'News', '3'], ['markets', 'Markets', 'm'], ['sat', 'SAT', '4'], ['maths', 'Spé Maths', '5'], ['ses', 'Spé SES', '6'], ['python', 'Python', '7'], ['review', 'Révisions', '0'], ['focus', 'Focus', '8'], ['apps', 'Applications', '9']
+  ['today', 'Today', '1'], ['timetable', 'Timetable', '2'], ['markets', 'Markets', '3'], ['sat', 'SAT', '4'], ['maths', 'Spé Maths', '5'], ['ses', 'Spé SES', '6'], ['python', 'Python', '7'], ['review', 'Révisions', '0'], ['focus', 'Focus', '8'], ['apps', 'Applications', '9']
 ];
 
 const SAT = {
@@ -1146,7 +1163,8 @@ function buildNav() {
 function openAttn() { const b = S.brief; if (!b) return 0; return (b.needs_attention || []).filter(i => !local.get(`done:${b.date}:${i.id}`, false)).length; }
 function route() {
   const h = (location.hash || '').slice(1);
-  const nv = VIEWS.some(v => v[0] === h) ? h : 'today';
+  const hh = h === 'news' ? 'markets' : h;
+  const nv = VIEWS.some(v => v[0] === hh) ? hh : 'today';
   const m = $('#main');
   const go = () => { if (S.view !== nv) SCROLLMEM[S.view] = window.scrollY; const back = S.view !== nv ? SCROLLMEM[nv] : 0; S.view = nv; rerender(true); if (back) requestAnimationFrame(() => window.scrollTo(0, back)); };
   if (S.brief && nv !== S.view && !REDUCE() && m && m.querySelector('.view')) {
@@ -2348,9 +2366,25 @@ function tvWidget(kind, cfg, key) {
 function chartWidget(sym) { return tvWidget('advanced-chart', { autosize: true, symbol: MK_SYM[sym] || sym, interval: 'D', timezone: 'Asia/Dubai', theme: 'dark', style: '1', locale: 'en', backgroundColor: 'rgba(4, 5, 6, 0)', gridColor: 'rgba(255, 255, 255, 0.05)', allow_symbol_change: true, withdateranges: true, hide_side_toolbar: false, calendar: false, support_host: 'https://www.tradingview.com' }, 'chart:' + sym); }
 function mkWatch() { const M = S.db.markets || {}; return M.watch && M.watch.length ? M.watch : MK_DEFAULT; }
 function saveWatch(list) { save('markets', { ...(S.db.markets || {}), watch: list }); Object.keys(TVW).filter(k => k.startsWith('tape')).forEach(k => delete TVW[k]); rerender(); }
+function wirePanel(B) {
+  const news = B.news || [], cats = ['all', ...new Set(news.map(n => n.category).filter(Boolean))];
+  if (!cats.includes(S.newsFilter)) S.newsFilter = 'all';
+  const list = el('div', { class: 'ws-stories' }, news.map(n => el('article', { class: 'ws-story', 'data-cat': n.category || '', hidden: S.newsFilter !== 'all' && n.category !== S.newsFilter },
+    el('div', { class: 'ws-tags' }, n.category ? el('span', { class: 'ws-cat ' + n.category, text: n.category }) : null, n.region ? el('span', { class: 'ws-k', style: { margin: 0 }, text: n.region }) : null),
+    el('h3', {}, n.url ? el('a', { href: n.url, text: n.headline }) : n.headline),
+    n.summary ? el('p', { text: n.summary }) : null,
+    n.why ? el('div', { class: 'ws-why' }, el('b', { text: 'Why it matters' }), n.why) : null,
+    el('div', { class: 'ws-src' }, el('span', { text: n.source || '' }), n.url ? el('a', { href: n.url, text: 'Read source' }) : null))));
+  const bar = el('div', { class: 'ws-wire-bar', role: 'tablist' }, cats.map(c => el('button', { class: 'ws-sym' + (S.newsFilter === c ? ' on' : ''), type: 'button', role: 'tab', 'aria-pressed': S.newsFilter === c ? 'true' : 'false',
+    onclick: e => { S.newsFilter = c; bar.querySelectorAll('.ws-sym').forEach(b => { const on = b === e.currentTarget; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); }); list.querySelectorAll('.ws-story').forEach(a => { a.hidden = c !== 'all' && a.dataset.cat !== c; }); },
+    text: c === 'all' ? `All · ${news.length}` : `${c} · ${news.filter(n => n.category === c).length}` })));
+  return el('div', { class: 'ws-panel', style: { marginTop: '18px' } },
+    el('div', { class: 'ws-h' }, el('span', { text: 'The wire · politics & money' }), el('span', { text: B.news_date ? 'edition of ' + fmtDay(B.news_date, { weekday: 'short', month: 'short', day: 'numeric' }) : 'from your 7:00 brief' })),
+    news.length ? [bar, list] : el('p', { class: 'ws-empty', text: 'No stories in today’s edition yet. They arrive with the 7:00 refresh.' }));
+}
 function vMarkets() {
   const B = S.brief, v = el('section', { class: 'view ws' }), watch = mkWatch();
-  v.append(pageHead('Wall Street desk', 'Markets', 'Live quotes, the New York session, the S&P 500 map and the macro calendar. Quotes from TradingView; some exchanges delay them by 15 minutes.'));
+  v.append(pageHead('Wall Street desk', 'Markets', 'Live quotes, the New York session, the morning news, the S&P 500 map and the macro calendar. Quotes from TradingView; some exchanges delay them by 15 minutes.'));
   const tape = [{ proName: 'FOREXCOM:SPXUSD', title: 'S&P 500' }, { proName: 'FOREXCOM:NSXUSD', title: 'Nasdaq 100' }, { proName: 'FOREXCOM:DJI', title: 'Dow 30' }, ...watch.map(t => ({ proName: MK_SYM[t] || t, title: t }))];
   v.append(el('div', { class: 'ws-tape' }, tvWidget('ticker-tape', { symbols: tape, showSymbolLogo: true, isTransparent: false, displayMode: 'regular', colorTheme: 'dark', locale: 'en' }, 'tape:' + watch.join(','))));
   const st = nyseState(new Date()), pos = h => ((h - 4) / 16 * 100).toFixed(2) + '%';
@@ -2369,6 +2403,7 @@ function vMarkets() {
   const m = B.markets;
   if (m && (m.items || []).length) v.append(el('div', { class: 'ws-panel', style: { marginTop: '18px' } }, el('div', { class: 'ws-h' }, el('span', { text: 'Morning tape' + (m.as_of ? ' · ' + m.as_of : '') }), el('span', { text: m.source || 'from your 7:00 brief' })),
     el('div', { class: 'ws-tiles' }, m.items.map(i => { const c = +i.change_pct || 0; return el('div', { class: 'ws-tile ' + (c > 0 ? 'up' : c < 0 ? 'down' : ''), style: { '--a': Math.min(1, Math.abs(c) / 2.5).toFixed(2) } }, el('div', { class: 'ws-k', text: i.name }), el('div', { class: 'ws-chg num', text: `${c > 0 ? '+' : ''}${i.change_pct}%` }), i.value ? el('div', { class: 'ws-sub num', text: i.value }) : null); }))));
+  v.append(wirePanel(B));
   const sym = watch.includes(S.mkSym) ? S.mkSym : watch[0];
   const host = el('div', { class: 'tv-host', id: 'tv-chart' }, chartWidget(sym));
   const chips = el('div', { class: 'ws-syms' }, watch.map(t => el('button', { class: 'ws-sym' + (t === sym ? ' on' : ''), type: 'button', onclick: e => { S.mkSym = t; host.replaceChildren(chartWidget(t)); chips.querySelectorAll('.ws-sym').forEach(b => b.classList.toggle('on', b === e.currentTarget)); } },
@@ -2383,9 +2418,6 @@ function vMarkets() {
       el('div', { class: 'tv-host tall' }, tvWidget('hotlists', { colorTheme: 'dark', dateRange: '1D', exchange: 'US', showChart: true, locale: 'en', largeChartUrl: '', isTransparent: true, showSymbolLogo: true, showFloatingTooltip: false, width: '100%', height: '100%', plotLineColorGrowing: 'rgba(0, 230, 118, 1)', plotLineColorFalling: 'rgba(255, 82, 82, 1)', gridLineColor: 'rgba(255, 255, 255, 0)', scaleFontColor: 'rgba(255, 255, 255, 0.6)', belowLineFillColorGrowing: 'rgba(0, 230, 118, 0.12)', belowLineFillColorFalling: 'rgba(255, 82, 82, 0.12)', symbolActiveColor: 'rgba(255, 176, 0, 0.12)' })))));
   v.append(el('div', { class: 'ws-panel', style: { marginTop: '18px' } }, el('div', { class: 'ws-h' }, el('span', { text: 'Macro calendar' }), el('span', { text: 'US · euro area · UAE · high and medium impact' })),
     el('div', { class: 'tv-host mid' }, tvWidget('events', { colorTheme: 'dark', isTransparent: true, width: '100%', height: '100%', locale: 'en', importanceFilter: '0,1', countryFilter: 'us,eu,ae' }))));
-  const fin = (B.news || []).filter(n => n.category === 'finance');
-  if (fin.length) v.append(el('div', { class: 'ws-panel', style: { marginTop: '18px' } }, el('div', { class: 'ws-h' }, el('span', { text: 'Wire · finance' }), el('span', { text: 'from your 7:00 brief' })),
-    el('ul', { class: 'ws-wire' }, fin.map(n => el('li', {}, el('span', { class: 'ws-k', style: { margin: 0 }, text: n.source || '' }), n.url ? el('a', { href: n.url, text: n.headline }) : el('b', { text: n.headline }), n.why ? el('p', { text: n.why }) : null)))));
   setTimeout(() => updateMarkets(new Date()), 0);
   return v;
 }
