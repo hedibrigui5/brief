@@ -1357,6 +1357,15 @@ body.locked #fab { display: none; }
   #curtain, #dust, .tap-ring { display: none; }
   .page-head h1, .enter .page-head h1, .cine .home-chips > *, .now-line, .q-opt.right, .q-opt.wrong, .tm-stage.running .tm-btn.main::before, .tm-stage.running .tm-btn.main::after, .ch-body.tab-in-r, .ch-body.tab-in-l, .ws-panel::after, .ws-ex li.open .ws-dot, .lock-title { animation: none !important; }
 }
+
+.page-head h1.split { background: none !important; -webkit-text-fill-color: currentColor; color: #fff; animation: none !important; clip-path: none !important; }
+.page-head h1.split > div { padding: 0 .02em .14em; margin-bottom: -.14em; }
+.page-head h1.split .w2 { background: linear-gradient(100deg, #fff 0%, #fff 55%, #e9cc94 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ws .page-head h1.split .w2 { background-image: linear-gradient(100deg, #fff 0%, #fff 50%, #ffb000 100%); }
+:root:not([data-theme="dark"]) .page-head h1.split { color: #12151a; }
+:root:not([data-theme="dark"]) .page-head h1.split .w2 { background-image: linear-gradient(100deg, #12151a 0%, #12151a 58%, #a8741f 100%); }
+:root:not([data-theme="dark"]) .ws .page-head h1.split .w2 { background-image: linear-gradient(100deg, #12151a 0%, #12151a 50%, #b07a00 100%); }
+.ws-led.long { font-size: clamp(1.3rem, 2.4vw, 2.1rem); white-space: nowrap; }
 </style>
 
 <style>html,body{margin:0;height:100%}body{padding-top:env(safe-area-inset-top,0px)}[hidden]{display:none!important}</style>
@@ -1390,6 +1399,9 @@ body.locked #fab { display: none; }
 </nav>
 <main id="main"><div class="loading">Loading your brief…</div></main>
 
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
 <script>
 (() => {
 const $ = s => document.querySelector(s);
@@ -1708,7 +1720,7 @@ function rerender(scrollTop) {
   if (scrollTop) window.scrollTo(0, 0); else window.scrollTo(0, y);
   main.classList.toggle('has-cine', !!main.querySelector('.cine')); document.body.dataset.view = S.view; main.classList.toggle('scrolled', window.scrollY > 40);
   cinePlayState();
-  if (scrollTop) enterAnim(main); else animateRings(main, true);
+  if (scrollTop) enterAnim(main); else { animateRings(main, true); gsapScroll(main.querySelector('.view')); }
   parallax();
   tick();
 }
@@ -2710,7 +2722,7 @@ function enterAnim(main) {
   }
   setTimeout(() => countUp(view), 120);
   view.querySelectorAll('.page-head .label, .ws-h > span:first-child').forEach((n, i) => setTimeout(() => scramble(n), 120 + i * 60));
-  staggerLists(view); glintCards(view);
+  staggerLists(view); glintCards(view); gsapEnter(view);
   parallax();
 }
 function gradeAnim(g) {
@@ -3005,6 +3017,7 @@ function updateMarkets(now) {
   const dz = zoned(now, 'Asia/Dubai'); $('#ws-dxb').textContent = `${pad(dz.hh)}:${pad(dz.mm)}`;
   $('#ws-day').textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'long', month: 'short', day: 'numeric' }).format(now) + (st.isT ? '' : ' · no trading');
   const s = Math.max(0, Math.round(st.next / 1000)), hh = Math.floor(s / 3600), mm = Math.floor(s % 3600 / 60), ss = s % 60;
+  $('#ws-next').classList.toggle('long', hh >= 24);
   $('#ws-next').textContent = hh >= 24 ? `${Math.floor(hh / 24)}d ${hh % 24}h ${pad(mm)}m` : `${pad(hh)}:${pad(mm)}:${pad(ss)}`;
   $('#ws-next-l').textContent = st.nextLabel + ' in';
   $('#ws-bell').textContent = `${st.nextLabel} at ${fmtTime(new Date(now.getTime() + st.next), 'Asia/Dubai')} Dubai`;
@@ -3440,6 +3453,36 @@ function initTapRings() {
     if (e.button > 0 || (e.target.closest && e.target.closest('input, textarea, select, iframe'))) return;
     const r = el('i', { class: 'tap-ring', style: { left: e.clientX + 'px', top: e.clientY + 'px' } }); document.body.append(r); setTimeout(() => r.remove(), 700);
   }, { passive: true });
+}
+const G = window.gsap, HAS_G = !!(window.gsap && window.ScrollTrigger && window.SplitText);
+if (HAS_G) { G.registerPlugin(ScrollTrigger, SplitText); ScrollTrigger.config({ ignoreMobileResize: true }); }
+function gsapEnter(view) {
+  if (!HAS_G || REDUCE() || !view) return;
+  const h1 = view.querySelector('.page-head h1');
+  if (h1) {
+    h1.classList.add('split');
+    const sp = new SplitText(h1, { type: 'words', mask: 'words', wordsClass: 'w2' });
+    G.from(sp.words, { yPercent: 118, rotate: 6, opacity: 0, duration: 1.15, ease: 'expo.out', stagger: .075, delay: .08 });
+  }
+  gsapScroll(view);
+}
+function gsapScroll(view) {
+  if (!HAS_G || REDUCE() || !view) return;
+  ScrollTrigger.getAll().forEach(t => t.kill());
+  const cine = view.querySelector('.cine');
+  if (cine) {
+    const g = cine.querySelector('.greet');
+    if (g) G.fromTo(g, { yPercent: 0, scale: 1, filter: 'blur(0px)' }, { yPercent: -22, scale: .93, filter: 'blur(7px)', ease: 'none', transformOrigin: 'left bottom', immediateRender: false, scrollTrigger: { trigger: cine, start: 'top top', end: 'bottom top', scrub: .7 } });
+    const chips = cine.querySelector('.home-chips');
+    if (chips) G.fromTo(chips, { y: 0, opacity: 1 }, { y: -60, opacity: 0, ease: 'none', immediateRender: false, scrollTrigger: { trigger: cine, start: '20% top', end: '70% top', scrub: .7 } });
+    const mq = view.querySelector('.mq-track');
+    if (mq) G.fromTo(view.querySelector('.mq'), { rotate: -2.2, scale: 1.04 }, { rotate: 0, scale: 1, ease: 'none', scrollTrigger: { trigger: view.querySelector('.mq'), start: 'top bottom', end: 'center center', scrub: .8 } });
+  }
+  view.querySelectorAll(':scope > .card, :scope > .grid > .card, :scope > .ws-panel, :scope > .grid > .ws-panel, .gr-grid > .card').forEach(c => {
+    if (c.getBoundingClientRect().top < innerHeight * .95) return;
+    G.fromTo(c, { scale: .955, rotateX: 6, transformPerspective: 1200, transformOrigin: '50% 100%' }, { scale: 1, rotateX: 0, ease: 'none', immediateRender: false, scrollTrigger: { trigger: c, start: 'top bottom', end: 'top 72%', scrub: .5 } });
+  });
+  requestAnimationFrame(() => ScrollTrigger.refresh());
 }
 function vNews() {
   const B = S.brief, v = el('section', { class: 'view' });
